@@ -1,0 +1,25 @@
+{
+  "name": "medical-equipment-tracker-hasura",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clear-modules": "rm -rf node_modules",
+    "hasura-start": "dotenv -e dev.env -- docker-compose up -d",
+    "start": "nodemon -e js,graphql src/index.js",
+    "stop-containers": "docker stop backend_postgres_1 backend_graphql-engine_1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/catarizea/medical-equipment-tracker-react-hasura.git"
+  },
+  "author": "Catalin Rizea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/catarizea/medical-equipment-tracker-react-hasura/issues"
+  },
+  "homepage": "https://github.com/catarizea/medical-equipment-tracker-react-hasura#readme",
+  "dependencies": {
+    "dotenv-cli": "3.1.0"
+  }
+}
