@@ -7,7 +7,7 @@
     "clear-modules": "rm -rf node_modules",
     "hasura-start": "dotenv -e dev.env -- docker-compose up -d",
     "start": "nodemon -e js,graphql src/index.js",
-    "stop-containers": "docker stop backend_postgres_1 backend_graphql-engine_1"
+    "stop-containers": "docker stop medical-equipment-tracker_postgres_1 medical-equipment-tracker_graphql-engine_1"
   },
   "repository": {
     "type": "git",
