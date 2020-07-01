@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "clear-modules": "rm -rf node_modules",
+    "dev": "nodemon -e js,graphql src/index.js",
     "hasura-start": "dotenv -e dev.env -- docker-compose up -d",
-    "start": "nodemon -e js,graphql src/index.js",
+    "start": "node src/index.js",
     "stop-containers": "docker stop medical-equipment-tracker_postgres_1 medical-equipment-tracker_graphql-engine_1"
   },
   "repository": {
