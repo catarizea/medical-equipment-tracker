@@ -1,32 +1,19 @@
 {
-  "name": "medical-equipment-tracker-hasura",
+  "name": "medical-equipment-tracker",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
+  "repository": "https://github.com/catarizea/medical-equipment-tracker.git",
+  "author": "Catalin Rizea <catalinrizea1@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend",
+    "packages/*"
+  ],
   "scripts": {
-    "clear-modules": "rm -rf node_modules",
-    "dev": "nodemon -e js,graphql src/index.js",
-    "hasura-start": "dotenv -e dev.env -- docker-compose up -d",
-    "start": "node src/index.js",
-    "stop-containers": "docker stop medical-equipment-tracker_postgres_1 medical-equipment-tracker_graphql-engine_1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/catarizea/medical-equipment-tracker-react-hasura.git"
-  },
-  "author": "Catalin Rizea",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/catarizea/medical-equipment-tracker-react-hasura/issues"
-  },
-  "homepage": "https://github.com/catarizea/medical-equipment-tracker-react-hasura#readme",
-  "dependencies": {
-    "dotenv": "8.2.0",
-    "dotenv-cli": "3.1.0",
-    "express": "4.17.1",
-    "sequelize": "6.2.4"
-  },
-  "devDependencies": {
-    "nodemon": "2.0.4"
+    "build": "yarn --cwd frontend build",
+    "clear": "rm -rf node_modules backend/node_modules frontend/node_modules packages/config/node_modules",
+    "start": "yarn --cwd backend start"
   }
 }
