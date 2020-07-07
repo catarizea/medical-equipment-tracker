@@ -12,7 +12,7 @@
 
 ## Environment variables
 
-You need to create two environment files into the root folder of the project, `.env.development.local` and `.emv.production.local` having the following structure:
+You need to create two environment files into the root folder of the project, `.env.development.local` and `.env.production.local` having the following structure:
 
 ```bash
 HASURA_POSTGRES_USER=<your_user>
