@@ -1,0 +1,39 @@
+openapi: 3.0.0
+info:
+  title: Authentication with Refresh Tokens
+  version: 1.0.0
+
+servers:
+  - url: http://127.0.0.1:3000
+    description: Development server
+
+paths:
+
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid, or the user does not have access to perform the action
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Unauthorized"
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Not Found"

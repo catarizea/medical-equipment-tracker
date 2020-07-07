@@ -1,0 +1,16 @@
+{
+  "name": "@medical-equipment-tracker/hasura",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "console:dev": "set NODE_ENV=development && dotenv -e ../.env.development.local -- hasura console",
+    "migrate": "set NODE_ENV=development && dotenv -e ../.env.development.local -- hasura migrate"
+  },
+  "dependencies": {
+    "dotenv-cli": "3.2.0"
+  },
+  "devDependencies": {
+    "hasura-cli": "1.2.2"
+  }
+}

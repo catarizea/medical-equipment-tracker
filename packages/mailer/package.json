@@ -1,0 +1,9 @@
+{
+  "name": "@medical-equipment-tracker/mailer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "nodemailer": "6.4.10"
+  }
+}

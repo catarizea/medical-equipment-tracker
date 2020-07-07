@@ -20,4 +20,4 @@ node_modules/
 # Intellij Configuration Files
 .vscode/
 
-*.env
+.env*

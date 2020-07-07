@@ -25,7 +25,7 @@ module.exports = {
       replacedByToken: {
         type: Sequelize.STRING,
       },
-      UserId: {
+      userId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         allowNull: false,

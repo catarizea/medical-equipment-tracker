@@ -7,13 +7,17 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "backend",
+    "authentication",
+    "hasura",
     "frontend",
     "packages/*"
   ],
   "scripts": {
-    "build": "yarn --cwd frontend build",
-    "clear": "rm -rf node_modules backend/node_modules frontend/node_modules packages/config/node_modules",
-    "start": "yarn --cwd backend start"
+    "build": "set NODE_ENV=production && yarn --cwd frontend build",
+    "clear": "rm -rf node_modules */node_modules packages/*/node_modules",
+    "containers-stop": "docker stop medical-equipment-tracker_postgres_1 medical-equipment-tracker_graphql-engine_1",
+    "hasura-start:dev": "set NODE_ENV=development && dotenv -e .env.development.local -- docker-compose up -d",
+    "hasura-start": "set NODE_ENV=production && dotenv -e .env.production.local -- docker-compose up -d",
+    "start": "set NODE_ENV=production && yarn --cwd authentication start"
   }
 }

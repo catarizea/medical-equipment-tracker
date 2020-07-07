@@ -1,5 +1,7 @@
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '../../../..', 'dev.env') });
+
+const envFile = process.env.NODE_ENV === 'development' ? '.env.development.local' : '.env.production.local';
+require('dotenv').config({ path: path.join(__dirname, '../../../..', envFile) });
 
 module.exports = {
   development: {
