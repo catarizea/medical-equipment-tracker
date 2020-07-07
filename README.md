@@ -6,7 +6,7 @@
 
 * a local email messaging system in place e.g. Postfix, Dovecot, PostfixAdmin, Roundcube (please see this series of tutorials from linuxbabe.com [Build Your Own Email Server on Ubuntu: Basic Postfix Setup](https://www.linuxbabe.com/mail-server/setup-basic-postfix-mail-sever-ubuntu))
 
-* https setup for the local services `docs/certificates/README.md`
+* SSL / TLS setup for the local services `docs/certificates/README.md`
 
 * NGINX webserver `docs/nginx/README.md`
 
