@@ -9,6 +9,8 @@
   "license": "MIT",
   "dependencies": {
     "@hapi/boom": "9.1.0",
+    "@medical-equipment-tracker/mailer": "1.0.0",
+    "@medical-equipment-tracker/validator": "1.0.0",
     "bcryptjs": "2.4.3",
     "cookie-parser": "1.4.5",
     "cors": "2.8.5",
@@ -17,11 +19,12 @@
     "express": "4.17.1",
     "express-jwt": "6.0.0",
     "jsonwebtoken": "8.5.1",
+    "lodash.get": "4.4.2",
+    "lodash.intersection": "4.4.0",
     "morgan": "1.10.0",
     "pg": "8.2.1",
     "sequelize": "6.2.4",
-    "uuid": "8.2.0",
-    "yup": "0.29.1"
+    "uuid": "8.2.0"
   },
   "devDependencies": {
     "nodemon": "2.0.4",

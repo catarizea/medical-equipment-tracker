@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  SignInInvitations.init(
+  SignInInvitation.init(
     {
       email: {
         type: DataTypes.STRING,

@@ -1,5 +1,9 @@
 # medical-equipment-tracker
 
+## Main objective
+
+Create an internal communication and hospital resources management system to help the medical personnel facing a flood of patients due to a hypothetical natural catastrophe.
+
 ## Prerequisites
 
 * local DNS service to be able to access the webserver by its name `docs/bind/README.md`
@@ -12,7 +16,7 @@
 
 ## Environment variables
 
-You need to create two environment files into the root folder of the project, `.env.development.local` and `.env.production.local` having the following structure:
+You need to create two environment variables related files into the root folder of the project, `.env.development.local` and `.env.production.local` having the following structure:
 
 ```bash
 HASURA_POSTGRES_USER=<your_user>
@@ -21,8 +25,13 @@ HASURA_POSTGRES_PORT=5432
 HASURA_POSTGRES_PORTS="5432:5432"
 HASURA_GRAPHQL_ENABLE_CONSOLE="false"
 HASURA_GRAPHQL_ENABLED_LOG_TYPES="startup, http-log, webhook-log, websocket-log, query-log"
+HASURA_GRAPHQL_ENDPOINT=<your_hasura_endpoint>
 HASURA_GRAPHQL_ADMIN_PORTS="8080:8080"
 HASURA_GRAPHQL_ADMIN_SECRET=<your_secret>
+HASURA_GRAPHQL_JWT_SECRET="{"type":"HS256","key":"<your_secret_key>"}"
 AUTHENTICATION_DB_NAME="authentication"
-AUTHENTICATION_EXPRESS_PORT=<port_number>
+AUTHENTICATION_EXPRESS_PORT=<your_port_number>
+AUTHENTICATION_EXPRESS_ENDPOINT=<your_endpoint>
+AUTHENTICATION_REFRESH_TOKEN_EXPIRES=<your_number_of_minutes>
+AUTHENTICATION_JWT_TOKEN_EXPIRES=<your_number_of_minutes>
 ```

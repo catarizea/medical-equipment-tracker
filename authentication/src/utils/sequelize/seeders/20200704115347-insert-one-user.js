@@ -6,9 +6,10 @@ module.exports = {
       {
         firstName: 'Catalin',
         lastName: 'Rizea',
-        username: 'catalinrizea',
-        passwordHash: 'password',
-        role: 'User, Admin',
+        email: 'catalin@medical.equipment',
+        passwordHash: '$2a$10$EJ44qODozStE1rm1c/hWSOkR.rv4nun7.5yYqzZX9JbJx0GCpADye',
+        role: 'User,Admin',
+        isBlocked: false,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

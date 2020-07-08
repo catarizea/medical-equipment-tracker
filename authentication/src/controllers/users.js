@@ -1,18 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-// router.post('/invite-signin', );
+const authorize = require('../middlewares/authorize');
+const { validateLogin, login } = require('./handlers/login');
+const { inviteSignin } = require('./handlers/inviteSignin');
+
 // router.get('/signin-invited/:token', );
 // router.post('/signin', );
-// router.post('/login', );
 // router.post('/forgot-password', );
 // router.post('/refresh-token', );
 // router.post('/revoke-token', );
 
-const inviteSignIn = (req, res, next) => {
-  res.json('Invitation to signin sent!');
-};
-
-router.post('/invite-signin', inviteSignIn);
+router.post('/login', validateLogin, login);
+router.post('/invite-signin', authorize('Admin'), inviteSignin);
 
 module.exports = router;

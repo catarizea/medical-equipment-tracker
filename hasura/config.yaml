@@ -1,7 +1,7 @@
 version: 2
-endpoint: http://localhost:8080
+endpoint: ${HASURA_GRAPHQL_ENDPOINT}
 metadata_directory: metadata
 admin_secret: ${HASURA_GRAPHQL_ADMIN_SECRET} 
 actions:
   kind: synchronous
-  handler_webhook_baseurl: http://localhost:3000
+  handler_webhook_baseurl: ${AUTHENTICATION_EXPRESS_ENDPOINT}

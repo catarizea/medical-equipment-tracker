@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      username: {
+      email: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
@@ -28,6 +28,11 @@ module.exports = {
       role: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      isBlocked: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,

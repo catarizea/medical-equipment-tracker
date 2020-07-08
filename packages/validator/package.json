@@ -1,0 +1,9 @@
+{
+  "name": "@medical-equipment-tracker/validator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "yup": "0.29.1"
+  }
+}
