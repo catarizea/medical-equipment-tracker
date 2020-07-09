@@ -13,7 +13,7 @@ const validate = async (req, next, schema) => {
   } catch (error) {
     const errors = {};
     error.inner.forEach((err) => (errors[err.path] = err.errors[0]));
-    next(`${VALIDATION_ERROR}${JSON.stringify(errors, null, 2)}`);
+    next(`${VALIDATION_ERROR}${JSON.stringify(errors)}`);
   }
 };
 

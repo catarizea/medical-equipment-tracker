@@ -24,6 +24,7 @@
     "jsonwebtoken": "8.5.1",
     "lodash.get": "4.4.2",
     "lodash.intersection": "4.4.0",
+    "lodash.pick": "4.4.0",
     "morgan": "1.10.0",
     "pg": "8.2.1",
     "sequelize": "6.2.4",

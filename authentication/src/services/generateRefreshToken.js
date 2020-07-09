@@ -1,5 +1,6 @@
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
+const pick = require('lodash.pick');
 
 const envFile =
   process.env.NODE_ENV === 'development'
@@ -16,23 +17,18 @@ const generateRefreshToken = async (user, ip) => {
   let refreshToken = null;
 
   try {
-    const newToken = await models.RefreshToken.create(
-      {
-        token,
-        expiresAt: new Date(
-          Date.now() +
-            process.env.AUTHENTICATION_REFRESH_TOKEN_EXPIRES * 60 * 1000
-        ),
-        createdAt: new Date(),
-        createdByIp: ip,
-        UserId: user.id,
-      },
-      {
-        include: [models.User],
-      }
-    );
+    const newToken = await models.RefreshToken.create({
+      token,
+      expiresAt: new Date(
+        Date.now() +
+          process.env.AUTHENTICATION_REFRESH_TOKEN_EXPIRES * 60 * 1000
+      ),
+      createdAt: new Date(),
+      createdByIp: ip,
+      UserId: user.id,
+    });
 
-    refreshToken = { token: newToken.token, expiresAt: newToken.expiresAt };
+    refreshToken = pick(newToken, ['token', 'expiresAt']);
   } catch (error) {
     console.log('generateRefreshToken error');
     console.log(error);
