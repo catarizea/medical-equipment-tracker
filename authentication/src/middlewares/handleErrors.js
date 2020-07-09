@@ -1,3 +1,4 @@
+/* eslint no-unused-vars: 0 */
 const { VALIDATION_ERROR } = require('../constants/validation');
 
 const handleErrors = (err, req, res, next) => {
@@ -14,13 +15,22 @@ const handleErrors = (err, req, res, next) => {
           .status(400)
           .json({ type: VALIDATION_ERROR, message: JSON.parse(parts[1]) });
       }
-
+      break;
+    
     case err.isBoom:
       const {
         statusCode,
         payload: { error, message },
       } = err.output;
       return res.status(statusCode).json({ type: error, message });
+    
+    default:
+      return res
+        .status(500)
+        .json({
+          type: 'Internal Server Error',
+          message: 'An internal server error occurred',
+        });
   }
 };
 

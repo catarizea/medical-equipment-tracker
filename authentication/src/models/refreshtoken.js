@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
+      expiresAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -37,10 +41,19 @@ module.exports = (sequelize, DataTypes) => {
       replacedByToken: {
         type: DataTypes.STRING,
       },
+      UserId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+      },
     },
     {
       sequelize,
       modelName: 'RefreshToken',
+      timestamps: false,
     }
   );
   

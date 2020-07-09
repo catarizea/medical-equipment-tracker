@@ -38,6 +38,12 @@ const authorize = (roles) => {
 
       req.user.role = user.role;
 
+      const ownTokens = await models.RefreshToken.findAll({
+        where: { UserId: userId },
+      });
+      req.user.ownsToken = (token) =>
+        !!ownTokens.find((tokn) => tokn.token === token);
+
       next();
     },
   ];

@@ -13,6 +13,7 @@ require('dotenv').config({
 
 const validate = require('../../middlewares/validate');
 const generateJwtToken = require('../../services/generateJwtToken');
+const generateRefreshToken = require('../../services/generateRefreshToken');
 const models = require('../../models');
 
 module.exports = {
@@ -26,15 +27,13 @@ module.exports = {
     const user = await models.User.findOne({ where: { email } });
 
     if (!user) {
-      next(Boom.unauthorized('Invalid email or password'));
-      return;
+      return next(Boom.unauthorized('Invalid email or password'));
     }
 
     const match = await bcrypt.compare(password, user.passwordHash);
 
     if (!match) {
-      next(Boom.unauthorized('Invalid email or password'));
-      return;
+      return next(Boom.unauthorized('Invalid email or password'));
     }
 
     const jwtToken = generateJwtToken(user);
@@ -43,9 +42,16 @@ module.exports = {
         process.env.AUTHENTICATION_JWT_TOKEN_EXPIRES * 60 * 1000
     );
 
+    const refreshToken = await generateRefreshToken(user, req.ip);
+
+    if (!refreshToken) {
+      return next(Boom.badImplementation());
+    }
+
     res.json({
       jwtToken,
       jwtTokenExpiry,
+      refreshToken,
     });
   },
 };

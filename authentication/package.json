@@ -2,6 +2,9 @@
   "name": "@medical-equipment-tracker/authentication",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": ">=8.10.0"
+  },
   "scripts": {
     "dev": "set NODE_ENV=development && nodemon -e js,graphql src/index.js",
     "start": "set NODE_ENV=production && node src/index.js"
@@ -27,6 +30,8 @@
     "uuid": "8.2.0"
   },
   "devDependencies": {
+    "eslint": "7.4.0",
+    "eslint-plugin-node": "11.1.0",
     "nodemon": "2.0.4",
     "sequelize-cli": "6.2.0",
     "swagger-ui-express": "4.1.4",

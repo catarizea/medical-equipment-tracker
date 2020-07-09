@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'SignInInvitation',
+      timestamps: false,
     }
   );
   return SignInInvitation;

@@ -12,8 +12,8 @@ const customClaims = process.env.AUTHENTICATION_CUSTOM_CLAIMS
   ? process.env.AUTHENTICATION_CUSTOM_CLAIMS.split(',')
   : [];
 
-const defaultRole = 'User';
 const { KEY } = require('../constants/claims');
+const roles = require('../constants/roles');
 
 const generateJwtToken = (user) => {
   const custom_claims = {};
@@ -24,15 +24,15 @@ const generateJwtToken = (user) => {
     ].toString();
   });
 
-  if (!user.role.includes(defaultRole)) {
-    user.role.push(defaultRole);
+  if (!user.role.includes(roles.Default)) {
+    user.role.push(roles.Default);
   }
 
   return jwt.sign(
     {
       [KEY]: {
         'x-hasura-allowed-roles': user.role,
-        'x-hasura-default-role': defaultRole,
+        'x-hasura-default-role': roles.Default,
         'x-hasura-user-id': user.id.toString(),
         ...custom_claims,
       },

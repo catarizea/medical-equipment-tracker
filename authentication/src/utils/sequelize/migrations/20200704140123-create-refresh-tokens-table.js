@@ -8,6 +8,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      token: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      expiresAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -25,7 +34,7 @@ module.exports = {
       replacedByToken: {
         type: Sequelize.STRING,
       },
-      userId: {
+      UserId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         allowNull: false,
