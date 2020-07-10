@@ -1,0 +1,45 @@
+const validator = require('@medical-equipment-tracker/validator');
+const Boom = require('@hapi/boom');
+
+const validate = require('../../middlewares/validate');
+const models = require('../../models');
+
+module.exports = {
+  validateSigninInvitation: async (req, res, next) => {
+    await validate(req, next, validator.revokeTokenSchema, true);
+  },
+
+  findSigninInvitation: async (req, res, next) => {
+    const { token } = req.params;
+
+    const signinInvitation = await models.SignInInvitation.findOne({
+      where: { token },
+    });
+
+    if (!signinInvitation) {
+      return next(Boom.badRequest('Invalid sign in invitation'));
+    }
+
+    if (signinInvitation.accountCreated) {
+      return next(Boom.badRequest('Account already created'));
+    }
+
+    let setOpened = null;
+
+    try {
+      setOpened = await models.SignInInvitation.update(
+        { isOpened: true },
+        { where: { id: signinInvitation.id } }
+      );  
+    } catch (error) {
+      console.log('checkSigninInvitation error');
+      console.log(error);
+    }
+
+    if (!setOpened) {
+      return next(Boom.badImplementation());
+    }
+
+    res.json({ result: 'Valid sign in invitation' });
+  },
+};
