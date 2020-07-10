@@ -34,4 +34,9 @@ AUTHENTICATION_EXPRESS_PORT=<your_port_number>
 AUTHENTICATION_EXPRESS_ENDPOINT=<your_endpoint>
 AUTHENTICATION_REFRESH_TOKEN_EXPIRES=<your_number_of_minutes>
 AUTHENTICATION_JWT_TOKEN_EXPIRES=<your_number_of_minutes>
+AUTHENTICATION_CUSTOM_CLAIMS=""
+MAILTRAP_HOST="smtp.mailtrap.io"
+MAILTRAP_PORT=2525
+MAILTRAP_USER=<your_mailtrap_user>
+MAILTRAP_PASS=<your_mailtrap_password>
 ```

@@ -11,8 +11,6 @@ const envFile =
     : '.env.production.local';
 require('dotenv').config({ path: path.join(__dirname, '../..', envFile) });
 
-const handleErrors = require('./middlewares/handleErrors');
-
 const app = express();
 
 app.use(
@@ -33,7 +31,7 @@ const frontendPath = path.join(__dirname, '../..', 'frontend/build');
 app.use(express.static(frontendPath));
 
 app.use('/api/authentication', require('./controllers/users'));
-app.use(handleErrors);
+app.use(require('./middlewares/handleErrors'));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(frontendPath, 'index.html'));

@@ -28,10 +28,17 @@ const refreshTokens = async (oldRefreshToken, ip, next) => {
     replacedByToken: newRefreshToken.token,
   };
 
-  const tokenRevoked = await models.RefreshToken.update(revokedToken, {
-    where: { id: oldRefreshToken.id },
-  });
+  let tokenRevoked = null;
 
+  try {
+    tokenRevoked = await models.RefreshToken.update(revokedToken, {
+      where: { id: oldRefreshToken.id },
+    });
+  } catch (error) {
+    console.log('refreshTokens error');
+    console.log(error);
+  }
+  
   if (!tokenRevoked) {
     return next(Boom.badImplementation());
   }

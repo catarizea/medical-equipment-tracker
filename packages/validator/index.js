@@ -14,7 +14,13 @@ const revokeTokenSchema = object({
     .required('Token is required'),
 });
 
+const inviteSigninSchema = object({
+  email: string().email('Email has to be valid').required('Email is required'),
+  name: string().required('Name is required'),
+});
+
 module.exports = {
   loginSchema,
   revokeTokenSchema,
+  inviteSigninSchema,
 };

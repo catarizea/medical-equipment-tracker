@@ -6,8 +6,8 @@
     "node": ">=8.10.0"
   },
   "scripts": {
-    "dev": "set NODE_ENV=development && nodemon -e js,graphql src/index.js",
-    "start": "set NODE_ENV=production && node src/index.js"
+    "dev": "env NODE_ENV=development nodemon -e js,graphql src/index.js",
+    "start": "env NODE_ENV=production node src/index.js"
   },
   "license": "MIT",
   "dependencies": {
@@ -15,6 +15,7 @@
     "@medical-equipment-tracker/mailer": "1.0.0",
     "@medical-equipment-tracker/validator": "1.0.0",
     "bcryptjs": "2.4.3",
+    "body-parser": "1.19.0",
     "cookie-parser": "1.4.5",
     "cors": "2.8.5",
     "dotenv": "8.2.0",

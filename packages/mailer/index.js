@@ -1,23 +1,29 @@
+const path = require('path');
 const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTransport({
+const envFile =
+  process.env.NODE_ENV === 'development'
+    ? '.env.development.local'
+    : '.env.production.local';
+require('dotenv').config({
+  path: path.join(__dirname, '../..', envFile),
+});
+
+let mailer = nodemailer.createTransport({
   sendmail: true,
   newline: 'unix',
   path: '/usr/sbin/sendmail',
 });
 
-const sendMail = ({ from, to, subject, text, html }) => {
-  transporter.sendMail({
-    from,
-    to,
-    subject,
-    text,
-    html,
-  }, (err, info) => {
-    console.log(err);
-    console.log(info.envelope);
-    console.log(info.messageId);
+if (process.env.NODE_ENV === 'development') {
+  mailer = nodemailer.createTransport({
+    host: process.env.MAILTRAP_HOST,
+    port: process.env.MAILTRAP_PORT,
+    auth: {
+      user: process.env.MAILTRAP_USER,
+      pass: process.env.MAILTRAP_PASS,
+    },
   });
-};
+}
 
-module.exports = sendMail;
+module.exports = mailer;

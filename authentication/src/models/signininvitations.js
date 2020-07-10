@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       isOpened: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
@@ -31,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'SignInInvitation',
-      timestamps: false,
+      timestamps: true,
     }
   );
   return SignInInvitation;

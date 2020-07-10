@@ -12,6 +12,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       isOpened: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
@@ -22,7 +26,7 @@ module.exports = {
         allowNull: false,
         defaultValue: false,
       },
-      userId: {
+      UserId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         allowNull: false,
