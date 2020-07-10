@@ -3,6 +3,7 @@ const validator = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
 const get = require('lodash.get');
 const mailer = require('@medical-equipment-tracker/mailer');
+const { v4: uuidv4 } = require('uuid');
 
 const validate = require('../../middlewares/validate');
 const models = require('../../models');
@@ -43,6 +44,7 @@ module.exports = {
       signinInvitation = await models.SignInInvitation.create({
         email,
         name,
+        token: uuidv4(),
         UserId: userId,
       });
     } catch (error) {
@@ -62,7 +64,7 @@ module.exports = {
 
     const renderVars = {
       host,
-      invitationId: signinInvitation.id,
+      invitationId: signinInvitation.token,
       toName: name,
       fromName: admin.fullName,
     };

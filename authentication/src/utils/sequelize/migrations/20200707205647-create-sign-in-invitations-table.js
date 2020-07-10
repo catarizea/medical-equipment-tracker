@@ -16,6 +16,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      token: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
       isOpened: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
