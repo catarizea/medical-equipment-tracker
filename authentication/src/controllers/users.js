@@ -13,13 +13,17 @@ const {
   validateSigninInvitation,
   findSigninInvitation,
 } = require('./handlers/checkSigninInvitation');
+const { logout } = require('./handlers/logout');
+const { validateSignin, signin } = require('./handlers/signin');
+
 const roles = require('../constants/roles');
 
-// router.post('/signin', );
 // router.post('/forgot-password', );
 // router.post('/reset-password', );
 
 router.post('/login', validateLogin, login);
+
+router.post('/logout', logout);
 
 router.post(
   '/invite-signin',
@@ -42,5 +46,7 @@ router.get(
   validateSigninInvitation,
   findSigninInvitation
 );
+
+router.post('/signin', validateSignin, signin);
 
 module.exports = router;

@@ -3,6 +3,7 @@ const Boom = require('@hapi/boom');
 const models = require('../../models');
 const refreshTokens = require('../../services/refreshTokens');
 const { REFRESH_TOKEN_COOKIE } = require('../../constants/cookies');
+const { revokeAccess } = require('./logout');
 
 module.exports = {
   refreshToken: async (req, res, next) => {
@@ -28,6 +29,11 @@ module.exports = {
       dbRefreshToken.expiresAt < new Date()
     ) {
       return next(Boom.unauthorized('Unauthorized'));
+    }
+
+    if (dbRefreshToken.User.isBlocked) {
+      await revokeAccess(req, res);
+      return next(Boom.unauthorized('Access revoked'));
     }
 
     const newTokens = await refreshTokens(dbRefreshToken, req.ip, next);

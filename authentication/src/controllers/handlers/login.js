@@ -37,6 +37,10 @@ module.exports = {
       return next(Boom.unauthorized('Invalid email or password'));
     }
 
+    if (user.isBlocked) {
+      return next(Boom.unauthorized('Access revoked'));
+    }
+
     const jwtToken = generateJwtToken(user);
     const jwtTokenExpiry = new Date(
       new Date().getTime() +
