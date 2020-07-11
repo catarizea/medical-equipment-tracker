@@ -20,9 +20,12 @@ const {
   forgotPassword,
 } = require('./handlers/forgotPassword');
 
-const roles = require('../constants/roles');
+const {
+  validateResetPassword,
+  resetPassword,
+} = require('./handlers/resetPassword');
 
-// router.post('/reset-password', );
+const roles = require('../constants/roles');
 
 router.post('/login', validateLogin, login);
 
@@ -53,5 +56,7 @@ router.get(
 router.post('/signin', validateSignin, signin);
 
 router.post('/forgot-password', validateForgotPassword, forgotPassword);
+
+router.post('/reset-password', validateResetPassword, resetPassword);
 
 module.exports = router;
