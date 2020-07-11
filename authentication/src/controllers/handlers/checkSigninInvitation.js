@@ -1,5 +1,6 @@
 const validator = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
+const pick = require('lodash.pick');
 
 const validate = require('../../middlewares/validate');
 const models = require('../../models');
@@ -30,7 +31,7 @@ module.exports = {
       setOpened = await models.SignInInvitation.update(
         { isOpened: true },
         { where: { id: signinInvitation.id } }
-      );  
+      );
     } catch (error) {
       console.log('checkSigninInvitation error');
       console.log(error);
@@ -40,6 +41,9 @@ module.exports = {
       return next(Boom.badImplementation());
     }
 
-    res.json({ result: 'Valid sign in invitation' });
+    res.json({
+      result: 'Valid sign in invitation',
+      payload: pick(signinInvitation, ['email', 'token', 'name']),
+    });
   },
 };

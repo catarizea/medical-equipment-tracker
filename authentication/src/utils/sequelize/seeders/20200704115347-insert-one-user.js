@@ -7,7 +7,7 @@ module.exports = {
         firstName: 'Catalin',
         lastName: 'Rizea',
         email: 'catalin@medical.equipment',
-        passwordHash: '$2a$10$EJ44qODozStE1rm1c/hWSOkR.rv4nun7.5yYqzZX9JbJx0GCpADye',
+        passwordHash: '$2a$10$EET8MHMUPZ4s4GkCnqWwp.dG5msvPNw9Ar/4RcsLx.r./Cv6SWGD6',
         role: 'User,Admin',
         isBlocked: false,
         createdAt: new Date(),
