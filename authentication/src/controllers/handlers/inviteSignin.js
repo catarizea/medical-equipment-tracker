@@ -1,13 +1,11 @@
 const path = require('path');
 const validator = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
-const get = require('lodash.get');
 const mailer = require('@medical-equipment-tracker/mailer');
 const { v4: uuidv4 } = require('uuid');
 
 const validate = require('../../middlewares/validate');
 const models = require('../../models');
-const { KEY } = require('../../constants/claims');
 const renderTextMessage = require('../../utils/emailTemplates/inviteSignin/textTemplate');
 const renderHtmlMessage = require('../../utils/emailTemplates/inviteSignin/htmlTemplate');
 
@@ -26,26 +24,18 @@ module.exports = {
 
   inviteSignin: async (req, res, next) => {
     const { email, firstName } = req.body;
-    const userId = get(req, `user['${KEY}'].x-hasura-user-id`, null);
+    const { user } = req;
 
-    if (!userId) {
-      return next(Boom.unauthorized('Unauthorized'));
-    }
+    const invitee = await models.User.findOne({ where: { email } });
 
-    const admin = await models.User.findOne({ where: { id: userId } });
+    if (invitee) {
+      let errorMessage = 'Account already exists for this email';
 
-    if (!admin) {
-      return next(Boom.unauthorized('Unauthorized'));
-    }
-
-    const user = await models.User.findOne({ where: { email } });
-
-    if (user) {
-      return next(Boom.badRequest('Account already exists for this email'));
-    }
-
-    if (user.isBlocked) {
-      return next(Boom.badRequest('Access revoked for this email'));
+      if (invitee.isBlocked) {
+        errorMessage += '. Access revoked for this email';
+      }
+      
+      return next(Boom.badRequest(errorMessage));
     }
 
     let signinInvitation = null;
@@ -55,7 +45,7 @@ module.exports = {
         email,
         name: firstName,
         token: uuidv4(),
-        UserId: userId,
+        UserId: user.id,
       });
     } catch (error) {
       console.log('inviteSignin error');

@@ -42,7 +42,7 @@ const authorize = (roles) => {
         return next(Boom.unauthorized('Access revoked'));
       }
 
-      req.user.role = user.role;
+      req.user = user;
 
       const ownTokens = await models.RefreshToken.findAll({
         where: { UserId: userId },

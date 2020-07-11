@@ -1,10 +1,8 @@
 const Boom = require('@hapi/boom');
-const get = require('lodash.get');
 const intersection = require('lodash.intersection');
 const validator = require('@medical-equipment-tracker/validator');
 
 const models = require('../../models');
-const { KEY } = require('../../constants/claims');
 const roles = require('../../constants/roles');
 const validate = require('../../middlewares/validate');
 
@@ -14,28 +12,17 @@ module.exports = {
   },
 
   revokeToken: async (req, res, next) => {
-    const userId = get(req, `user['${KEY}'].x-hasura-user-id`, null);
-    const userRoles = get(req, `user['${KEY}'].x-hasura-allowed-roles`, null);
-
-    if (
-      !userId ||
-      !userRoles ||
-      !userRoles.length ||
-      !intersection(userRoles, [roles.Default].length)
-    ) {
-      return next(Boom.unauthorized('Unauthorized'));
-    }
-
+    const { user } = req;
     const { token } = req.body;
 
     const refreshToken = await models.RefreshToken.findOne({
       where: { token },
     });
-    const isAdmin = !!intersection(userRoles, [roles.Admin]).length;
+    const isAdmin = !!intersection(user.role, [roles.Admin]).length;
 
     if (
       !refreshToken ||
-      (refreshToken.UserId !== parseInt(userId, 10) && !isAdmin)
+      (refreshToken.UserId !== parseInt(user.id, 10) && !isAdmin)
     ) {
       return next(Boom.unauthorized('Unauthorized'));
     }
