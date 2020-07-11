@@ -15,10 +15,13 @@ const {
 } = require('./handlers/checkSigninInvitation');
 const { logout } = require('./handlers/logout');
 const { validateSignin, signin } = require('./handlers/signin');
+const {
+  validateForgotPassword,
+  forgotPassword,
+} = require('./handlers/forgotPassword');
 
 const roles = require('../constants/roles');
 
-// router.post('/forgot-password', );
 // router.post('/reset-password', );
 
 router.post('/login', validateLogin, login);
@@ -48,5 +51,7 @@ router.get(
 );
 
 router.post('/signin', validateSignin, signin);
+
+router.post('/forgot-password', validateForgotPassword, forgotPassword);
 
 module.exports = router;

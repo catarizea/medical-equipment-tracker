@@ -1,9 +1,9 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class SignInInvitation extends Model {
+  class ForgotPassword extends Model {
     static associate(models) {
-      models.SignInInvitation.belongsTo(models.User, {
+      models.ForgotPassword.belongsTo(models.User, {
         onDelete: 'CASCADE',
         foreignKey: {
           allowNull: false,
@@ -11,38 +11,33 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  
-  SignInInvitation.init(
+
+  ForgotPassword.init(
     {
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       token: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
       },
-      isOpened: {
-        type: DataTypes.BOOLEAN,
+      expiresAt: {
+        type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: false,
       },
-      accountCreated: {
+      used: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: false,
+        default: false,
+      },
+      ip: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: 'SignInInvitation',
+      modelName: 'ForgotPassword',
       timestamps: true,
     }
   );
-  return SignInInvitation;
+  return ForgotPassword;
 };

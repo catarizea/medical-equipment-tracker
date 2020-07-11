@@ -1,4 +1,4 @@
-module.exports = ({ host, invitationId, toName, fromName }) => `<!doctype html>
+module.exports = ({ host, token, toName }) => `<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
@@ -240,7 +240,7 @@ module.exports = ({ host, invitationId, toName, fromName }) => `<!doctype html>
                           <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
                             <tr>
                               <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#212b35;">Please create your account to medical.equipment</div>
+                                <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#212b35;">Please reset your password at medical.equipment</div>
                               </td>
                             </tr>
                             <tr>
@@ -258,9 +258,9 @@ module.exports = ({ host, invitationId, toName, fromName }) => `<!doctype html>
                               <td align="center" vertical-align="middle" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;width:300px;line-height:100%;">
                                   <tr>
-                                    <td align="center" bgcolor="#5e6ebf" role="presentation" style="border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:#5e6ebf;" valign="middle"> <a href="${host}/signin/${invitationId}" style="display:inline-block;width:250px;background:#5e6ebf;color:#ffffff;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:17px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;"
+                                    <td align="center" bgcolor="#5e6ebf" role="presentation" style="border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:#5e6ebf;" valign="middle"> <a href="${host}/reset-password/${token}" style="display:inline-block;width:250px;background:#5e6ebf;color:#ffffff;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:17px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;"
                                         target="_blank">
-              Create an account
+              Reset password
             </a> </td>
                                   </tr>
                                 </table>
@@ -412,7 +412,7 @@ module.exports = ({ host, invitationId, toName, fromName }) => `<!doctype html>
                           <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
                             <tr>
                               <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:14px;font-weight:400;line-height:24px;text-align:left;color:#637381;">Thank you! <br> Have a nice day,<br><br> ${fromName},<br> Systems Administrator</div>
+                                <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:14px;font-weight:400;line-height:24px;text-align:left;color:#637381;">Thank you! <br> Have a nice day,<br><br> Systems Administrator</div>
                               </td>
                             </tr>
                           </table>

@@ -8,8 +8,8 @@ const { v4: uuidv4 } = require('uuid');
 const validate = require('../../middlewares/validate');
 const models = require('../../models');
 const { KEY } = require('../../constants/claims');
-const renderTextMessage = require('../../utils/emailTemplates/textTemplate');
-const renderHtmlMessage = require('../../utils/emailTemplates/htmlTemplate');
+const renderTextMessage = require('../../utils/emailTemplates/inviteSignin/textTemplate');
+const renderHtmlMessage = require('../../utils/emailTemplates/inviteSignin/htmlTemplate');
 
 const envFile =
   process.env.NODE_ENV === 'development'
@@ -25,7 +25,7 @@ module.exports = {
   },
 
   inviteSignin: async (req, res, next) => {
-    const { email, name } = req.body;
+    const { email, firstName } = req.body;
     const userId = get(req, `user['${KEY}'].x-hasura-user-id`, null);
 
     if (!userId) {
@@ -43,7 +43,7 @@ module.exports = {
     try {
       signinInvitation = await models.SignInInvitation.create({
         email,
-        name,
+        name: firstName,
         token: uuidv4(),
         UserId: userId,
       });
@@ -65,20 +65,19 @@ module.exports = {
     const renderVars = {
       host,
       invitationId: signinInvitation.token,
-      toName: name,
-      fromName: admin.fullName,
+      toName: firstName,
     };
 
     let emailSent = null;
 
     try {
       emailSent = await mailer.sendMail({
-        from: admin.email,
+        from: 'noreply@medical.equipment',
         to: email,
         subject: 'Invitation to create an account on medical.equipment',
         text: renderTextMessage(renderVars),
         html: renderHtmlMessage(renderVars),
-      });    
+      });
     } catch (error) {
       console.log('inviteSignin email error');
       console.log(error);
