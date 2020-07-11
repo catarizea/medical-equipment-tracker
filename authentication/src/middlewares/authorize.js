@@ -6,6 +6,7 @@ const intersection = require('lodash.intersection');
 
 const models = require('../models');
 const { KEY } = require('../constants/claims');
+const { revokeAccess } = require('../controllers/handlers/logout');
 
 const envFile =
   process.env.NODE_ENV === 'development'
@@ -27,13 +28,18 @@ const authorize = (roles) => {
       const userId = get(req, `user['${KEY}'].x-hasura-user-id`, null);
 
       if (!userId || !roles.length) {
-        next(Boom.unauthorized('Unauthorized'));
+        return next(Boom.unauthorized('Unauthorized'));
       }
 
       const user = await models.User.findOne({ where: { id: userId } });
 
       if (!user || !intersection(roles, user.role).length) {
-        next(Boom.unauthorized('Unauthorized'));
+        return next(Boom.unauthorized('Unauthorized'));
+      }
+
+      if (user.isBlocked) {
+        await revokeAccess(req, res);
+        return next(Boom.unauthorized('Access revoked'));
       }
 
       req.user.role = user.role;

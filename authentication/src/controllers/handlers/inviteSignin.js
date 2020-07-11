@@ -38,6 +38,16 @@ module.exports = {
       return next(Boom.unauthorized('Unauthorized'));
     }
 
+    const user = await models.User.findOne({ where: { email } });
+
+    if (user) {
+      return next(Boom.badRequest('Account already exists for this email'));
+    }
+
+    if (user.isBlocked) {
+      return next(Boom.badRequest('Access revoked for this email'));
+    }
+
     let signinInvitation = null;
 
     try {
