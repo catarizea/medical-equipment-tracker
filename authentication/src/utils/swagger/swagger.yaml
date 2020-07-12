@@ -346,6 +346,54 @@ paths:
               schema:
                 $ref: "#/components/schemas/AccessRevoked"
 
+  /api/authentication/reset-password:
+    post:
+      summary: Reset password
+      description: Reset password using a valid reset password token
+      operationId: reset-password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  example: "MyOwnIsland1999"
+                confirmPassword:
+                  type: string
+                  example: "MyOwnIsland1999"
+                token:
+                  type: string
+                  format: uuid
+                  example: "e1e43d4e-8351-4e96-8831-f1d3914e9066"
+              required:
+                - password
+                - confirmPassword
+                - token
+      responses:
+        "200":
+          $ref: "#/components/responses/JWTRefreshTokenCookie"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/InvalidResetPassword"
+                  - $ref: "#/components/schemas/ResetLinkAlreadyUsed"
+                  - $ref: "#/components/schemas/ExpiredResetLink"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/InvalidToken"
+                  - $ref: "#/components/schemas/AccessRevoked"
+
+
 components:
   securitySchemes:
     bearerAuth:
@@ -522,4 +570,39 @@ components:
             email:
               type: string
               example: "Email is required"
-                  
+    InvalidResetPassword:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Validation error"
+        message:
+          type: object
+          properties:
+            password:
+              type: string
+              example: "Password is required"
+            confirmPassword:
+              type: string
+              example: "Confirm password is required"
+            token:
+              type: string
+              example: "Token is required"
+    ResetLinkAlreadyUsed:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Bad request"
+        message:
+          type: string
+          example: "Reset link already used"
+    ExpiredResetLink:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Bad request"
+        message:
+          type: string
+          example: "Expired reset link"
