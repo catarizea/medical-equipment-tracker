@@ -29,7 +29,7 @@ const roles = require('../constants/roles');
 
 router.post('/login', validateLogin, login);
 
-router.post('/logout', logout);
+router.get('/logout', logout);
 
 router.post(
   '/invite-signin',

@@ -37,6 +37,7 @@
     ],
     "node/prefer-promises/dns": "error",
     "node/prefer-promises/fs": "error",
+    "node/no-unpublished-require": 0,
     "no-case-declarations": 0
   }
 }

@@ -33,6 +33,10 @@ app.use(express.static(frontendPath));
 app.use('/api/authentication', require('./controllers/users'));
 app.use(require('./middlewares/handleErrors'));
 
+if (process.env.NODE_ENV === 'development') {
+  app.use('/api-docs', require('./utils/swagger'));
+}
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(frontendPath, 'index.html'));
 });

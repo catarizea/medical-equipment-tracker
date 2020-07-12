@@ -6,7 +6,7 @@
     "node": ">=8.10.0"
   },
   "scripts": {
-    "dev": "env NODE_ENV=development nodemon -e js,graphql src/index.js",
+    "dev": "env NODE_ENV=development nodemon -e js,yaml src/index.js",
     "start": "env NODE_ENV=production node src/index.js"
   },
   "license": "MIT",

@@ -1,14 +1,107 @@
 openapi: 3.0.0
 info:
-  title: Authentication with Refresh Tokens
+  title: JWT Authentication with Refresh Tokens
   version: 1.0.0
 
 servers:
-  - url: http://127.0.0.1:3000
+  - url: ${AUTHENTICATION_EXPRESS_ENDPOINT} 
     description: Development server
 
 paths:
+  /api/authentication/login:
+    post:
+      summary: Authenticate users with email and password
+      description: Authenticate users with email and password and return the JWT and refresh token
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "catalin@medical.equipment"
+                password:
+                  type: string
+                  example: "MyOwnIsland1999"
+              required:
+                - email
+                - password
+      responses:
+        "200":
+          $ref: "#/components/responses/JWTRefreshTokenCookie"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type: 
+                    type: string
+                    example: "Validation error"
+                  message:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        example: "Email is required"
+                      password:
+                        type: string
+                        example: "Password is required"                
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/InvalidEmailOrPassword'
+                  - $ref: '#/components/schemas/AccessRevoked'
 
+  /api/authentication/logout:
+    get:
+      summary: Log out authenticated users
+      description: Log out authenticated users by deleting the refreshToken cookie
+      operationId: logout
+      responses:
+        "200":
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: "Logged out"
+  
+  /api/authentication/refresh-token:
+    post:
+      summary: Refresh JWT using a valid refresh token
+      description: Refresh JWT using a valid refreshToken
+      operationId: refresh-token
+      parameters:
+        - in: cookie
+          name: refreshToken
+          required: true
+          description: The refresh token can be sent in a cookie
+          schema:
+            type: string
+            example: e1e43d4e-8351-4e96-8831-f1d3914e9066
+      responses:
+        "200":
+          $ref: "#/components/responses/JWTRefreshTokenCookie"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Unauthorized'
+                  - $ref: '#/components/schemas/AccessRevoked'
 
 components:
   securitySchemes:
@@ -16,24 +109,62 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+  
   responses:
-    UnauthorizedError:
-      description: Access token is missing or invalid, or the user does not have access to perform the action
+    JWTRefreshTokenCookie:
+      description: JWT token, JWT token expiration date, refresh token
+      headers:
+        Set-Cookie:
+          description: "refreshToken"
+          schema:
+            type: string
+            example: refreshToken=e1e43d4e-8351-4e96-8831-f1d3914e9066; Domain=127.0.0.1; Path=/; Expires=Tue, 11 Aug 2020 11:22:37 GMT; HttpOnly
       content:
         application/json:
           schema:
             type: object
             properties:
-              message:
+              jwtToken:
                 type: string
-                example: "Unauthorized"
-    NotFoundError:
-      description: Not Found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
+                example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL21lZGljYWwuZXF1aXBtZW50L2p3dC9jbGFpbXMiOnsieC1oYXN1cmEtYWxsb3dlZC1yb2xlcyI6WyJVc2VyIiwiQWRtaW4iXSwieC1oYXN1cmEtZGVmYXVsdC1yb2xlIjoiVXNlciIsIngtaGFzdXJhLXVzZXItaWQiOiIxIn0sImlhdCI6MTU5NDU1Mjk1OCwiZXhwIjoxNTk0NTUzODU4fQ.mEMgsbfXnVVd0dQc-Oo16SG78ZhWTTkqmLBAYwrQhY8
+              jwtTokenExpiry:
                 type: string
-                example: "Not Found"
+                example: 2020-07-12T11:37:38.070Z
+              refreshToken:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: e1e43d4e-8351-4e96-8831-f1d3914e9066
+                  expiresAt:
+                    type: string
+                    example: 2020-08-11T11:22:38.070Z
+  
+  schemas:
+    Unauthorized:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Unauthorized"
+        message:
+          type: string
+          example: "Unauthorized"
+    AccessRevoked:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Unauthorized"
+        message:
+          type: string
+          example: "Access revoked"
+    InvalidEmailOrPassword:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Unauthorized"
+        message:
+          type: string
+          example: "Invalid email or password"
