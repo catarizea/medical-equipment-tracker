@@ -18,11 +18,11 @@ module.exports = {
     });
 
     if (!signinInvitation) {
-      return next(Boom.badRequest('Invalid sign in invitation'));
+      return next(Boom.badRequest('Invalid sign up invitation'));
     }
 
     if (signinInvitation.accountCreated) {
-      return next(Boom.badRequest('Account already created'));
+      return next(Boom.badRequest('Account already exists for this email'));
     }
 
     let setOpened = null;
@@ -42,7 +42,7 @@ module.exports = {
     }
 
     res.json({
-      result: 'Valid sign in invitation',
+      result: 'Valid sign up invitation',
       payload: pick(signinInvitation, ['email', 'token', 'name']),
     });
   },

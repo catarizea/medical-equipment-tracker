@@ -201,7 +201,56 @@ paths:
                   - $ref: "#/components/schemas/InvalidToken"
                   - $ref: "#/components/schemas/Unauthorized"
                   - $ref: "#/components/schemas/AccessRevoked"
-                    
+  
+  /api/authentication/check-signup-invitation/:token:
+    get:
+      summary: Check if sign up invitation token is valid
+      description: Check if sign up invitation token is valid to allow sign up 
+      operationId: check-signup-invitation
+      parameters:
+        - in: path
+          name: token
+          description: Invitation token
+          required: true
+          example: "e1e43d4e-8351-4e96-8831-f1d3914e9066"
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Valid sign up invitation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: "Valid sign up invitation"
+                  payload:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        format: email
+                        example: "simona@medical.equipment"
+                      token:
+                        type: string
+                        format: uuid
+                        example: "e1e43d4e-8351-4e96-8831-f1d3914e9066"
+                      name:
+                        type: string
+                        example: "Simona"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/InvalidRefreshToken"
+                  - $ref: "#/components/schemas/AccountExistsForEmail"
+                  - $ref: "#/components/schemas/InvalidSignUpInvitation"
+
 
 components:
   securitySchemes:
@@ -322,4 +371,14 @@ components:
             token:
               type: string
               example: "Token is not valid"
+    InvalidSignUpInvitation:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Bad request"
+        message:
+          type: string
+          example: "Invalid sign up invitation"
+              
               
