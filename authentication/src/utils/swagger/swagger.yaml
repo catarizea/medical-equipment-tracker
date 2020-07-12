@@ -250,6 +250,52 @@ paths:
                   - $ref: "#/components/schemas/InvalidRefreshToken"
                   - $ref: "#/components/schemas/AccountExistsForEmail"
                   - $ref: "#/components/schemas/InvalidSignUpInvitation"
+  
+  /api/authentication/signup:
+    post:
+      summary: Sign up for a new account
+      description: Sign up for a new account  
+      operationId: signup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName: 
+                  type: string
+                  example: "Simona"
+                lastName:
+                  type: string
+                  example: "Galushka"
+                email:
+                  type: string
+                  format: email
+                  example: "simona@medical.equipment"
+                password:
+                  type: string
+                  example: "MyOwnIsland1999"
+                confirmPassword:
+                  type: string
+                  example: "MyOwnIsland1999"
+              required:
+                - firstName
+                - lastName
+                - email
+                - password
+                - confirmPassword
+      responses:
+        "200":
+          $ref: "#/components/responses/JWTRefreshTokenCookie"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/InvalidSignUpInvitation"
+                  - $ref: "#/components/schemas/InvalidSignUp"
 
 
 components:
@@ -337,6 +383,7 @@ components:
           properties:
             email:
               type: string
+              format: email
               example: "Email is required"
             firstName:
               type: string
@@ -380,5 +427,30 @@ components:
         message:
           type: string
           example: "Invalid sign up invitation"
+    InvalidSignUp:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Validation error"
+        message:
+          type: object
+          properties:
+            firstName:
+              type: string
+              example: "First name is required"
+            lastName:
+              type: string
+              example: "Last name is required"
+            email:
+              type: string
+              format: email
+              example: "Email is required"
+            password:
+              type: string
+              example: "Password is required"
+            confirmPassword:
+              type: string
+              example: "Confirm password is required"
               
               
