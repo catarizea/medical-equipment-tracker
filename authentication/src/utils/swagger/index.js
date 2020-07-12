@@ -14,6 +14,10 @@ swaggerDocument.servers[0].url = process.env.AUTHENTICATION_EXPRESS_ENDPOINT;
 
 // console.log(JSON.stringify(swaggerDocument, null, 2));
 
-router.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const options = {
+  // customCssUrl: './css/theme.css'
+};
+
+router.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 
 module.exports = router;

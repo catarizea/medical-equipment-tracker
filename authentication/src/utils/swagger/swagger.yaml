@@ -81,13 +81,13 @@ paths:
   /api/authentication/refresh-token:
     post:
       summary: Refresh JWT using a valid refresh token
-      description: Refresh JWT using a valid refreshToken
+      description: Refresh JWT using a valid refreshToken in a http only cookie
       operationId: refresh-token
       parameters:
         - in: cookie
           name: refreshToken
           required: true
-          description: The refresh token can be sent in a cookie
+          description: Refresh token can be sent in a cookie
           schema:
             type: string
             example: e1e43d4e-8351-4e96-8831-f1d3914e9066
@@ -100,8 +100,108 @@ paths:
             application/json:
               schema:
                 oneOf:
-                  - $ref: '#/components/schemas/Unauthorized'
-                  - $ref: '#/components/schemas/AccessRevoked'
+                  - $ref: "#/components/schemas/Unauthorized"
+                  - $ref: "#/components/schemas/AccessRevoked"
+  
+  /api/authentication/revoke-token:
+    post:
+      summary: Revoke a refresh token
+      description: Revoke a refresh token as owner user or admin
+      operationId: revoke-token
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token: 
+                  type: string
+                  format: uuid
+                  example: "e1e43d4e-8351-4e96-8831-f1d3914e9066"
+              required:
+                - token
+      responses:
+        "200":
+          description: Token revoked
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: "Token revoked"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TokenAlreadyRevoked"
+                  - $ref: "#/components/schemas/InvalidRefreshToken"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+
+  /api/authentication/invite-signup:
+    post:
+      summary: Invite an user with a valid email account to sign up
+      description: Invite an user with a valid email account to sign up for a new account 
+      operationId: invite-signup
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: 
+                  type: string
+                  format: email
+                  example: "simona@medical.equipment"
+                firstName:
+                  type: string
+                  example: "Simona"
+              required:
+                - email
+                - firstName
+      responses:
+        "200":
+          description: Invitation to signup sent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: "Invitation to signup sent"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/InvalidEmailOrFirstName"
+                  - $ref: "#/components/schemas/AccountExistsForEmail"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/InvalidToken"
+                  - $ref: "#/components/schemas/Unauthorized"
+                  - $ref: "#/components/schemas/AccessRevoked"
+                    
 
 components:
   securitySchemes:
@@ -141,6 +241,15 @@ components:
                     example: 2020-08-11T11:22:38.070Z
   
   schemas:
+    InvalidToken:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Unauthorized"
+        message:
+          type: string
+          example: "Invalid token"
     Unauthorized:
       type: object
       properties:
@@ -168,3 +277,49 @@ components:
         message:
           type: string
           example: "Invalid email or password"
+    InvalidEmailOrFirstName:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Validation error"
+        message:
+          type: object
+          properties:
+            email:
+              type: string
+              example: "Email is required"
+            firstName:
+              type: string
+              example: "First name is required"
+    AccountExistsForEmail:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Bad request"
+        message:
+          type: string
+          example: "Account already exists for this email"
+    TokenAlreadyRevoked:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Bad request"
+        message:
+          type: string
+          example: "Token already revoked"
+    InvalidRefreshToken:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Validation error"
+        message:
+          type: object
+          properties:
+            token:
+              type: string
+              example: "Token is not valid"
+              
