@@ -89,6 +89,6 @@ module.exports = {
 
     console.log(JSON.stringify(emailSent, null, 2));
 
-    res.json({ result: 'Invitation to signin sent' });
+    res.json({ result: 'Invitation to signup sent' });
   },
 };

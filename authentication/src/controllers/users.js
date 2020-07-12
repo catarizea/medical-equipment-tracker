@@ -32,7 +32,7 @@ router.post('/login', validateLogin, login);
 router.get('/logout', logout);
 
 router.post(
-  '/invite-signin',
+  '/invite-signup',
   authorize(roles.Admin),
   validateInviteSignin,
   inviteSignin
@@ -48,12 +48,12 @@ router.post(
 );
 
 router.get(
-  '/check-signin-invitation/:token',
+  '/check-signup-invitation/:token',
   validateSigninInvitation,
   findSigninInvitation
 );
 
-router.post('/signin', validateSignin, signin);
+router.post('/signup', validateSignin, signin);
 
 router.post('/forgot-password', validateForgotPassword, forgotPassword);
 
