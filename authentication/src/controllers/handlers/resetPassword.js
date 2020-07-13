@@ -67,34 +67,34 @@ module.exports = {
     }
 
     let user = null;
+    const t = await models.sequelize.transaction();
+    let transactionSuccessful = true;
 
     try {
       user = await models.User.update(
         { passwordHash, role: forgotPassword.User.role },
-        { returning: true, where: { id: forgotPassword.User.id } }
+        {
+          returning: true,
+          where: { id: forgotPassword.User.id },
+          transaction: t,
+        }
       );
-    } catch (error) {
-      console.log('resetPassword updating error');
-      console.log(error);
-    }
 
-    if (!user) {
-      return next(Boom.badImplementation());
-    }
-
-    let forgotPasswordUsed = null;
-
-    try {
-      forgotPasswordUsed = await models.ForgotPassword.update(
+      await models.ForgotPassword.update(
         { used: true },
-        { where: { id: forgotPassword.id } }
+        { where: { id: forgotPassword.id }, transaction: t }
       );
+
+      await t.commit();
     } catch (error) {
-      console.log('resetPassword used update error');
+      console.log('resetPassword transaction failed');
       console.log(error);
+
+      await t.rollback();
+      transactionSuccessful = false;
     }
 
-    if (!forgotPasswordUsed) {
+    if (!transactionSuccessful || !user) {
       return next(Boom.badImplementation());
     }
 
