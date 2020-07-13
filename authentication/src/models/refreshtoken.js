@@ -41,6 +41,10 @@ module.exports = (sequelize, DataTypes) => {
       replacedByToken: {
         type: DataTypes.STRING,
       },
+      revokedBy: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       UserId: {
         type: DataTypes.INTEGER,
         allowNull: false,

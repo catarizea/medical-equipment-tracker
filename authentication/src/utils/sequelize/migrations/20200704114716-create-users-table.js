@@ -34,6 +34,14 @@ module.exports = {
         allowNull: false,
         defaultValue: false,
       },
+      blockedBy: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      blockedByIp: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

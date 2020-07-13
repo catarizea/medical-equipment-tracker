@@ -6,34 +6,34 @@ const validate = require('../../middlewares/validate');
 const models = require('../../models');
 
 module.exports = {
-  validateSigninInvitation: async (req, res, next) => {
+  validateSignupInvitation: async (req, res, next) => {
     await validate(req, next, validator.revokeTokenSchema, true);
   },
 
-  findSigninInvitation: async (req, res, next) => {
+  findSignupInvitation: async (req, res, next) => {
     const { token } = req.params;
 
-    const signinInvitation = await models.SignInInvitation.findOne({
+    const signupInvitation = await models.SignupInvitation.findOne({
       where: { token },
     });
 
-    if (!signinInvitation) {
+    if (!signupInvitation) {
       return next(Boom.badRequest('Invalid sign up invitation'));
     }
 
-    if (signinInvitation.accountCreated) {
+    if (signupInvitation.accountCreated) {
       return next(Boom.badRequest('Account already exists for this email'));
     }
 
     let setOpened = null;
 
     try {
-      setOpened = await models.SignInInvitation.update(
+      setOpened = await models.SignupInvitation.update(
         { isOpened: true },
-        { where: { id: signinInvitation.id } }
+        { where: { id: signupInvitation.id } }
       );
     } catch (error) {
-      console.log('checkSigninInvitation error');
+      console.log('checkSignupInvitation error');
       console.log(error);
     }
 
@@ -43,7 +43,7 @@ module.exports = {
 
     res.json({
       result: 'Valid sign up invitation',
-      payload: pick(signinInvitation, ['email', 'token', 'name']),
+      payload: pick(signupInvitation, ['email', 'token', 'name']),
     });
   },
 };

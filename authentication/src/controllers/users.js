@@ -2,19 +2,27 @@ const express = require('express');
 const router = express.Router();
 
 const authorize = require('../middlewares/authorize');
+
 const { validateLogin, login } = require('./handlers/login');
+
 const {
-  validateInviteSignin,
-  inviteSignin,
-} = require('./handlers/inviteSignin');
+  validateInviteSignup,
+  inviteSignup,
+} = require('./handlers/inviteSignup');
+
 const { refreshToken } = require('./handlers/refreshToken');
+
 const { validateRevokeToken, revokeToken } = require('./handlers/revokeToken');
+
 const {
-  validateSigninInvitation,
-  findSigninInvitation,
-} = require('./handlers/checkSigninInvitation');
+  validateSignupInvitation,
+  findSignupInvitation,
+} = require('./handlers/checkSignupInvitation');
+
 const { logout } = require('./handlers/logout');
-const { validateSignin, signin } = require('./handlers/signin');
+
+const { validateSignup, signup } = require('./handlers/signup');
+
 const {
   validateForgotPassword,
   forgotPassword,
@@ -25,6 +33,10 @@ const {
   resetPassword,
 } = require('./handlers/resetPassword');
 
+const { validateRemoveUser, removeUser } = require('./handlers/removeUser');
+
+const { validateRevokeAccess, revokeAccess } = require('./handlers/revokeAccess');
+
 const roles = require('../constants/roles');
 
 router.post('/login', validateLogin, login);
@@ -34,8 +46,8 @@ router.get('/logout', logout);
 router.post(
   '/invite-signup',
   authorize(roles.Admin),
-  validateInviteSignin,
-  inviteSignin
+  validateInviteSignup,
+  inviteSignup
 );
 
 router.post('/refresh-token', refreshToken);
@@ -48,15 +60,29 @@ router.post(
 );
 
 router.get(
-  '/check-signup-invitation/:token',
-  validateSigninInvitation,
-  findSigninInvitation
+  '/check-signup-invitation/:token?',
+  validateSignupInvitation,
+  findSignupInvitation
 );
 
-router.post('/signup', validateSignin, signin);
+router.post('/signup', validateSignup, signup);
 
 router.post('/forgot-password', validateForgotPassword, forgotPassword);
 
 router.post('/reset-password', validateResetPassword, resetPassword);
+
+router.delete(
+  '/remove-user/:userId?',
+  authorize(roles.Admin),
+  validateRemoveUser,
+  removeUser
+);
+
+router.get(
+  '/revoke-access/:userId?',
+  authorize(roles.Admin),
+  validateRevokeAccess,
+  revokeAccess
+);
 
 module.exports = router;

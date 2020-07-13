@@ -1,4 +1,4 @@
-const { object, string, ref } = require('yup');
+const { object, string, ref, number } = require('yup');
 
 const uuidRegex = /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i;
 
@@ -35,7 +35,7 @@ const revokeTokenSchema = object({
   token: tokenValidation,
 });
 
-const inviteSigninSchema = object({
+const inviteSignupSchema = object({
   email: emailValidation,
   firstName: firstNameValidation,
 });
@@ -55,11 +55,19 @@ const resetPasswordSchema = object({
   ...newPasswordValidation,
 });
 
+const userIdSchema = object({
+  userId: number()
+    .positive('User id has to be positive number')
+    .integer('User id has to be an integer')
+    .required('User id is required'),
+});
+
 module.exports = {
   loginSchema,
   revokeTokenSchema,
-  inviteSigninSchema,
+  inviteSignupSchema,
   userSchema,
   forgotPasswordSchema,
   resetPasswordSchema,
+  userIdSchema,
 };

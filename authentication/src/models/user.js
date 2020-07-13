@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       models.User.hasMany(models.RefreshToken);
-      models.User.hasMany(models.SignInInvitation);
+      models.User.hasMany(models.SignupInvitation);
+      models.User.hasMany(models.ForgotPassword);
     }
   }
 
@@ -43,6 +44,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
+      },
+      blockedBy: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      blockedByIp: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       fullName: {
         type: DataTypes.VIRTUAL,

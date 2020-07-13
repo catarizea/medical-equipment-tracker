@@ -24,6 +24,7 @@ const refreshTokens = async (oldRefreshToken, ip, next) => {
 
   const revokedToken = {
     revokedAt: new Date(),
+    revokedBy: user.id,
     revokedByIp: ip,
     replacedByToken: newRefreshToken.token,
   };

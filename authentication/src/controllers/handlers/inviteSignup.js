@@ -6,8 +6,8 @@ const { v4: uuidv4 } = require('uuid');
 
 const validate = require('../../middlewares/validate');
 const models = require('../../models');
-const renderTextMessage = require('../../utils/emailTemplates/inviteSignin/textTemplate');
-const renderHtmlMessage = require('../../utils/emailTemplates/inviteSignin/htmlTemplate');
+const renderTextMessage = require('../../utils/emailTemplates/inviteSignup/textTemplate');
+const renderHtmlMessage = require('../../utils/emailTemplates/inviteSignup/htmlTemplate');
 
 const envFile =
   process.env.NODE_ENV === 'development'
@@ -18,11 +18,11 @@ require('dotenv').config({
 });
 
 module.exports = {
-  validateInviteSignin: async (req, res, next) => {
-    await validate(req, next, validator.inviteSigninSchema);
+  validateInviteSignup: async (req, res, next) => {
+    await validate(req, next, validator.inviteSignupSchema);
   },
 
-  inviteSignin: async (req, res, next) => {
+  inviteSignup: async (req, res, next) => {
     const { email, firstName } = req.body;
     const { user } = req;
 
@@ -38,21 +38,21 @@ module.exports = {
       return next(Boom.badRequest(errorMessage));
     }
 
-    let signinInvitation = null;
+    let signupInvitation = null;
 
     try {
-      signinInvitation = await models.SignInInvitation.create({
+      signupInvitation = await models.SignupInvitation.create({
         email,
         name: firstName,
         token: uuidv4(),
         UserId: user.id,
       });
     } catch (error) {
-      console.log('inviteSignin error');
+      console.log('inviteSignup error');
       console.log(error);
     }
 
-    if (!signinInvitation) {
+    if (!signupInvitation) {
       return next(Boom.badImplementation());
     }
 
@@ -64,7 +64,7 @@ module.exports = {
 
     const renderVars = {
       host,
-      invitationId: signinInvitation.token,
+      invitationId: signupInvitation.token,
       toName: firstName,
     };
 
@@ -79,7 +79,7 @@ module.exports = {
         html: renderHtmlMessage(renderVars),
       });
     } catch (error) {
-      console.log('inviteSignin email error');
+      console.log('inviteSignup email error');
       console.log(error);
     }
 

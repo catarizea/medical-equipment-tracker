@@ -31,6 +31,10 @@ module.exports = {
       revokedByIp: {
         type: Sequelize.STRING,
       },
+      revokedBy: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
       replacedByToken: {
         type: Sequelize.STRING,
       },

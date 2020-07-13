@@ -33,14 +33,7 @@ app.use(express.static(frontendPath));
 app.use('/api/authentication', require('./controllers/users'));
 app.use(require('./middlewares/handleErrors'));
 
-if (process.env.NODE_ENV === 'development') {
-  const swaggerCssPath = path.join(__dirname, 'utils/swagger/css');
-  app.use(express.static(swaggerCssPath));
-  
-  app.get('/api-docs/css/*', (req, res) => {
-    res.sendFile(path.join(swaggerCssPath, 'theme.css'));
-  });
-  
+if (process.env.NODE_ENV === 'development') {  
   app.use('/api-docs', require('./utils/swagger'));
 }
 

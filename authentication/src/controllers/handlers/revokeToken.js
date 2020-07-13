@@ -33,6 +33,7 @@ module.exports = {
 
     const revokedToken = {
       revokedAt: new Date(),
+      revokedBy: user.id,
       revokedByIp: req.ip,
     };
 

@@ -1,9 +1,9 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class SignInInvitation extends Model {
+  class SignupInvitation extends Model {
     static associate(models) {
-      models.SignInInvitation.belongsTo(models.User, {
+      models.SignupInvitation.belongsTo(models.User, {
         onDelete: 'CASCADE',
         foreignKey: {
           allowNull: false,
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   
-  SignInInvitation.init(
+  SignupInvitation.init(
     {
       email: {
         type: DataTypes.STRING,
@@ -40,9 +40,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'SignInInvitation',
+      modelName: 'SignupInvitation',
       timestamps: true,
     }
   );
-  return SignInInvitation;
+  return SignupInvitation;
 };

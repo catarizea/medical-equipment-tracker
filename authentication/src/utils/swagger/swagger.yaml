@@ -557,7 +557,16 @@ components:
           example: "Bad request"
         message:
           type: string
-          example: "'No account for this email"
+          example: "No account for this email"
+    NoAccountForId:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Bad request"
+        message:
+          type: string
+          example: "No account for this id"
     InvalidEmail:
       type: object
       properties:

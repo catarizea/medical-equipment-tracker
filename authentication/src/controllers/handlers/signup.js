@@ -19,19 +19,19 @@ const { REFRESH_TOKEN_COOKIE } = require('../../constants/cookies');
 const roles = require('../../constants/roles');
 
 module.exports = {
-  validateSignin: async (req, res, next) => {
+  validateSignup: async (req, res, next) => {
     await validate(req, next, validator.userSchema);
   },
 
-  signin: async (req, res, next) => {
+  signup: async (req, res, next) => {
     const { firstName, lastName, email, password, token } = req.body;
 
-    const signinInvitation = await models.SignInInvitation.findOne({
+    const signupInvitation = await models.SignupInvitation.findOne({
       where: { token },
     });
 
-    if (!signinInvitation || signinInvitation.email !== email) {
-      return next(Boom.badRequest('Invalid sign in invitation'));
+    if (!signupInvitation || signupInvitation.email !== email) {
+      return next(Boom.badRequest('Invalid sign up invitation'));
     }
 
     let passwordHash = null;
@@ -39,7 +39,7 @@ module.exports = {
     try {
       passwordHash = await bcrypt.hash(password, 10);
     } catch (error) {
-      console.log('signin hashing error');
+      console.log('signup hashing error');
       console.error(error);
     }
 
@@ -55,16 +55,29 @@ module.exports = {
       role: [roles.Default],
     };
 
+    const t = await models.sequelize.transaction();
+
+    let transactionSuccessful = true;
     let user = null;
 
     try {
       user = await models.User.create(newUser);
+
+      await models.SignupInvitation.update(
+        { isOpened: true, accountCreated: true },
+        { where: { id: signupInvitation.id } }
+      );
+
+      await t.commit();
     } catch (error) {
-      console.log('signing creating error');
+      console.log('signup transaction failed');
       console.log(error);
+
+      await t.rollback();
+      transactionSuccessful = false;
     }
 
-    if (!user) {
+    if (!transactionSuccessful || !user) {
       return next(Boom.badImplementation());
     }
 
