@@ -35,9 +35,14 @@ const {
 
 const { validateRemoveUser, removeUser } = require('./handlers/removeUser');
 
-const { validateRevokeAccess, revokeAccess } = require('./handlers/revokeAccess');
+const {
+  validateRevokeAccess,
+  revokeAccess,
+} = require('./handlers/revokeAccess');
 
-const { undoRevokeAccess } = require('./handlers/undoRevokeAccess'); 
+const { undoRevokeAccess } = require('./handlers/undoRevokeAccess');
+
+const { fetchUsers } = require('./handlers/fetchUsers');
 
 const roles = require('../constants/roles');
 
@@ -92,6 +97,12 @@ router.get(
   authorize(roles.Admin),
   validateRevokeAccess,
   undoRevokeAccess
+);
+
+router.post(
+  '/fetch-users',
+  authorize(roles.Admin),
+  fetchUsers
 );
 
 module.exports = router;

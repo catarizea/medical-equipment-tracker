@@ -41,6 +41,9 @@ paths:
   /api/authentication/undo-revoke-access/{userId}:
     $ref: "../../controllers/handlers/undoRevokeAccess/index.yaml"
 
+  /api/authentication/fetch-users:
+    $ref: "../../controllers/handlers/fetchUsers/index.yaml"
+
   /api/authentication/remove-user/{userId}:
     $ref: "../../controllers/handlers/removeUser/index.yaml"
 

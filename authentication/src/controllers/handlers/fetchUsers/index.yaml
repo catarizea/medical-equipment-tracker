@@ -1,0 +1,64 @@
+post:
+  summary: Fetch users
+  description: Fetch users according to filter criteria as a logged in admin
+  operationId: fetch-users
+  security:
+    - bearerAuth: []
+  parameters:
+    - in: query
+      description: Query object to compose the where clause using Sequelize operators (https://sequelize.org/master/manual/model-querying-basics.html#operators)
+      name: params
+      schema:
+        type: object
+  responses:
+    "200":
+      description: Users array
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: "123"
+                email:
+                  type: string
+                  format: email
+                  example: "catalin@medical.equipment"
+                fullName:
+                  type: string
+                  example: "Catalin Rizea"
+                role:
+                  type: array
+                  items:
+                    type: string
+                    example: "User"
+                isBlocked:
+                  type: boolean
+                  example: "false"
+                createdAt:
+                  type: string
+                  example: "2020-07-13 17:16:11.492+00"
+                updatedAt:
+                  type: string
+                  example: "2020-07-13 17:24:36.068+00"
+    "400":
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/InvalidRefreshToken"
+              - $ref: "#/components/schemas/AccountExistsForEmail"
+              - $ref: "#/components/schemas/InvalidSignUpInvitation"
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/InvalidToken"
+              - $ref: "#/components/schemas/Unauthorized"
+              - $ref: "#/components/schemas/AccessRevoked"
