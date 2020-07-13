@@ -61,11 +61,11 @@ module.exports = {
     let user = null;
 
     try {
-      user = await models.User.create(newUser);
+      user = await models.User.create(newUser, { transaction: t });
 
       await models.SignupInvitation.update(
         { isOpened: true, accountCreated: true },
-        { where: { id: signupInvitation.id } }
+        { where: { id: signupInvitation.id }, transaction: t }
       );
 
       await t.commit();

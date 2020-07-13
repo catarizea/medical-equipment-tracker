@@ -28,14 +28,14 @@ module.exports = {
     let transactionSuccessful = true;
 
     try {
-      await models.User.destroy({ where: { id: userId } });
+      await models.User.destroy({ where: { id: userId }, transaction: t });
 
       await models.RemovedUser.create({
         removedId: userId,
         email: user.email,
         removedByIp: req.ip,
         removedBy: admin.id,
-      });
+      }, { transaction: t });
 
       await t.commit();
     } catch (error) {

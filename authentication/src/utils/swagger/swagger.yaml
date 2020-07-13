@@ -393,6 +393,90 @@ paths:
                   - $ref: "#/components/schemas/InvalidToken"
                   - $ref: "#/components/schemas/AccessRevoked"
 
+  /api/authentication/revoke-access/:userId:
+    get:
+      summary: Revoke user's access
+      description: Revoke user's access as a logged in admin
+      operationId: revoke-access
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: User id
+          required: true
+          example: "123"
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Access revoked
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: "Access revoked"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/NoAccountForId"
+                  - $ref: "#/components/schemas/InvalidUserId"
+                  - $ref: "#/components/schemas/CannotRevokeOwnAccess"
+                  - $ref: "#/components/schemas/AccessAlreadyRevoked"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InvalidToken"
+
+  /api/authentication/remove-user/:userId:
+    delete:
+      summary: Remove user
+      description: Remove user as a logged in admin
+      operationId: remove-user
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: User id
+          required: true
+          example: "123"
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User removed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: "User removed"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/NoAccountForId"
+                  - $ref: "#/components/schemas/InvalidUserId"
+                  - $ref: "#/components/schemas/CannotRemoveOwnAccount"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InvalidToken"
 
 components:
   securitySchemes:
@@ -615,3 +699,43 @@ components:
         message:
           type: string
           example: "Expired reset link"
+    InvalidUserId:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Validation error"
+        message:
+          type: object
+          properties:
+            userId:
+              type: string
+              example: "User id is required"
+    CannotRevokeOwnAccess:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Bad request"
+        message:
+          type: string
+          example: "You cannot revoke your own access"
+    AccessAlreadyRevoked:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Bad request"
+        message:
+          type: string
+          example: "Access already revoked for this account"
+    CannotRemoveOwnAccount:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Bad request"
+        message:
+          type: string
+          example: "You cannot remove your own account"
+          

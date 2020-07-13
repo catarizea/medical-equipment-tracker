@@ -3,14 +3,9 @@ const Boom = require('@hapi/boom');
 
 const validate = require('../../middlewares/validate');
 const models = require('../../models');
-const { VALIDATION_ERROR } = require('../../constants/validation');
 
 module.exports = {
   validateRevokeAccess: async (req, res, next) => {
-    console.log('req.params.userId', req.params.userId);
-    if (!req.params.userId) {
-      return next(`${VALIDATION_ERROR}${JSON.stringify({ userId: 'User id is required' })}`);
-    }
     await validate(req, next, validator.userIdSchema, true);
   },
 
@@ -44,12 +39,12 @@ module.exports = {
           blockedByIp: req.ip,
           role: user.role,
         },
-        { where: { id: userId } }
+        { where: { id: userId }, transaction: t }
       );
 
       await models.RefreshToken.update(
         { revokedAt: new Date(), revokedBy: admin.id, revokedByIp: req.ip },
-        { where: { UserId: userId, revokedAt: null } }
+        { where: { UserId: userId, revokedAt: null }, transaction: t }
       );
 
       await t.commit();
