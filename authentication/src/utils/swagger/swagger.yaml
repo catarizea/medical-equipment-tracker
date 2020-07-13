@@ -37,6 +37,9 @@ paths:
 
   /api/authentication/revoke-access/{userId}:
     $ref: "../../controllers/handlers/revokeAccess/index.yaml"
+  
+  /api/authentication/undo-revoke-access/{userId}:
+    $ref: "../../controllers/handlers/undoRevokeAccess/index.yaml"
 
   /api/authentication/remove-user/{userId}:
     $ref: "../../controllers/handlers/removeUser/index.yaml"
@@ -301,4 +304,21 @@ components:
         message:
           type: string
           example: "You cannot remove your own account"
-          
+    CannotUndoRevokeAccessOwnAccount:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Bad request"
+        message:
+          type: string
+          example: "You cannot undo revoke access your own account"
+    AccessNotRevoked:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Bad request"
+        message:
+          type: string
+          example: "Access is not revoked for this account"

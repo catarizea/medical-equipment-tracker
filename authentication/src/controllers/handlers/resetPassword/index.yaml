@@ -11,10 +11,10 @@ post:
           properties:
             password:
               type: string
-              example: "MyOwnIsland1999"
+              example: "Password1"
             confirmPassword:
               type: string
-              example: "MyOwnIsland1999"
+              example: "Password1"
             token:
               type: string
               format: uuid

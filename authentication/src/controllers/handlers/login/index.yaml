@@ -15,7 +15,7 @@ post:
               example: "catalin@medical.equipment"
             password:
               type: string
-              example: "MyOwnIsland1999"
+              example: "Password1"
           required:
             - email
             - password

@@ -37,6 +37,8 @@ const { validateRemoveUser, removeUser } = require('./handlers/removeUser');
 
 const { validateRevokeAccess, revokeAccess } = require('./handlers/revokeAccess');
 
+const { undoRevokeAccess } = require('./handlers/undoRevokeAccess'); 
+
 const roles = require('../constants/roles');
 
 router.post('/login', validateLogin, login);
@@ -83,6 +85,13 @@ router.get(
   authorize(roles.Admin),
   validateRevokeAccess,
   revokeAccess
+);
+
+router.get(
+  '/undo-revoke-access/:userId?',
+  authorize(roles.Admin),
+  validateRevokeAccess,
+  undoRevokeAccess
 );
 
 module.exports = router;
