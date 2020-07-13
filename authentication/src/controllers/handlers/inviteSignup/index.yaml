@@ -1,0 +1,51 @@
+post:
+  summary: Invite an user with a valid email account to sign up
+  description: Invite an user with a valid email account to sign up for a new account 
+  operationId: invite-signup
+  security:
+    - bearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email: 
+              type: string
+              format: email
+              example: "simona@medical.equipment"
+            firstName:
+              type: string
+              example: "Simona"
+          required:
+            - email
+            - firstName
+  responses:
+    "200":
+      description: Invitation to signup sent
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              result:
+                type: string
+                example: "Invitation to signup sent"
+    "400":
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/InvalidEmailOrFirstName"
+              - $ref: "#/components/schemas/AccountExistsForEmail"
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/InvalidToken"
+              - $ref: "#/components/schemas/Unauthorized"
+              - $ref: "#/components/schemas/AccessRevoked"

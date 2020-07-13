@@ -1,0 +1,42 @@
+post:
+  summary: Generate email message to reset password
+  description: Generate email message containing the URL to reset password
+  operationId: forgot-password
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+              example: "simona@medical.equipment"
+          required:
+            - email
+  responses:
+    "200":
+      description: Reset email message sent
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              result:
+                type: string
+                example: "Reset email message sent"
+    "400":
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/NoAccountForEmail"
+              - $ref: "#/components/schemas/InvalidEmail"
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/AccessRevoked"

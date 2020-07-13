@@ -1,0 +1,44 @@
+post:
+  summary: Revoke a refresh token
+  description: Revoke a refresh token as owner user or admin
+  operationId: revoke-token
+  security:
+    - bearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            token: 
+              type: string
+              format: uuid
+              example: "e1e43d4e-8351-4e96-8831-f1d3914e9066"
+          required:
+            - token
+  responses:
+    "200":
+      description: Token revoked
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              result:
+                type: string
+                example: "Token revoked"
+    "400":
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/TokenAlreadyRevoked"
+              - $ref: "#/components/schemas/InvalidRefreshToken"
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Unauthorized"

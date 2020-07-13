@@ -2,9 +2,9 @@ const Boom = require('@hapi/boom');
 const intersection = require('lodash.intersection');
 const validator = require('@medical-equipment-tracker/validator');
 
-const models = require('../../models');
-const roles = require('../../constants/roles');
-const validate = require('../../middlewares/validate');
+const models = require('../../../models');
+const roles = require('../../../constants/roles');
+const validate = require('../../../middlewares/validate');
 
 module.exports = {
   validateRevokeToken: async (req, res, next) => {

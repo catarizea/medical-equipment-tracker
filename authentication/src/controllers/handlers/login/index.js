@@ -8,14 +8,14 @@ const envFile =
     ? '.env.development.local'
     : '.env.production.local';
 require('dotenv').config({
-  path: path.join(__dirname, '../../../..', envFile),
+  path: path.join(__dirname, '../../../../../..', envFile),
 });
 
-const validate = require('../../middlewares/validate');
-const generateJwtToken = require('../../services/generateJwtToken');
-const generateRefreshToken = require('../../services/generateRefreshToken');
-const models = require('../../models');
-const { REFRESH_TOKEN_COOKIE } = require('../../constants/cookies');
+const validate = require('../../../middlewares/validate');
+const generateJwtToken = require('../../../services/generateJwtToken');
+const generateRefreshToken = require('../../../services/generateRefreshToken');
+const models = require('../../../models');
+const { REFRESH_TOKEN_COOKIE } = require('../../../constants/cookies');
 
 module.exports = {
   validateLogin: async (req, res, next) => {

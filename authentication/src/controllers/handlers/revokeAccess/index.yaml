@@ -1,0 +1,44 @@
+get:
+  summary: Revoke user's access
+  description: Revoke user's access as a logged in admin
+  operationId: revoke-access
+  security:
+    - bearerAuth: []
+  parameters:
+    - in: path
+      name: userId
+      description: User id
+      required: true
+      example: "123"
+      schema:
+        type: integer
+  responses:
+    "200":
+      description: Access revoked
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              result:
+                type: string
+                example: "Access revoked"
+    "400":
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/NoAccountForId"
+              - $ref: "#/components/schemas/InvalidUserId"
+              - $ref: "#/components/schemas/CannotRevokeOwnAccess"
+              - $ref: "#/components/schemas/AccessAlreadyRevoked"
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/InvalidToken"
+              - $ref: "#/components/schemas/Unauthorized"
+              - $ref: "#/components/schemas/AccessRevoked"

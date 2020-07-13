@@ -1,0 +1,45 @@
+post:
+  summary: Reset password
+  description: Reset password using a valid reset password token
+  operationId: reset-password
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            password:
+              type: string
+              example: "MyOwnIsland1999"
+            confirmPassword:
+              type: string
+              example: "MyOwnIsland1999"
+            token:
+              type: string
+              format: uuid
+              example: "e1e43d4e-8351-4e96-8831-f1d3914e9066"
+          required:
+            - password
+            - confirmPassword
+            - token
+  responses:
+    "200":
+      $ref: "#/components/responses/JWTRefreshTokenCookie"
+    "400":
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/InvalidResetPassword"
+              - $ref: "#/components/schemas/ResetLinkAlreadyUsed"
+              - $ref: "#/components/schemas/ExpiredResetLink"
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/InvalidToken"
+              - $ref: "#/components/schemas/AccessRevoked"

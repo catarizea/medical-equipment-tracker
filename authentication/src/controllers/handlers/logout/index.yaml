@@ -1,0 +1,15 @@
+get:
+  summary: Log out authenticated users
+  description: Log out authenticated users by deleting the refreshToken cookie
+  operationId: logout
+  responses:
+    "200":
+      description: Logged out
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              result:
+                type: string
+                example: "Logged out"

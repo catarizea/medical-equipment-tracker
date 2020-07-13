@@ -1,0 +1,43 @@
+delete:
+  summary: Remove user
+  description: Remove user as a logged in admin
+  operationId: remove-user
+  security:
+    - bearerAuth: []
+  parameters:
+    - in: path
+      name: userId
+      description: User id
+      required: true
+      example: "123"
+      schema:
+        type: integer
+  responses:
+    "200":
+      description: User removed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              result:
+                type: string
+                example: "User removed"
+    "400":
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/NoAccountForId"
+              - $ref: "#/components/schemas/InvalidUserId"
+              - $ref: "#/components/schemas/CannotRemoveOwnAccount"
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/InvalidToken"
+              - $ref: "#/components/schemas/Unauthorized"
+              - $ref: "#/components/schemas/AccessRevoked"

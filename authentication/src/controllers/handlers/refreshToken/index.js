@@ -1,9 +1,9 @@
 const Boom = require('@hapi/boom');
 
-const models = require('../../models');
-const refreshTokens = require('../../services/refreshTokens');
-const { REFRESH_TOKEN_COOKIE } = require('../../constants/cookies');
-const { revokeAccess } = require('./logout');
+const models = require('../../../models');
+const refreshTokens = require('../../../services/refreshTokens');
+const { REFRESH_TOKEN_COOKIE } = require('../../../constants/cookies');
+const { revokeAccess } = require('../logout');
 
 module.exports = {
   refreshToken: async (req, res, next) => {

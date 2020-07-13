@@ -1,0 +1,49 @@
+post:
+  summary: Sign up for a new account
+  description: Sign up for a new account using a valid invitation  
+  operationId: signup
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            firstName: 
+              type: string
+              example: "Simona"
+            lastName:
+              type: string
+              example: "Galushka"
+            email:
+              type: string
+              format: email
+              example: "simona@medical.equipment"
+            password:
+              type: string
+              example: "MyOwnIsland1999"
+            confirmPassword:
+              type: string
+              example: "MyOwnIsland1999"
+            token:
+              type: string
+              format: uuid
+              example: "e1e43d4e-8351-4e96-8831-f1d3914e9066"
+          required:
+            - firstName
+            - lastName
+            - email
+            - password
+            - confirmPassword
+            - token
+  responses:
+    "200":
+      $ref: "#/components/responses/JWTRefreshTokenCookie"
+    "400":
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/InvalidSignUpInvitation"
+              - $ref: "#/components/schemas/InvalidSignUp"

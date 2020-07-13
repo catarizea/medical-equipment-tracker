@@ -4,18 +4,18 @@ const Boom = require('@hapi/boom');
 const { v4: uuidv4 } = require('uuid');
 const mailer = require('@medical-equipment-tracker/mailer');
 
-const validate = require('../../middlewares/validate');
-const models = require('../../models');
-const { revokeAccess } = require('./logout');
-const renderTextMessage = require('../../utils/emailTemplates/forgotPassword/textTemplate');
-const renderHtmlMessage = require('../../utils/emailTemplates/forgotPassword/htmlTemplate');
+const validate = require('../../../middlewares/validate');
+const models = require('../../../models');
+const { revokeAccess } = require('../logout');
+const renderTextMessage = require('../../../utils/emailTemplates/forgotPassword/textTemplate');
+const renderHtmlMessage = require('../../../utils/emailTemplates/forgotPassword/htmlTemplate');
 
 const envFile =
   process.env.NODE_ENV === 'development'
     ? '.env.development.local'
     : '.env.production.local';
 require('dotenv').config({
-  path: path.join(__dirname, '../../../..', envFile),
+  path: path.join(__dirname, '../../../../..', envFile),
 });
 
 module.exports = {

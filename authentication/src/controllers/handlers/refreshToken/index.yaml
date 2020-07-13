@@ -1,0 +1,23 @@
+post:
+  summary: Refresh JWT using a valid refresh token
+  description: Refresh JWT using a valid refreshToken in a http only cookie
+  operationId: refresh-token
+  parameters:
+    - in: cookie
+      name: refreshToken
+      required: true
+      description: Refresh token can be sent in a cookie
+      schema:
+        type: string
+        example: e1e43d4e-8351-4e96-8831-f1d3914e9066
+  responses:
+    "200":
+      $ref: "#/components/responses/JWTRefreshTokenCookie"
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/Unauthorized"
+              - $ref: "#/components/schemas/AccessRevoked"

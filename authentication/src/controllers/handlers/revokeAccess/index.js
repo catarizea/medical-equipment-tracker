@@ -1,8 +1,8 @@
 const validator = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
 
-const validate = require('../../middlewares/validate');
-const models = require('../../models');
+const validate = require('../../../middlewares/validate');
+const models = require('../../../models');
 
 module.exports = {
   validateRevokeAccess: async (req, res, next) => {

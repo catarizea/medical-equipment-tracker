@@ -10,9 +10,14 @@ require('dotenv').config({
 
 const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
 
-swaggerDocument.servers[0].url = process.env.AUTHENTICATION_EXPRESS_ENDPOINT; 
+swaggerDocument.servers[0].url = process.env.AUTHENTICATION_EXPRESS_ENDPOINT;
 
-// console.log(JSON.stringify(swaggerDocument, null, 2));
+for (const endpoint in swaggerDocument.paths) {
+  const definition = YAML.load(
+    path.join(__dirname, swaggerDocument.paths[endpoint]['$ref'])
+  );
+  swaggerDocument.paths[endpoint] = definition;
+}
 
 router.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
