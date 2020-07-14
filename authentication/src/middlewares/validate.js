@@ -16,6 +16,10 @@ const validate = async (req, next, schema, checkParams = false, checkQuery = fal
     whatToCheck = req.query;
   }
 
+  if (!whatToCheck || !Object.keys(whatToCheck).length) {
+    return next(`${VALIDATION_ERROR}${JSON.stringify({ empty: 'Entity is required' })}`);
+  }
+
   try {
     const validObject = await schema.validate(whatToCheck, options);
     if (checkParams) {
@@ -28,9 +32,13 @@ const validate = async (req, next, schema, checkParams = false, checkQuery = fal
     
     next();
   } catch (error) {
-    const errors = {};
-    error.inner.forEach((err) => (errors[err.path] = err.errors[0]));
-    next(`${VALIDATION_ERROR}${JSON.stringify(errors)}`);
+    if (error.inner && error.inner.length) {
+      const errors = {};
+      error.inner.forEach((err) => (errors[err.path] = err.errors[0]));
+      next(`${VALIDATION_ERROR}${JSON.stringify(errors)}`);
+    } else {
+      next(error);
+    }
   }
 };
 

@@ -19,7 +19,7 @@ const tokenValidation = string()
   .matches(uuidRegex, 'Token is not valid')
   .required('Token is required');
 
-const newPasswordValidation = {
+const passwordAndConfirm = {
   password: string()
     .trim()
     .required('Password is required')
@@ -32,6 +32,10 @@ const newPasswordValidation = {
     .trim()
     .required('Please confirm password')
     .oneOf([ref('password'), null], 'Passwords must match'),
+};
+
+const newPasswordValidation = {
+  ...passwordAndConfirm,
   token: tokenValidation,
 };
 
@@ -88,6 +92,11 @@ const udateUserSchema = object({
   isBlocked: boolean().notRequired(),
 });
 
+const changePasswordSchema = object({
+  currentPassword: string().trim().notRequired(),
+  ...passwordAndConfirm,
+});
+
 module.exports = {
   loginSchema,
   revokeTokenSchema,
@@ -98,4 +107,5 @@ module.exports = {
   userIdSchema,
   udateUserSchema,
   roles,
+  changePasswordSchema,
 };

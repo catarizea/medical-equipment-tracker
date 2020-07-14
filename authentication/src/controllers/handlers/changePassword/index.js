@@ -1,56 +1,53 @@
-const path = require('path');
 const Boom = require('@hapi/boom');
 const validator = require('@medical-equipment-tracker/validator');
 const bcrypt = require('bcryptjs');
-
-const envFile =
-  process.env.NODE_ENV === 'development'
-    ? '.env.development.local'
-    : '.env.production.local';
-require('dotenv').config({
-  path: path.join(__dirname, '../../../../../..', envFile),
-});
+const intersection = require('lodash.intersection');
 
 const validate = require('../../../middlewares/validate');
-const generateJwtToken = require('../../../services/generateJwtToken');
-const generateRefreshToken = require('../../../services/generateRefreshToken');
 const models = require('../../../models');
-const { REFRESH_TOKEN_COOKIE } = require('../../../constants/cookies');
-const { revokeAccess } = require('../logout');
+const { VALIDATION_ERROR } = require('../../../constants/validation');
+
+const { roles } = validator;
 
 module.exports = {
   validateChangePassword: async (req, res, next) => {
-    await validate(req, next, validator.resetPasswordSchema);
+    await validate(req, next, validator.changePasswordSchema);
   },
 
   changePassword: async (req, res, next) => {
-    const { password, token } = req.body;
+    const { userId } = req.params;
+    const { user } = req;
+    const { currentPassword, password } = req.body;
 
-    const forgotPassword = await models.ForgotPassword.findOne({
-      include: [
-        {
-          model: models.User,
-          as: 'User',
-        },
-      ],
-      where: { token },
-    });
+    const isAdmin = intersection(user.role, [roles.Admin]).length;
 
-    if (!forgotPassword) {
-      return next(Boom.unauthorized('Invalid token'));
+    if ((!isAdmin || (isAdmin && userId === user.id)) && !currentPassword) {
+      return next(
+        `${VALIDATION_ERROR}${JSON.stringify({
+          currentPassword: 'Current password is required',
+        })}`
+      );
     }
 
-    if (forgotPassword.used) {
-      return next(Boom.badRequest('Reset link already used'));
+    if (!isAdmin && user.id !== userId) {
+      return next(Boom.unauthorized('Unauthorized'));
     }
 
-    if (forgotPassword.expiresAt < new Date()) {
-      return next(Boom.badRequest('Expired reset link'));
+    const foundUser = await models.User.findOne({ where: { id: userId } });
+
+    if (!foundUser) {
+      return next(Boom.badRequest('No account for this id'));
     }
 
-    if (forgotPassword.User && forgotPassword.User.isBlocked) {
-      await revokeAccess(req, res);
-      return next(Boom.unauthorized('Access revoked'));
+    if (!isAdmin || (isAdmin && userId === user.id)) {
+      const match = await bcrypt.compare(
+        currentPassword,
+        foundUser.passwordHash
+      );
+
+      if (!match) {
+        return next(Boom.badRequest('Current password is incorrect'));
+      }
     }
 
     let passwordHash = null;
@@ -58,7 +55,7 @@ module.exports = {
     try {
       passwordHash = await bcrypt.hash(password, 10);
     } catch (error) {
-      console.log('resetPassword hashing error');
+      console.log('changePassword hashing error');
       console.error(error);
     }
 
@@ -66,60 +63,22 @@ module.exports = {
       return next(Boom.badImplementation());
     }
 
-    let user = null;
-    const t = await models.sequelize.transaction();
-    let transactionSuccessful = true;
+    let updatedUser = null;
 
     try {
-      user = await models.User.update(
-        { passwordHash, role: forgotPassword.User.role },
-        {
-          returning: true,
-          where: { id: forgotPassword.User.id },
-          transaction: t,
-        }
+      updatedUser = await models.User.update(
+        { passwordHash, role: foundUser.role },
+        { where: { id: foundUser.id } }
       );
-
-      await models.ForgotPassword.update(
-        { used: true },
-        { where: { id: forgotPassword.id }, transaction: t }
-      );
-
-      await t.commit();
     } catch (error) {
-      console.log('resetPassword transaction failed');
+      console.log('changePassword update error');
       console.log(error);
-
-      await t.rollback();
-      transactionSuccessful = false;
     }
 
-    if (!transactionSuccessful || !user) {
+    if (!updatedUser) {
       return next(Boom.badImplementation());
     }
 
-    const jwtToken = generateJwtToken(user[1][0]);
-    const jwtTokenExpiry = new Date(
-      new Date().getTime() +
-        process.env.AUTHENTICATION_JWT_TOKEN_EXPIRES * 60 * 1000
-    );
-
-    const refreshToken = await generateRefreshToken(user[1][0], req.ip);
-
-    if (!refreshToken) {
-      return next(Boom.badImplementation());
-    }
-
-    res.cookie(REFRESH_TOKEN_COOKIE, refreshToken.token, {
-      maxAge: process.env.AUTHENTICATION_REFRESH_TOKEN_EXPIRES * 60 * 1000,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-    });
-
-    res.json({
-      jwtToken,
-      jwtTokenExpiry,
-      refreshToken,
-    });
+    res.json({ result: 'Password changed' });
   },
 };

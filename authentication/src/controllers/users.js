@@ -107,11 +107,7 @@ router.get(
   undoRevokeAccess
 );
 
-router.get(
-  '/fetch-users',
-  authorize(roles.Admin),
-  fetchUsers
-);
+router.get('/fetch-users', authorize(roles.Admin), fetchUsers);
 
 router.get(
   '/fetch-user/:userId?',
@@ -127,6 +123,12 @@ router.put(
   updateUser
 );
 
-router.put('/change-password/:userId', validateChangePassword, changePassword);
+router.put(
+  '/change-password/:userId',
+  authorize(roles.Default),
+  validateRevokeAccess,
+  validateChangePassword,
+  changePassword
+);
 
 module.exports = router;

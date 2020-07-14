@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: 0 */
 const { VALIDATION_ERROR } = require('../constants/validation');
 
-const handleErrors = (err, req, res, next) => {
+const handleErrors = (err, req, res, next) => {  
   switch (true) {
     case err.name === 'UnauthorizedError':
       return res

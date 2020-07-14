@@ -4,6 +4,14 @@ put:
   operationId: change-password
   security:
     - bearerAuth: []
+  parameters:
+    - in: path
+      name: userId
+      description: User id
+      required: true
+      example: "123"
+      schema:
+        type: integer
   requestBody:
     required: true
     content:
@@ -13,30 +21,37 @@ put:
           properties:
             password:
               type: string
-              example: "Password1"
+              example: "Password12"
             confirmPassword:
               type: string
-              example: "Password1"
-            token:
+              example: "Password12"
+            currentPassword:
               type: string
-              format: uuid
-              example: "e1e43d4e-8351-4e96-8831-f1d3914e9066"
+              example: "Password1"
           required:
             - password
             - confirmPassword
-            - token
   responses:
     "200":
-      $ref: "#/components/responses/JWTRefreshTokenCookie"
+      description: Password changed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              result:
+                type: string
+                example: 'Password changed'
     "400":
       description: Bad request
       content:
         application/json:
           schema:
             oneOf:
-              - $ref: "#/components/schemas/InvalidResetPassword"
-              - $ref: "#/components/schemas/ResetLinkAlreadyUsed"
-              - $ref: "#/components/schemas/ExpiredResetLink"
+              - $ref: "#/components/schemas/NoAccountForId"
+              - $ref: "#/components/schemas/CurrentPasswordRequired"
+              - $ref: "#/components/schemas/CurrentPasswordIncorrect"
+              - $ref: "#/components/schemas/InvalidChangePassword"
     "401":
       description: Unauthorized
       content:
@@ -45,3 +60,4 @@ put:
             oneOf:
               - $ref: "#/components/schemas/InvalidToken"
               - $ref: "#/components/schemas/AccessRevoked"
+              - $ref: "#/components/schemas/Unauthorized"

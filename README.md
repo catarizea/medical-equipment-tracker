@@ -4,6 +4,8 @@
 
 Create an internal communication and hospital resources management system to help the medical personnel facing a flood of patients due to a hypothetical natural catastrophe.
 
+#### Do not use this software in production! This is work in progress!
+
 ## Prerequisites
 
 * local DNS service to be able to access the webserver by its name `docs/bind/README.md`

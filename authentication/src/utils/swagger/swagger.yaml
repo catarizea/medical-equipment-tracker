@@ -361,6 +361,24 @@ components:
         message:
           type: string
           example: "Entity parse failed"
+    CurrentPasswordRequired:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Bad request"
+        message:
+          type: string
+          example: "Current password is required"
+    CurrentPasswordIncorrect:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Bad request"
+        message:
+          type: string
+          example: "Current password is incorrect"
     InvalidUpdateUser:
       type: object
       properties:
@@ -380,4 +398,19 @@ components:
               type: "Role must be one of Admin,User"
             isBlocked:
               type: string
+    InvalidChangePassword:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Validation error"
+        message:
+          type: object
+          properties:
+            password:
+              type: string
+              example: "Password is required"
+            confirmPassword:
+              type: string
+              example: "Confirm password is required"
           
