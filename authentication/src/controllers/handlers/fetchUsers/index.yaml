@@ -1,4 +1,4 @@
-post:
+get:
   summary: Fetch users
   description: Fetch users according to filter criteria as a logged in admin
   operationId: fetch-users
@@ -6,7 +6,7 @@ post:
     - bearerAuth: []
   parameters:
     - in: query
-      description: Query object to compose the where clause using Sequelize operators (https://sequelize.org/master/manual/model-querying-basics.html#operators)
+      description: Query object to compose the where clause using Sequelize operators (https://sequelize.org/master/manual/model-querying-basics.html#operators) Example: { "email": { "Op.startsWith": "cat", "Op.endsWith": "ment" }, "id": { "Op.lt": 2 } } 
       name: params
       schema:
         type: object
@@ -44,6 +44,12 @@ post:
                 updatedAt:
                   type: string
                   example: "2020-07-13 17:24:36.068+00"
+    "400":
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EntityParseFailed"
     "401":
       description: Unauthorized
       content:

@@ -99,7 +99,7 @@ router.get(
   undoRevokeAccess
 );
 
-router.post(
+router.get(
   '/fetch-users',
   authorize(roles.Admin),
   fetchUsers

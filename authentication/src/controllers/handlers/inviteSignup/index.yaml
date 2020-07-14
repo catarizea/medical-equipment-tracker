@@ -37,9 +37,7 @@ post:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: "#/components/schemas/InvalidEmailOrFirstName"
-              - $ref: "#/components/schemas/AccountExistsForEmail"
+            $ref: "#/components/schemas/EntityParseFailed"
     "401":
       description: Unauthorized
       content:

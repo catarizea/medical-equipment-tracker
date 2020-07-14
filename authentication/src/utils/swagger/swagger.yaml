@@ -325,3 +325,13 @@ components:
         message:
           type: string
           example: "Access is not revoked for this account"
+    EntityParseFailed:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Bad request"
+        message:
+          type: string
+          example: "Entity parse failed"
+          
