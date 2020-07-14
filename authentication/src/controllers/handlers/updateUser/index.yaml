@@ -1,0 +1,64 @@
+put:
+  summary: Update user
+  description: Update user by id as a logged in owner or admin
+  operationId: update-user
+  security:
+    - bearerAuth: []
+  parameters:
+    - in: path
+      name: userId
+      description: User id
+      required: true
+      example: "123"
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            firstName: 
+              type: string
+              example: "Simona"
+            lastName:
+              type: string
+              example: "Galushka"
+            role:
+              type: array
+              items:
+                type: string
+                example: "User"
+            isBlocked:
+              type: boolean
+              example: false
+  responses:
+    "200":
+      description: User updated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              result:
+                type: string
+                example: 'User updated'
+    "400":
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/NoAccountForId"
+              - $ref: "#/components/schemas/InvalidUpdateUser"
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/InvalidToken"
+              - $ref: "#/components/schemas/Unauthorized"
+              - $ref: "#/components/schemas/AccessRevoked"
+              - $ref: "#/components/schemas/CannotUpdateAccessOwnAccount"
+              - $ref: "#/components/schemas/CannotUpdateOwnRole"

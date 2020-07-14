@@ -14,7 +14,7 @@ module.exports = {
     }
 
     if (user.id === parseInt(admin.id, 10)) {
-      return next(Boom.badRequest('You cannot undo revoke access your own account'));
+      return next(Boom.unauthorized('You cannot undo revoke access your own account'));
     }
 
     if (!user.isBlocked) {

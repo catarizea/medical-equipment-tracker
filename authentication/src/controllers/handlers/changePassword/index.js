@@ -1,6 +1,6 @@
 const path = require('path');
-const validator = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
+const validator = require('@medical-equipment-tracker/validator');
 const bcrypt = require('bcryptjs');
 
 const envFile =
@@ -16,22 +16,41 @@ const generateJwtToken = require('../../../services/generateJwtToken');
 const generateRefreshToken = require('../../../services/generateRefreshToken');
 const models = require('../../../models');
 const { REFRESH_TOKEN_COOKIE } = require('../../../constants/cookies');
-const { roles } = validator;
+const { revokeAccess } = require('../logout');
 
 module.exports = {
-  validateSignup: async (req, res, next) => {
-    await validate(req, next, validator.userSchema);
+  validateChangePassword: async (req, res, next) => {
+    await validate(req, next, validator.resetPasswordSchema);
   },
 
-  signup: async (req, res, next) => {
-    const { firstName, lastName, email, password, token } = req.body;
+  changePassword: async (req, res, next) => {
+    const { password, token } = req.body;
 
-    const signupInvitation = await models.SignupInvitation.findOne({
+    const forgotPassword = await models.ForgotPassword.findOne({
+      include: [
+        {
+          model: models.User,
+          as: 'User',
+        },
+      ],
       where: { token },
     });
 
-    if (!signupInvitation || signupInvitation.email !== email) {
-      return next(Boom.badRequest('Invalid sign up invitation'));
+    if (!forgotPassword) {
+      return next(Boom.unauthorized('Invalid token'));
+    }
+
+    if (forgotPassword.used) {
+      return next(Boom.badRequest('Reset link already used'));
+    }
+
+    if (forgotPassword.expiresAt < new Date()) {
+      return next(Boom.badRequest('Expired reset link'));
+    }
+
+    if (forgotPassword.User && forgotPassword.User.isBlocked) {
+      await revokeAccess(req, res);
+      return next(Boom.unauthorized('Access revoked'));
     }
 
     let passwordHash = null;
@@ -39,7 +58,7 @@ module.exports = {
     try {
       passwordHash = await bcrypt.hash(password, 10);
     } catch (error) {
-      console.log('signup hashing error');
+      console.log('resetPassword hashing error');
       console.error(error);
     }
 
@@ -47,30 +66,28 @@ module.exports = {
       return next(Boom.badImplementation());
     }
 
-    const newUser = {
-      firstName,
-      lastName,
-      email,
-      passwordHash,
-      role: [roles.Default],
-    };
-
-    const t = await models.sequelize.transaction();
-
-    let transactionSuccessful = true;
     let user = null;
+    const t = await models.sequelize.transaction();
+    let transactionSuccessful = true;
 
     try {
-      user = await models.User.create(newUser, { transaction: t });
+      user = await models.User.update(
+        { passwordHash, role: forgotPassword.User.role },
+        {
+          returning: true,
+          where: { id: forgotPassword.User.id },
+          transaction: t,
+        }
+      );
 
-      await models.SignupInvitation.update(
-        { isOpened: true, accountCreated: true },
-        { where: { id: signupInvitation.id }, transaction: t }
+      await models.ForgotPassword.update(
+        { used: true },
+        { where: { id: forgotPassword.id }, transaction: t }
       );
 
       await t.commit();
     } catch (error) {
-      console.log('signup transaction failed');
+      console.log('resetPassword transaction failed');
       console.log(error);
 
       await t.rollback();
@@ -81,13 +98,13 @@ module.exports = {
       return next(Boom.badImplementation());
     }
 
-    const jwtToken = generateJwtToken(user);
+    const jwtToken = generateJwtToken(user[1][0]);
     const jwtTokenExpiry = new Date(
       new Date().getTime() +
         process.env.AUTHENTICATION_JWT_TOKEN_EXPIRES * 60 * 1000
     );
 
-    const refreshToken = await generateRefreshToken(user, req.ip);
+    const refreshToken = await generateRefreshToken(user[1][0], req.ip);
 
     if (!refreshToken) {
       return next(Boom.badImplementation());

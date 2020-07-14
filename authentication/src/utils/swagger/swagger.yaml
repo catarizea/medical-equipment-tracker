@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: JWT Authentication with Refresh Tokens
+  title: medical.equipment JWT Authentication with Refresh Tokens
   version: 1.0.0
 
 servers:
@@ -44,8 +44,17 @@ paths:
   /api/authentication/fetch-users:
     $ref: "../../controllers/handlers/fetchUsers/index.yaml"
 
+  /api/authentication/fetch-user/{userId}:
+    $ref: "../../controllers/handlers/fetchUser/index.yaml"
+
+  /api/authentication/update-user/{userId}:
+    $ref: "../../controllers/handlers/updateUser/index.yaml"
+
   /api/authentication/remove-user/{userId}:
     $ref: "../../controllers/handlers/removeUser/index.yaml"
+  
+  /api/authentication/change-password/{userId}:
+    $ref: "../../controllers/handlers/changePassword/index.yaml"
 
 components:
   securitySchemes:
@@ -285,7 +294,7 @@ components:
       properties:
         type: 
           type: string
-          example: "Bad request"
+          example: "Unauthorized"
         message:
           type: string
           example: "You cannot revoke your own access"
@@ -303,7 +312,7 @@ components:
       properties:
         type: 
           type: string
-          example: "Bad request"
+          example: "Unauthorized"
         message:
           type: string
           example: "You cannot remove your own account"
@@ -312,10 +321,28 @@ components:
       properties:
         type: 
           type: string
-          example: "Bad request"
+          example: "Unauthorized"
         message:
           type: string
           example: "You cannot undo revoke access your own account"
+    CannotUpdateAccessOwnAccount:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Unauthorized"
+        message:
+          type: string
+          example: "You cannot update your own access"
+    CannotUpdateOwnRole:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Unauthorized"
+        message:
+          type: string
+          example: "You cannot update your own role"
     AccessNotRevoked:
       type: object
       properties:
@@ -334,4 +361,23 @@ components:
         message:
           type: string
           example: "Entity parse failed"
+    InvalidUpdateUser:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Validation error"
+        message:
+          type: object
+          properties:
+            firstName:
+              type: string
+            lastName:
+              type: string
+            role[0]:
+              type: "Role must be one of Admin,User"
+            role[1]:
+              type: "Role must be one of Admin,User"
+            isBlocked:
+              type: string
           

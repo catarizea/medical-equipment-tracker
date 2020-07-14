@@ -31,7 +31,6 @@ get:
             oneOf:
               - $ref: "#/components/schemas/NoAccountForId"
               - $ref: "#/components/schemas/InvalidUserId"
-              - $ref: "#/components/schemas/CannotUndoRevokeAccessOwnAccount"
               - $ref: "#/components/schemas/AccessNotRevoked"
     "401":
       description: Unauthorized
@@ -42,3 +41,4 @@ get:
               - $ref: "#/components/schemas/InvalidToken"
               - $ref: "#/components/schemas/Unauthorized"
               - $ref: "#/components/schemas/AccessRevoked"
+              - $ref: "#/components/schemas/CannotUndoRevokeAccessOwnAccount"

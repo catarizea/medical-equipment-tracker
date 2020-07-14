@@ -1,4 +1,4 @@
-post:
+put:
   summary: Revoke a refresh token
   description: Revoke a refresh token as owner user or admin
   operationId: revoke-token

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { roles } = require('@medical-equipment-tracker/validator');
 
 const authorize = require('../middlewares/authorize');
 
@@ -44,7 +45,14 @@ const { undoRevokeAccess } = require('./handlers/undoRevokeAccess');
 
 const { fetchUsers } = require('./handlers/fetchUsers');
 
-const roles = require('../constants/roles');
+const { fetchUser } = require('./handlers/fetchUser');
+
+const { updateUser, validateUpdateUser } = require('./handlers/updateUser');
+
+const {
+  validateChangePassword,
+  changePassword,
+} = require('./handlers/changePassword');
 
 router.post('/login', validateLogin, login);
 
@@ -59,7 +67,7 @@ router.post(
 
 router.post('/refresh-token', refreshToken);
 
-router.post(
+router.put(
   '/revoke-token',
   authorize(roles.Default),
   validateRevokeToken,
@@ -76,7 +84,7 @@ router.post('/signup', validateSignup, signup);
 
 router.post('/forgot-password', validateForgotPassword, forgotPassword);
 
-router.post('/reset-password', validateResetPassword, resetPassword);
+router.put('/reset-password', validateResetPassword, resetPassword);
 
 router.delete(
   '/remove-user/:userId?',
@@ -104,5 +112,21 @@ router.get(
   authorize(roles.Admin),
   fetchUsers
 );
+
+router.get(
+  '/fetch-user/:userId?',
+  authorize(roles.Default),
+  validateRevokeAccess,
+  fetchUser
+);
+
+router.put(
+  '/update-user/:userId?',
+  authorize(roles.Default),
+  validateUpdateUser,
+  updateUser
+);
+
+router.put('/change-password/:userId', validateChangePassword, changePassword);
 
 module.exports = router;

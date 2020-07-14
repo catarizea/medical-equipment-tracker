@@ -1,19 +1,27 @@
-const { object, string, ref, number } = require('yup');
+const { object, string, ref, number, array, boolean } = require('yup');
+
+const roles = {
+  Admin: 'Admin',
+  Default: 'User',
+};
 
 const uuidRegex = /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i;
 
 const emailValidation = string()
+  .trim()
   .email('Email has to be valid')
   .required('Email is required');
 
-const firstNameValidation = string().required('First name is required');
+const firstNameValidation = string().trim().strict().required('First name is required');
 
 const tokenValidation = string()
+  .trim()
   .matches(uuidRegex, 'Token is not valid')
   .required('Token is required');
 
 const newPasswordValidation = {
   password: string()
+    .trim()
     .required('Password is required')
     .min(8, `Password has to contain at least 8 characters`)
     .matches(
@@ -21,6 +29,7 @@ const newPasswordValidation = {
       'Password has to contain lowercase and uppercase and numeric characters'
     ),
   confirmPassword: string()
+    .trim()
     .required('Please confirm password')
     .oneOf([ref('password'), null], 'Passwords must match'),
   token: tokenValidation,
@@ -28,7 +37,7 @@ const newPasswordValidation = {
 
 const loginSchema = object({
   email: emailValidation,
-  password: string().required('Password is required'),
+  password: string().trim().required('Password is required'),
 });
 
 const revokeTokenSchema = object({
@@ -42,7 +51,7 @@ const inviteSignupSchema = object({
 
 const userSchema = object({
   firstName: firstNameValidation,
-  lastName: string().required('Last name is required'),
+  lastName: string().trim().strict().required('Last name is required'),
   email: emailValidation,
   ...newPasswordValidation,
 });
@@ -62,6 +71,23 @@ const userIdSchema = object({
     .required('User id is required'),
 });
 
+const udateUserSchema = object({
+  firstName: string().trim().strict().notRequired(),
+  lastName: string().trim().strict().notRequired(),
+  role: array()
+    .of(
+      string()
+        .trim()
+        .oneOf(
+          [roles.Default, roles.Admin],
+          `Role must be one of ${Object.values(roles).join(',')}`
+        )
+        .required('Role is required')
+    )
+    .notRequired(),
+  isBlocked: boolean().notRequired(),
+});
+
 module.exports = {
   loginSchema,
   revokeTokenSchema,
@@ -70,4 +96,6 @@ module.exports = {
   forgotPasswordSchema,
   resetPasswordSchema,
   userIdSchema,
+  udateUserSchema,
+  roles,
 };

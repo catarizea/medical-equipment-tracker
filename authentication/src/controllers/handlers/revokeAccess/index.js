@@ -20,7 +20,7 @@ module.exports = {
     }
 
     if (user.id === parseInt(admin.id, 10)) {
-      return next(Boom.badRequest('You cannot revoke your own access'));
+      return next(Boom.unauthorized('You cannot revoke your own access'));
     }
 
     if (user.isBlocked) {

@@ -1,7 +1,9 @@
 put:
-  summary: Reset password
-  description: Reset password using a valid reset password token
-  operationId: reset-password
+  summary: Change password
+  description: Change password as a logged in owner or admin
+  operationId: change-password
+  security:
+    - bearerAuth: []
   requestBody:
     required: true
     content:

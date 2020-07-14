@@ -1,15 +1,17 @@
 get:
-  summary: Fetch users
-  description: Fetch users according to filter criteria as a logged in admin
-  operationId: fetch-users
+  summary: Fetch user
+  description: Fetch selected user by id as a logged in owner or admin
+  operationId: fetch-user
   security:
     - bearerAuth: []
   parameters:
-    - in: query
-      description: Query object to compose the where clause using Sequelize operators (https://sequelize.org/master/manual/model-querying-basics.html#operators) Example: { "email": { "Op.startsWith": "cat", "Op.endsWith": "ment" }, "id": { "Op.lt": 2 } } 
-      name: params
+    - in: path
+      name: userId
+      description: User id
+      required: true
+      example: "123"
       schema:
-        type: object
+        type: integer
   responses:
     "200":
       description: Users array
@@ -44,6 +46,25 @@ get:
                 isBlocked:
                   type: boolean
                   example: "false"
+                blockedByIp:
+                  type: string
+                  example: "127.0.0.1"
+                blockedBy:
+                  type: object
+                  properties:
+                    email: 
+                      type: string
+                      format: email
+                      example: "simona@medical.equipment"
+                    fullName:
+                      type: string
+                      example: "Simona Galushka"
+                    firstName:
+                      type: string
+                      example: "Simona"
+                    lastName:
+                      type: string
+                      example: "Galushka"
                 createdAt:
                   type: string
                   example: "2020-07-13 17:16:11.492+00"
@@ -55,7 +76,9 @@ get:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/EntityParseFailed"
+            oneOf:
+              - $ref: "#/components/schemas/NoAccountForId"
+              - $ref: "#/components/schemas/InvalidUserId"
     "401":
       description: Unauthorized
       content:

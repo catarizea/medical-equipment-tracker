@@ -3,8 +3,9 @@ const intersection = require('lodash.intersection');
 const validator = require('@medical-equipment-tracker/validator');
 
 const models = require('../../../models');
-const roles = require('../../../constants/roles');
 const validate = require('../../../middlewares/validate');
+
+const { roles } = validator;
 
 module.exports = {
   validateRevokeToken: async (req, res, next) => {

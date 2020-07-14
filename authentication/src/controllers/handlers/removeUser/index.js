@@ -20,7 +20,7 @@ module.exports = {
     }
 
     if (user.id === parseInt(admin.id, 10)) {
-      return next(Boom.badRequest('You cannot remove your own account'));
+      return next(Boom.unauthorized('You cannot remove your own account'));
     }
 
     const t = await models.sequelize.transaction();

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const path = require('path');
+const { roles } = require('@medical-equipment-tracker/validator');
 
 const envFile =
   process.env.NODE_ENV === 'development'
@@ -13,7 +14,6 @@ const customClaims = process.env.AUTHENTICATION_CUSTOM_CLAIMS
   : [];
 
 const { KEY } = require('../constants/claims');
-const roles = require('../constants/roles');
 
 const generateJwtToken = (user) => {
   const custom_claims = {};

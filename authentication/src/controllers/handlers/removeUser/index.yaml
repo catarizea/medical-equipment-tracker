@@ -31,7 +31,6 @@ delete:
             oneOf:
               - $ref: "#/components/schemas/NoAccountForId"
               - $ref: "#/components/schemas/InvalidUserId"
-              - $ref: "#/components/schemas/CannotRemoveOwnAccount"
     "401":
       description: Unauthorized
       content:
@@ -41,3 +40,4 @@ delete:
               - $ref: "#/components/schemas/InvalidToken"
               - $ref: "#/components/schemas/Unauthorized"
               - $ref: "#/components/schemas/AccessRevoked"
+              - $ref: "#/components/schemas/CannotRemoveOwnAccount"
