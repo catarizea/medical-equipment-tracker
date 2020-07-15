@@ -6,12 +6,8 @@ const generateRefreshToken = require('./generateRefreshToken');
 const logger = require('./logger');
 const models = require('../models');
 
-const envFile =
-  process.env.NODE_ENV === 'development'
-    ? '.env.development.local'
-    : '.env.production.local';
 require('dotenv').config({
-  path: path.join(__dirname, '../../..', envFile),
+  path: path.join(__dirname, '../../..', `.env.${process.env.NODE_ENV}.local`),
 });
 
 const refreshTokens = async (oldRefreshToken, ip, next) => {

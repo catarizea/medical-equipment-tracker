@@ -10,13 +10,9 @@ const { revokeAccess } = require('../logout');
 const renderTextMessage = require('../../../utils/emailTemplates/forgotPassword/textTemplate');
 const renderHtmlMessage = require('../../../utils/emailTemplates/forgotPassword/htmlTemplate');
 const { logger } = require('../../../services');
-
-const envFile =
-  process.env.NODE_ENV === 'development'
-    ? '.env.development.local'
-    : '.env.production.local';
+  
 require('dotenv').config({
-  path: path.join(__dirname, '../../../../..', envFile),
+  path: path.join(__dirname, '../../../../..', `.env.${process.env.NODE_ENV}.local`),
 });
 
 module.exports = {

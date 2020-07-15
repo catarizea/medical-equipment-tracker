@@ -10,12 +10,8 @@ const renderTextMessage = require('../../../utils/emailTemplates/inviteSignup/te
 const renderHtmlMessage = require('../../../utils/emailTemplates/inviteSignup/htmlTemplate');
 const { logger } = require('../../../services');
 
-const envFile =
-  process.env.NODE_ENV === 'development'
-    ? '.env.development.local'
-    : '.env.production.local';
 require('dotenv').config({
-  path: path.join(__dirname, '../../../../..', envFile),
+  path: path.join(__dirname, '../../../../..', `.env.${process.env.NODE_ENV}.local`),
 });
 
 module.exports = {

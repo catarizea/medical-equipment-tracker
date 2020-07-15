@@ -2,12 +2,8 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const pick = require('lodash.pick');
 
-const envFile =
-  process.env.NODE_ENV === 'development'
-    ? '.env.development.local'
-    : '.env.production.local';
 require('dotenv').config({
-  path: path.join(__dirname, '../../..', envFile),
+  path: path.join(__dirname, '../../..', `.env.${process.env.NODE_ENV}.local`),
 });
 
 const models = require('../models');

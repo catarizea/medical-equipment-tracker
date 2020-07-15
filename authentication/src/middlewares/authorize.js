@@ -8,11 +8,7 @@ const models = require('../models');
 const { KEY } = require('../constants/claims');
 const { revokeAccess } = require('../controllers/handlers/logout');
 
-const envFile =
-  process.env.NODE_ENV === 'development'
-    ? '.env.development.local'
-    : '.env.production.local';
-require('dotenv').config({ path: path.join(__dirname, '../../..', envFile) });
+require('dotenv').config({ path: path.join(__dirname, '../../..', `.env.${process.env.NODE_ENV}.local`) });
 
 const secret = JSON.parse(process.env.HASURA_GRAPHQL_JWT_SECRET);
 

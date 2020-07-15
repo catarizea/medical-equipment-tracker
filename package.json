@@ -13,11 +13,14 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "env NODE_ENV=production yarn --cwd frontend build",
+    "build": "cross-env NODE_ENV=production yarn --cwd frontend build",
     "clear": "rm -rf node_modules */node_modules packages/*/node_modules",
     "containers-stop": "docker stop medical-equipment-tracker_postgres_1 medical-equipment-tracker_graphql-engine_1",
-    "hasura-start:dev": "env NODE_ENV=development dotenv -e .env.development.local -- docker-compose up -d",
-    "hasura-start": "env NODE_ENV=production dotenv -e .env.production.local -- docker-compose up -d",
-    "start": "env NODE_ENV=production yarn --cwd authentication start"
+    "hasura-start:dev": "cross-env NODE_ENV=development dotenv -e .env.development.local -- docker-compose up -d",
+    "hasura-start": "cross-env NODE_ENV=production dotenv -e .env.production.local -- docker-compose up -d",
+    "start": "cross-env NODE_ENV=production yarn --cwd authentication start"
+  },
+  "dependencies": {
+    "cross-env": "7.0.2"
   }
 }

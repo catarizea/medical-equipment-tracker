@@ -6,12 +6,8 @@ const bodyParser = require('body-parser');
 
 const { httpLogger } = require('./middlewares');
 const { logger } = require('./services');
-
-const envFile =
-  process.env.NODE_ENV === 'development'
-    ? '.env.development.local'
-    : '.env.production.local';
-require('dotenv').config({ path: path.join(__dirname, '../..', envFile) });
+  
+require('dotenv').config({ path: path.join(__dirname, '../..', `.env.${process.env.NODE_ENV}.local`) });
 
 const app = express();
 
