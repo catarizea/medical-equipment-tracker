@@ -3,7 +3,8 @@ const intersection = require('lodash.intersection');
 const validator = require('@medical-equipment-tracker/validator');
 
 const models = require('../../../models');
-const validate = require('../../../middlewares/validate');
+const { validate } = require('../../../middlewares');
+const { logger } = require('../../../services');
 
 const { roles } = validator;
 
@@ -44,8 +45,7 @@ module.exports = {
         where: { id: refreshToken.id },
       });
     } catch (error) {
-      console.log('revokeToken error');
-      console.log(error);
+      logger.error('revokeToken error', error);
     }
 
     if (!tokenRevoked) {

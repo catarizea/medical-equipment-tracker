@@ -1,6 +1,7 @@
 /* eslint no-unused-vars: 0 */
 const models = require('../../../models');
 const { REFRESH_TOKEN_COOKIE } = require('../../../constants/cookies');
+const { logger } = require('../../../services');
 
 const revokeAccess = async (req, res) => {
   const refreshToken = req.cookies[REFRESH_TOKEN_COOKIE];
@@ -16,8 +17,7 @@ const revokeAccess = async (req, res) => {
         where: { token: refreshToken },
       });
     } catch (error) {
-      console.log('logout error');
-      console.log(error);
+      logger.error('logout error', error);
     }
   }
 

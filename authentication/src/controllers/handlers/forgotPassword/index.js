@@ -4,11 +4,12 @@ const Boom = require('@hapi/boom');
 const { v4: uuidv4 } = require('uuid');
 const mailer = require('@medical-equipment-tracker/mailer');
 
-const validate = require('../../../middlewares/validate');
+const { validate } = require('../../../middlewares');
 const models = require('../../../models');
 const { revokeAccess } = require('../logout');
 const renderTextMessage = require('../../../utils/emailTemplates/forgotPassword/textTemplate');
 const renderHtmlMessage = require('../../../utils/emailTemplates/forgotPassword/htmlTemplate');
+const { logger } = require('../../../services');
 
 const envFile =
   process.env.NODE_ENV === 'development'
@@ -53,8 +54,7 @@ module.exports = {
     try {
       dbForgotPassword = await models.ForgotPassword.create(newForgotPassword);
     } catch (error) {
-      console.log('forgotPassword create error');
-      console.log(error);
+      logger.error('forgotPassword create error', error);
     }
 
     if (!dbForgotPassword) {
@@ -85,15 +85,14 @@ module.exports = {
         html: renderHtmlMessage(renderVars),
       });    
     } catch (error) {
-      console.log('forgotPassword email error');
-      console.log(error);
+      logger.error('forgotPassword email error', error);
     }
 
     if (!emailSent) {
       return next(Boom.badImplementation());
     }
 
-    console.log(JSON.stringify(emailSent, null, 2));
+    logger.info(JSON.stringify(emailSent, null, 2));
     
     res.json({ result: 'Reset email message sent' });
   },

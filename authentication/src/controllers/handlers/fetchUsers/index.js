@@ -1,5 +1,5 @@
 const models = require('../../../models');
-const generateWhere = require('../../../services/generateWhere');
+const { generateWhere, logger } = require('../../../services');
 
 const attributes = [
   'id',
@@ -22,8 +22,7 @@ module.exports = {
     try {
       users = await models.User.findAll({ where, attributes });
     } catch (error) {
-      console.log('fetchUsers findAll error');
-      console.log(error);
+      logger.error('fetchUsers findAll error', error);
     }
 
     res.json(users);

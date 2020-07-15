@@ -3,6 +3,7 @@ const Boom = require('@hapi/boom');
 
 const generateJwtToken = require('./generateJwtToken');
 const generateRefreshToken = require('./generateRefreshToken');
+const logger = require('./logger');
 const models = require('../models');
 
 const envFile =
@@ -36,8 +37,7 @@ const refreshTokens = async (oldRefreshToken, ip, next) => {
       where: { id: oldRefreshToken.id },
     });
   } catch (error) {
-    console.log('refreshTokens error');
-    console.log(error);
+    logger.error('refreshTokens error', error)
   }
   
   if (!tokenRevoked) {

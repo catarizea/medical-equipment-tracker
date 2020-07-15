@@ -3,9 +3,10 @@ const validator = require('@medical-equipment-tracker/validator');
 const bcrypt = require('bcryptjs');
 const intersection = require('lodash.intersection');
 
-const validate = require('../../../middlewares/validate');
+const { validate } = require('../../../middlewares');
 const models = require('../../../models');
 const { VALIDATION_ERROR } = require('../../../constants/validation');
+const { logger } = require('../../../services');
 
 const { roles } = validator;
 
@@ -55,8 +56,7 @@ module.exports = {
     try {
       passwordHash = await bcrypt.hash(password, 10);
     } catch (error) {
-      console.log('changePassword hashing error');
-      console.error(error);
+      logger.error('changePassword hashing error', error);
     }
 
     if (!passwordHash) {
@@ -71,8 +71,7 @@ module.exports = {
         { where: { id: foundUser.id } }
       );
     } catch (error) {
-      console.log('changePassword update error');
-      console.log(error);
+      logger.error('changePassword update error', error);
     }
 
     if (!updatedUser) {

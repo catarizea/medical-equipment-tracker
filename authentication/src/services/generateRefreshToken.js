@@ -11,6 +11,7 @@ require('dotenv').config({
 });
 
 const models = require('../models');
+const logger = require('./logger');
 
 const generateRefreshToken = async (user, ip) => {
   const token = uuidv4();
@@ -30,8 +31,7 @@ const generateRefreshToken = async (user, ip) => {
 
     refreshToken = pick(newToken, ['token', 'expiresAt']);
   } catch (error) {
-    console.log('generateRefreshToken error');
-    console.log(error);
+    logger.error('generateRefreshToken error', error);
   }
 
   return refreshToken;

@@ -29,14 +29,19 @@
     "lodash.uniq": "4.5.0",
     "morgan": "1.10.0",
     "pg": "8.2.1",
+    "pgtools": "0.3.0",
     "sequelize": "6.2.4",
-    "uuid": "8.2.0"
+    "uuid": "8.2.0",
+    "winston": "3.3.3",
+    "winston-daily-rotate-file": "4.5.0"
   },
   "devDependencies": {
     "eslint": "7.4.0",
     "eslint-plugin-node": "11.1.0",
+    "jest": "26.1.0",
     "nodemon": "2.0.4",
     "sequelize-cli": "6.2.0",
+    "supertest": "4.0.2",
     "swagger-ui-express": "4.1.4",
     "yamljs": "0.3.0"
   }

@@ -4,10 +4,11 @@ const Boom = require('@hapi/boom');
 const mailer = require('@medical-equipment-tracker/mailer');
 const { v4: uuidv4 } = require('uuid');
 
-const validate = require('../../../middlewares/validate');
+const { validate } = require('../../../middlewares');
 const models = require('../../../models');
 const renderTextMessage = require('../../../utils/emailTemplates/inviteSignup/textTemplate');
 const renderHtmlMessage = require('../../../utils/emailTemplates/inviteSignup/htmlTemplate');
+const { logger } = require('../../../services');
 
 const envFile =
   process.env.NODE_ENV === 'development'
@@ -48,8 +49,7 @@ module.exports = {
         UserId: user.id,
       });
     } catch (error) {
-      console.log('inviteSignup error');
-      console.log(error);
+      logger.error('inviteSignup error', error);
     }
 
     if (!signupInvitation) {
@@ -79,15 +79,14 @@ module.exports = {
         html: renderHtmlMessage(renderVars),
       });
     } catch (error) {
-      console.log('inviteSignup email error');
-      console.log(error);
+      logger.error('inviteSignup email error', error);
     }
 
     if (!emailSent) {
       return next(Boom.badImplementation());
     }
 
-    console.log(JSON.stringify(emailSent, null, 2));
+    logger.info(JSON.stringify(emailSent, null, 2));
 
     res.json({ result: 'Invitation to signup sent' });
   },

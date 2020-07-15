@@ -11,9 +11,12 @@ require('dotenv').config({
   path: path.join(__dirname, '../../../../../..', envFile),
 });
 
-const validate = require('../../../middlewares/validate');
-const generateJwtToken = require('../../../services/generateJwtToken');
-const generateRefreshToken = require('../../../services/generateRefreshToken');
+const { validate } = require('../../../middlewares');
+const {
+  generateJwtToken,
+  generateRefreshToken,
+  logger,
+} = require('../../../services');
 const models = require('../../../models');
 const { REFRESH_TOKEN_COOKIE } = require('../../../constants/cookies');
 const { revokeAccess } = require('../logout');
@@ -58,8 +61,7 @@ module.exports = {
     try {
       passwordHash = await bcrypt.hash(password, 10);
     } catch (error) {
-      console.log('resetPassword hashing error');
-      console.error(error);
+      logger.error('resetPassword hashing error', error);
     }
 
     if (!passwordHash) {
@@ -87,8 +89,7 @@ module.exports = {
 
       await t.commit();
     } catch (error) {
-      console.log('resetPassword transaction failed');
-      console.log(error);
+      logger.error('resetPassword transaction failed', error);
 
       await t.rollback();
       transactionSuccessful = false;

@@ -1,8 +1,9 @@
 const validator = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
 
-const validate = require('../../../middlewares/validate');
+const { validate } = require('../../../middlewares');
 const models = require('../../../models');
+const { logger } = require('../../../services');
 
 module.exports = {
   validateRevokeAccess: async (req, res, next) => {
@@ -49,8 +50,7 @@ module.exports = {
 
       await t.commit();
     } catch (error) {
-      console.log('revokeAccess transaction failed');
-      console.log(error);
+      logger.error('revokeAccess transaction failed', error);
 
       await t.rollback();
       transactionSuccessful = false;

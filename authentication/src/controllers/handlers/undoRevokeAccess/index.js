@@ -1,6 +1,7 @@
 const Boom = require('@hapi/boom');
 
 const models = require('../../../models');
+const { logger } = require('../../../services');
 
 module.exports = {
   undoRevokeAccess: async (req, res, next) => {
@@ -35,8 +36,7 @@ module.exports = {
       );
       
     } catch (error) {
-      console.log('undoRevokeAccess update failed');
-      console.log(error);
+      logger.error('undoRevokeAccess update failed', error);
     }
 
     if (!updatedUser) {

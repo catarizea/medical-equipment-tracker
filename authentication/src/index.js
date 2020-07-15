@@ -1,9 +1,11 @@
 const path = require('path');
 const express = require('express');
-const morgan = require('morgan');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+
+const { httpLogger } = require('./middlewares');
+const { logger } = require('./services');
 
 const envFile =
   process.env.NODE_ENV === 'development'
@@ -24,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(cookieParser());
-app.use(morgan('tiny'));
+app.use(httpLogger);
 app.disable('x-powered-by');
 
 const frontendPath = path.join(__dirname, '../..', 'frontend/build');
@@ -44,5 +46,5 @@ app.get('*', (req, res) => {
 const port = process.env.AUTHENTICATION_EXPRESS_PORT || 3500;
 
 app.listen(port, () => {
-  console.log(`App is listening on port ${port}`);
+  logger.info(`App is listening on port ${port}`);
 });

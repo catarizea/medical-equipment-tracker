@@ -4,7 +4,8 @@ const intersection = require('lodash.intersection');
 const uniq = require('lodash.uniq');
 
 const models = require('../../../models');
-const validate = require('../../../middlewares/validate');
+const { validate } = require('../../../middlewares');
+const { logger } = require('../../../services');
 
 const { roles } = validator;
 
@@ -120,8 +121,7 @@ module.exports = {
 
         await t.commit();
       } catch (error) {
-        console.log('updateUser transaction failed');
-        console.log(error);
+        logger.error('updateUser transaction failed', error);
 
         await t.rollback();
         transactionSuccessful = false;
@@ -134,8 +134,7 @@ module.exports = {
       try {
         await updateUser();
       } catch (error) {
-        console.log('updateUser error');
-        console.log(error);
+        logger.error('updateUser error', error);
       }
     }
 

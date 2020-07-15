@@ -2,8 +2,9 @@ const validator = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
 const pick = require('lodash.pick');
 
-const validate = require('../../../middlewares/validate');
+const { validate } = require('../../../middlewares');
 const models = require('../../../models');
+const { logger } = require('../../../services');
 
 module.exports = {
   validateSignupInvitation: async (req, res, next) => {
@@ -33,8 +34,7 @@ module.exports = {
         { where: { id: signupInvitation.id } }
       );
     } catch (error) {
-      console.log('checkSignupInvitation error');
-      console.log(error);
+      logger.error('checkSignupInvitation error', error);
     }
 
     if (!setOpened) {
