@@ -6,7 +6,7 @@ const intersection = require('lodash.intersection');
 const { validate } = require('../../../middlewares');
 const models = require('../../../models');
 const { VALIDATION_ERROR } = require('../../../constants/validation');
-const { logger } = require('../../../services');
+const logger = require('../../../services/logger');
 
 const { roles } = validator;
 

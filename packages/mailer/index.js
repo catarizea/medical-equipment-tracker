@@ -1,12 +1,8 @@
 const path = require('path');
 const nodemailer = require('nodemailer');
 
-const envFile =
-  process.env.NODE_ENV === 'development'
-    ? '.env.development.local'
-    : '.env.production.local';
 require('dotenv').config({
-  path: path.join(__dirname, '../..', envFile),
+  path: path.join(__dirname, '../..', `.env.${process.env.NODE_ENV}.local`),
 });
 
 let mailer = nodemailer.createTransport({
@@ -15,7 +11,7 @@ let mailer = nodemailer.createTransport({
   path: '/usr/sbin/sendmail',
 });
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
   mailer = nodemailer.createTransport({
     host: process.env.MAILTRAP_HOST,
     port: process.env.MAILTRAP_PORT,

@@ -9,7 +9,7 @@ const models = require('../../../models');
 const { revokeAccess } = require('../logout');
 const renderTextMessage = require('../../../utils/emailTemplates/forgotPassword/textTemplate');
 const renderHtmlMessage = require('../../../utils/emailTemplates/forgotPassword/htmlTemplate');
-const { logger } = require('../../../services');
+const logger = require('../../../services/logger');
   
 require('dotenv').config({
   path: path.join(__dirname, '../../../../..', `.env.${process.env.NODE_ENV}.local`),

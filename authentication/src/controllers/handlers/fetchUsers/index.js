@@ -1,5 +1,6 @@
 const models = require('../../../models');
-const { generateWhere, logger } = require('../../../services');
+const { generateWhere } = require('../../../services');
+const logger = require('../../../services/logger');
 
 const attributes = [
   'id',

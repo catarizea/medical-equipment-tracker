@@ -1,7 +1,7 @@
 const Boom = require('@hapi/boom');
 
 const models = require('../../../models');
-const { logger } = require('../../../services');
+const logger = require('../../../services/logger');
 
 module.exports = {
   undoRevokeAccess: async (req, res, next) => {

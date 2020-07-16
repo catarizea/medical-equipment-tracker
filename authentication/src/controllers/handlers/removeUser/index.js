@@ -3,7 +3,7 @@ const Boom = require('@hapi/boom');
 
 const { validate } = require('../../../middlewares');
 const models = require('../../../models');
-const { logger } = require('../../../services');
+const logger = require('../../../services/logger');
 
 module.exports = {
   validateRemoveUser: async (req, res, next) => {

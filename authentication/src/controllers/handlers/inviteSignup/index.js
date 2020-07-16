@@ -8,7 +8,7 @@ const { validate } = require('../../../middlewares');
 const models = require('../../../models');
 const renderTextMessage = require('../../../utils/emailTemplates/inviteSignup/textTemplate');
 const renderHtmlMessage = require('../../../utils/emailTemplates/inviteSignup/htmlTemplate');
-const { logger } = require('../../../services');
+const logger = require('../../../services/logger');
 
 require('dotenv').config({
   path: path.join(__dirname, '../../../../..', `.env.${process.env.NODE_ENV}.local`),
@@ -54,7 +54,7 @@ module.exports = {
 
     let host = 'https://medical.equipment';
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV !== 'production') {
       host = process.env.AUTHENTICATION_EXPRESS_ENDPOINT;
     }
 

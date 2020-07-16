@@ -11,8 +11,8 @@ const { validate } = require('../../../middlewares');
 const {
   generateJwtToken,
   generateRefreshToken,
-  logger,
 } = require('../../../services');
+const logger = require('../../../services/logger');
 const models = require('../../../models');
 const { REFRESH_TOKEN_COOKIE } = require('../../../constants/cookies');
 const { revokeAccess } = require('../logout');

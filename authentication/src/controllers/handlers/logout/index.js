@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: 0 */
 const models = require('../../../models');
 const { REFRESH_TOKEN_COOKIE } = require('../../../constants/cookies');
-const { logger } = require('../../../services');
+const logger = require('../../../services/logger');
 
 const revokeAccess = async (req, res) => {
   const refreshToken = req.cookies[REFRESH_TOKEN_COOKIE];

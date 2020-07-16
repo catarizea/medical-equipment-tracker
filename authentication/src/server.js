@@ -23,11 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(cookieParser());
-
-if (process.env.NODE_ENV !== 'test') {
-  app.use(httpLogger);
-}
-
+app.use(httpLogger);
 app.disable('x-powered-by');
 
 app.use('/api/authentication', require('./controllers/users'));

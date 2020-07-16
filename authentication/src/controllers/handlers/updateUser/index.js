@@ -5,7 +5,7 @@ const uniq = require('lodash.uniq');
 
 const models = require('../../../models');
 const { validate } = require('../../../middlewares');
-const { logger } = require('../../../services');
+const logger = require('../../../services/logger');
 
 const { roles } = validator;
 

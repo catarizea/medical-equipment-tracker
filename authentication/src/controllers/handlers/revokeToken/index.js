@@ -4,7 +4,7 @@ const validator = require('@medical-equipment-tracker/validator');
 
 const models = require('../../../models');
 const { validate } = require('../../../middlewares');
-const { logger } = require('../../../services');
+const logger = require('../../../services/logger');
 
 const { roles } = validator;
 
