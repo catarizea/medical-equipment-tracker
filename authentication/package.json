@@ -12,8 +12,9 @@
     "db:seed": "cross-env NODE_ENV=test sequelize db:seed:all",
     "setup-test-db": "cross-env NODE_ENV=test node scripts/setupTestDb.js",
     "start": "cross-env NODE_ENV=production node src/index.js",
-    "test": "",
-    "test:run": "cross-env NODE_ENV=test npm-run-all -s setup-test-db db:reset db:migrate db:seed"
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000 --detectOpenHandles",
+    "test:clear": "jest --clearCache",
+    "test:run": "cross-env NODE_ENV=test npm-run-all -s setup-test-db db:reset db:migrate db:seed test"
   },
   "license": "MIT",
   "dependencies": {
@@ -36,7 +37,6 @@
     "lodash.uniq": "4.5.0",
     "morgan": "1.10.0",
     "pg": "8.2.1",
-    "pgtools": "0.3.0",
     "sequelize": "6.2.4",
     "uuid": "8.2.0",
     "winston": "3.3.3",
@@ -48,9 +48,16 @@
     "jest": "26.1.0",
     "nodemon": "2.0.4",
     "npm-run-all": "4.1.5",
+    "pgtools": "0.3.0",
     "sequelize-cli": "6.2.0",
     "supertest": "4.0.2",
     "swagger-ui-express": "4.1.4",
     "yamljs": "0.3.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }

@@ -6,6 +6,9 @@
   "parserOptions": {
     "ecmaVersion": 2020
   },
+  "env": {
+    "jest": true
+  },
   "rules": {
     "node/exports-style": [
       "error",

@@ -17,7 +17,8 @@ module.exports = {
     database: process.env.AUTHENTICATION_DB_NAME,
     host: '127.0.0.1',
     port: process.env.HASURA_POSTGRES_PORT,
-    dialect: 'postgres'
+    dialect: 'postgres',
+    logging: false,
   },
   production: {
     username: process.env.HASURA_POSTGRES_USER,
@@ -25,6 +26,7 @@ module.exports = {
     database: process.env.AUTHENTICATION_DB_NAME,
     host: '127.0.0.1',
     port: process.env.HASURA_POSTGRES_PORT,
-    dialect: 'postgres'
+    dialect: 'postgres',
+    logging: false,
   },
 };
