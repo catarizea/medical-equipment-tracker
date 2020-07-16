@@ -48,6 +48,7 @@
     "jest": "26.1.0",
     "nodemon": "2.0.4",
     "npm-run-all": "4.1.5",
+    "pgtools": "0.3.0",
     "sequelize-cli": "6.2.0",
     "supertest": "4.0.2",
     "swagger-ui-express": "4.1.4",
