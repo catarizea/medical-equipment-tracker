@@ -7,14 +7,14 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon -e js,yaml src/index.js",
+    "db:create": "cross-env NODE_ENV=test node scripts/setupTestDb.js",
     "db:migrate": "cross-env NODE_ENV=test sequelize db:migrate",
     "db:reset": "cross-env NODE_ENV=test sequelize db:migrate:undo:all",
     "db:seed": "cross-env NODE_ENV=test sequelize db:seed:all",
-    "setup-test-db": "cross-env NODE_ENV=test node scripts/setupTestDb.js",
     "start": "cross-env NODE_ENV=production node src/index.js",
-    "test": "cross-env NODE_ENV=test jest --testTimeout=10000 --detectOpenHandles",
+    "test": "jest --coverage --detectOpenHandles",
     "test:clear": "jest --clearCache",
-    "test:run": "cross-env NODE_ENV=test npm-run-all -s setup-test-db db:reset db:migrate db:seed test"
+    "test:run": "cross-env NODE_ENV=test npm-run-all -s db:create db:reset db:migrate db:seed test"
   },
   "license": "MIT",
   "dependencies": {
@@ -48,7 +48,6 @@
     "jest": "26.1.0",
     "nodemon": "2.0.4",
     "npm-run-all": "4.1.5",
-    "pgtools": "0.3.0",
     "sequelize-cli": "6.2.0",
     "supertest": "4.0.2",
     "swagger-ui-express": "4.1.4",
