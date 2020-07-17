@@ -83,7 +83,8 @@ module.exports = {
     );
   },
   createTemp: async (user) => {
-    await models.User.create(user);
+    const createdUser = await models.User.create(user);
+    return createdUser;
   },
   destroyTemp: async (user) => {
     await models.User.destroy({ where: { email: user.email } });

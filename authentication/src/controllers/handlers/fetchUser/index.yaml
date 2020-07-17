@@ -14,63 +14,61 @@ get:
         type: integer
   responses:
     "200":
-      description: Users array
+      description: User object
       content:
         application/json:
           schema:
-            type: array
-            items:
-              type: object
-              properties:
-                id:
-                  type: integer
-                  example: "123"
-                email:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: "123"
+              email:
+                type: string
+                format: email
+                example: "catalin@medical.equipment"
+              fullName:
+                type: string
+                example: "Catalin Rizea"
+              firstName:
+                type: string
+                example: "Catalin"
+              lastName:
+                type: string
+                example: "Rizea"
+              role:
+                type: array
+                items:
                   type: string
-                  format: email
-                  example: "catalin@medical.equipment"
-                fullName:
-                  type: string
-                  example: "Catalin Rizea"
-                firstName:
-                  type: string
-                  example: "Catalin"
-                lastName:
-                  type: string
-                  example: "Rizea"
-                role:
-                  type: array
-                  items:
+                  example: "User"
+              isBlocked:
+                type: boolean
+                example: "false"
+              blockedByIp:
+                type: string
+                example: "127.0.0.1"
+              blockedBy:
+                type: object
+                properties:
+                  email: 
                     type: string
-                    example: "User"
-                isBlocked:
-                  type: boolean
-                  example: "false"
-                blockedByIp:
-                  type: string
-                  example: "127.0.0.1"
-                blockedBy:
-                  type: object
-                  properties:
-                    email: 
-                      type: string
-                      format: email
-                      example: "simona@medical.equipment"
-                    fullName:
-                      type: string
-                      example: "Simona Galushka"
-                    firstName:
-                      type: string
-                      example: "Simona"
-                    lastName:
-                      type: string
-                      example: "Galushka"
-                createdAt:
-                  type: string
-                  example: "2020-07-13 17:16:11.492+00"
-                updatedAt:
-                  type: string
-                  example: "2020-07-13 17:24:36.068+00"
+                    format: email
+                    example: "simona@medical.equipment"
+                  fullName:
+                    type: string
+                    example: "Simona Galushka"
+                  firstName:
+                    type: string
+                    example: "Simona"
+                  lastName:
+                    type: string
+                    example: "Galushka"
+              createdAt:
+                type: string
+                example: "2020-07-13 17:16:11.492+00"
+              updatedAt:
+                type: string
+                example: "2020-07-13 17:24:36.068+00"
     "400":
       description: Bad request
       content:
