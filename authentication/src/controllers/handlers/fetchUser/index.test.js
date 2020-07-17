@@ -11,7 +11,7 @@ const {
 const path = `${prefix}/fetch-user`;
 
 describe('/fetch-user endpoint', () => {
-  it('should return valid signup invitation', async (done) => {
+  it('should return the user object', async (done) => {
     const user = {
       ...tempUser,
       isBlocked: true,
