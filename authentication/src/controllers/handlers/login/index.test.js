@@ -59,18 +59,19 @@ describe('/login endpoint', () => {
   });
 
   it('should return 401 unauthorized when access is revoked', async (done) => {
-    await createTemp();
+    const user = { ...tempUser, isBlocked: true };
+    await createTemp(user);
 
     const res = await testApi
       .post(path)
-      .send({ email: tempUser.email, password: tempUser.password });
+      .send({ email: user.email, password: user.password });
 
     expect(res.statusCode).toEqual(401);
     expect(res.body).toHaveProperty('type');
     expect(res.body.type).toEqual('Unauthorized');
     expect(res.body.message).toEqual('Access revoked');
 
-    await destroyTemp();
+    await destroyTemp(user);
 
     done();
   });

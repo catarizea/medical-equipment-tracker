@@ -35,7 +35,7 @@ const tempUser = {
   lastName: 'Ciompo',
   email: 'stela@medical.equipment',
   role: ['User'],
-  isBlocked: true,
+  isBlocked: false,
   passwordHash: '$2a$10$EET8MHMUPZ4s4GkCnqWwp.dG5msvPNw9Ar/4RcsLx.r./Cv6SWGD6',
 };
 
@@ -82,10 +82,10 @@ module.exports = {
       { where: { id: user.id } }
     );
   },
-  createTemp: async () => {
-    await models.User.create(tempUser);
+  createTemp: async (user) => {
+    await models.User.create(user);
   },
-  destroyTemp: async () => {
-    await models.User.destroy({ where: { email: tempUser.email } });
+  destroyTemp: async (user) => {
+    await models.User.destroy({ where: { email: user.email } });
   },
 };

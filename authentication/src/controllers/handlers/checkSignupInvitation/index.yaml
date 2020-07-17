@@ -42,6 +42,5 @@ get:
         application/json:
           schema:
             oneOf:
-              - $ref: "#/components/schemas/InvalidRefreshToken"
               - $ref: "#/components/schemas/AccountExistsForEmail"
               - $ref: "#/components/schemas/InvalidSignUpInvitation"
