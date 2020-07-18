@@ -12,7 +12,7 @@ const path = `${prefix}/remove-user`;
 
 describe('/remove-user endpoint', () => {
   it('should remove an existing user', async (done) => {
-    const { jwtToken } = await login(adminUser, true);
+    const { jwtToken } = await login(adminUser);
 
     const user = { ...tempUser };
     const createdTemp = await createTemp(user);
@@ -36,7 +36,7 @@ describe('/remove-user endpoint', () => {
   });
 
   it('should fail if admin user tries to remove own account', async (done) => {
-    const { jwtToken } = await login(adminUser, true);
+    const { jwtToken } = await login(adminUser);
 
     const res = await testApi
       .delete(`${path}/1`)
