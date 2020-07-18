@@ -40,7 +40,7 @@ describe('/signup endpoint', () => {
 
     const res = await testApi.post(path).send(user);
 
-    // expect(res.statusCode).toEqual(200);
+    expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(
       expect.objectContaining({
         jwtToken: expect.any(String),

@@ -46,4 +46,28 @@ describe('/change-password endpoint', () => {
 
     done();
   });
+
+  it('should fail when currentPassword is not provided as owner of the record', async (done) => {
+    const credentials = await login(defaultUser);
+
+    const res = await testApi
+      .put(`${path}/${defaultUser.id}`)
+      .set('Authorization', `Bearer ${credentials.jwtToken}`)
+      .send({
+        password: newPassword,
+        confirmPassword: newPassword,
+      });
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toEqual(
+      expect.objectContaining({
+        type: 'Validation error',
+        message: {
+          currentPassword: 'Current password is required',
+        },
+      })
+    );
+
+    done();
+  });
 });
