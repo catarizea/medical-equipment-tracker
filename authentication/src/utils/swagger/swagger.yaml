@@ -150,7 +150,7 @@ components:
       properties:
         type: 
           type: string
-          example: "Bad request"
+          example: "Bad Request"
         message:
           type: string
           example: "Account already exists for this email"
@@ -159,7 +159,7 @@ components:
       properties:
         type: 
           type: string
-          example: "Bad request"
+          example: "Bad Request"
         message:
           type: string
           example: "Token already revoked"
@@ -180,7 +180,7 @@ components:
       properties:
         type: 
           type: string
-          example: "Bad request"
+          example: "Bad Request"
         message:
           type: string
           example: "Invalid sign up invitation"
@@ -216,7 +216,7 @@ components:
       properties:
         type: 
           type: string
-          example: "Bad request"
+          example: "Bad Request"
         message:
           type: string
           example: "No account for this email"
@@ -225,7 +225,7 @@ components:
       properties:
         type: 
           type: string
-          example: "Bad request"
+          example: "Bad Request"
         message:
           type: string
           example: "No account for this id"
@@ -264,7 +264,7 @@ components:
       properties:
         type: 
           type: string
-          example: "Bad request"
+          example: "Bad Request"
         message:
           type: string
           example: "Reset link already used"
@@ -273,7 +273,7 @@ components:
       properties:
         type: 
           type: string
-          example: "Bad request"
+          example: "Bad Request"
         message:
           type: string
           example: "Expired reset link"
@@ -303,7 +303,7 @@ components:
       properties:
         type: 
           type: string
-          example: "Bad request"
+          example: "Bad Request"
         message:
           type: string
           example: "Access already revoked for this account"
@@ -348,7 +348,7 @@ components:
       properties:
         type: 
           type: string
-          example: "Bad request"
+          example: "Bad Request"
         message:
           type: string
           example: "Access is not revoked for this account"
@@ -357,7 +357,7 @@ components:
       properties:
         type: 
           type: string
-          example: "Bad request"
+          example: "Bad Request"
         message:
           type: string
           example: "Entity parse failed"
@@ -366,7 +366,7 @@ components:
       properties:
         type: 
           type: string
-          example: "Bad request"
+          example: "Bad Request"
         message:
           type: string
           example: "Current password is required"
@@ -375,7 +375,7 @@ components:
       properties:
         type: 
           type: string
-          example: "Bad request"
+          example: "Bad Request"
         message:
           type: string
           example: "Current password is incorrect"

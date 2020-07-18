@@ -20,7 +20,7 @@ const handleErrors = (err, req, res, next) => {
     case err.type && err.type === 'entity.parse.failed':
       return res
           .status(400)
-          .json({ type: 'Bad request', message: 'Entity parse failed' });
+          .json({ type: 'Bad Request', message: 'Entity parse failed' });
     
     case err.isBoom:
       const {
