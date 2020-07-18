@@ -6,7 +6,6 @@ const {
   tempUser,
   createTemp,
   destroyTemp,
-  revokeAccess,
   updateBlocked,
 } = require('../../../utils/testHelpers/user');
 const { REFRESH_TOKEN_COOKIE } = require('../../../constants/cookies');

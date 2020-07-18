@@ -89,4 +89,7 @@ module.exports = {
   destroyTemp: async (user) => {
     await models.User.destroy({ where: { email: user.email } });
   },
+  destroyRemovedUser: async (user) => {
+    await models.RemovedUser.destroy({ where: { email: user.email } });
+  },
 };
