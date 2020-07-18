@@ -8,10 +8,8 @@ require('dotenv').config({
 });
 
 const { validate } = require('../../../middlewares');
-const {
-  generateJwtToken,
-  generateRefreshToken,
-} = require('../../../services');
+const generateRefreshToken = require('../../../services/generateRefreshToken');
+const generateJwtToken = require('../../../services/generateJwtToken');
 const logger = require('../../../services/logger');
 const models = require('../../../models');
 const { REFRESH_TOKEN_COOKIE } = require('../../../constants/cookies');

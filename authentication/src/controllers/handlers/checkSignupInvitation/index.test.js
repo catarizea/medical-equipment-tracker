@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require('uuid');
+
 const { testApi } = require('../../../services');
 const prefix = require('../../../constants/apiUrlPrefix');
 const {
@@ -8,12 +10,19 @@ const {
 let invited;
 const path = `${prefix}/check-signup-invitation`;
 
+const invitee = {
+  email: 'boshuruku@medical.equipment',
+  name: 'Boshuruku',
+  UserId: 1,
+  token: uuidv4(),
+};
+
 beforeAll(async () => {
-  invited = await createSignupInvitation();
+  invited = await createSignupInvitation(invitee);
 });
 
 afterAll(async () => {
-  await destroySignupInvitation();
+  await destroySignupInvitation(invitee);
 });
 
 describe('/check-signup-invitation endpoint', () => {  
