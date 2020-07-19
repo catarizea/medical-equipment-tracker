@@ -13,8 +13,9 @@
     "packages/*"
   ],
   "scripts": {
-    "authentication:start": "dotenv -e .env.production.local -- yarn --cwd authentication start",
     "authentication:dev": "dotenv -e .env.development.local -- yarn --cwd authentication dev",
+    "authentication:first": "dotenv -e .env.production.local -- yarn --cwd authentication db:first",
+    "authentication:start": "dotenv -e .env.production.local -- yarn --cwd authentication start",
     "authentication:test:clear": "dotenv -e .env.test.local -- yarn --cwd authentication test:clear",
     "authentication:test:coverage": "yarn --cwd authentication test:coverage",
     "authentication:test:run": "dotenv -e .env.test.local -- yarn --cwd authentication test:run",
