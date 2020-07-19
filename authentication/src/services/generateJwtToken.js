@@ -1,8 +1,5 @@
 const jwt = require('jsonwebtoken');
-const path = require('path');
 const { roles } = require('@medical-equipment-tracker/validator');
-
-require('dotenv').config({ path: path.join(__dirname, '../../..', `.env.${process.env.NODE_ENV}.local`) });
 
 const jwtSecret = JSON.parse(process.env.HASURA_GRAPHQL_JWT_SECRET);
 const customClaims = process.env.AUTHENTICATION_CUSTOM_CLAIMS

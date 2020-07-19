@@ -1,14 +1,9 @@
-const path = require('path');
 const Boom = require('@hapi/boom');
 
 const generateJwtToken = require('./generateJwtToken');
 const generateRefreshToken = require('./generateRefreshToken');
 const logger = require('./logger');
 const models = require('../models');
-
-require('dotenv').config({
-  path: path.join(__dirname, '../../..', `.env.${process.env.NODE_ENV}.local`),
-});
 
 const refreshTokens = async (oldRefreshToken, ip, next) => {
   const { User: user } = oldRefreshToken;

@@ -1,4 +1,3 @@
-const path = require('path');
 const validator = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
 const mailer = require('@medical-equipment-tracker/mailer');
@@ -9,10 +8,6 @@ const models = require('../../../models');
 const renderTextMessage = require('../../../utils/emailTemplates/inviteSignup/textTemplate');
 const renderHtmlMessage = require('../../../utils/emailTemplates/inviteSignup/htmlTemplate');
 const logger = require('../../../services/logger');
-
-require('dotenv').config({
-  path: path.join(__dirname, '../../../../..', `.env.${process.env.NODE_ENV}.local`),
-});
 
 module.exports = {
   validateInviteSignup: async (req, res, next) => {

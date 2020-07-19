@@ -1,4 +1,3 @@
-const path = require('path');
 const validator = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
 const { v4: uuidv4 } = require('uuid');
@@ -10,10 +9,6 @@ const { revokeAccess } = require('../logout');
 const renderTextMessage = require('../../../utils/emailTemplates/forgotPassword/textTemplate');
 const renderHtmlMessage = require('../../../utils/emailTemplates/forgotPassword/htmlTemplate');
 const logger = require('../../../services/logger');
-  
-require('dotenv').config({
-  path: path.join(__dirname, '../../../../..', `.env.${process.env.NODE_ENV}.local`),
-});
 
 module.exports = {
   validateForgotPassword: async (req, res, next) => {

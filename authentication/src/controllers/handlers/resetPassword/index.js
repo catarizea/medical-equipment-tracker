@@ -1,11 +1,6 @@
-const path = require('path');
 const Boom = require('@hapi/boom');
 const validator = require('@medical-equipment-tracker/validator');
 const bcrypt = require('bcryptjs');
-
-require('dotenv').config({
-  path: path.join(__dirname, '../../../../../..', `.env.${process.env.NODE_ENV}.local`),
-});
 
 const { validate } = require('../../../middlewares');
 const generateRefreshToken = require('../../../services/generateRefreshToken');

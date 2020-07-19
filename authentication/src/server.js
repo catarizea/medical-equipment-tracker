@@ -6,10 +6,6 @@ const bodyParser = require('body-parser');
 
 const { httpLogger } = require('./middlewares');
 
-require('dotenv').config({
-  path: path.join(__dirname, '../..', `.env.${process.env.NODE_ENV}.local`),
-});
-
 const app = express();
 
 app.use(

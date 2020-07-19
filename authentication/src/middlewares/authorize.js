@@ -1,4 +1,3 @@
-const path = require('path');
 const Boom = require('@hapi/boom');
 const expressJwt = require('express-jwt');
 const get = require('lodash.get');
@@ -7,8 +6,6 @@ const intersection = require('lodash.intersection');
 const models = require('../models');
 const { KEY } = require('../constants/claims');
 const { revokeAccess } = require('../controllers/handlers/logout');
-
-require('dotenv').config({ path: path.join(__dirname, '../../..', `.env.${process.env.NODE_ENV}.local`) });
 
 const secret = JSON.parse(process.env.HASURA_GRAPHQL_JWT_SECRET);
 
