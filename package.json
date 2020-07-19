@@ -13,16 +13,16 @@
     "packages/*"
   ],
   "scripts": {
-    "authentication:start": "cross-env NODE_ENV=production dotenv -e .env.production.local -- yarn --cwd authentication start",
-    "authentication:dev": "cross-env NODE_ENV=development dotenv -e .env.development.local -- yarn --cwd authentication dev",
-    "authentication:test:clear": "cross-env NODE_ENV=test dotenv -e .env.test.local -- yarn --cwd authentication test:clear",
+    "authentication:start": "dotenv -e .env.production.local -- yarn --cwd authentication start",
+    "authentication:dev": "dotenv -e .env.development.local -- yarn --cwd authentication dev",
+    "authentication:test:clear": "dotenv -e .env.test.local -- yarn --cwd authentication test:clear",
     "authentication:test:coverage": "yarn --cwd authentication test:coverage",
-    "authentication:test:run": "cross-env NODE_ENV=test dotenv -e .env.test.local -- yarn --cwd authentication test:run",
+    "authentication:test:run": "dotenv -e .env.test.local -- yarn --cwd authentication test:run",
     "frontend:build": "cross-env NODE_ENV=production yarn --cwd frontend build",
     "clear": "rm -rf node_modules */node_modules packages/*/node_modules",
     "containers:stop": "docker stop medical-equipment-tracker_postgres_1 medical-equipment-tracker_graphql-engine_1",
-    "hasura:start:dev": "cross-env NODE_ENV=development dotenv -e .env.development.local -- docker-compose up -d",
-    "hasura:start": "cross-env NODE_ENV=production dotenv -e .env.production.local -- docker-compose up -d"
+    "hasura:start:dev": "dotenv -e .env.development.local -- docker-compose up -d",
+    "hasura:start": "dotenv -e .env.production.local -- docker-compose up -d"
   },
   "dependencies": {
     "cross-env": "7.0.2"
