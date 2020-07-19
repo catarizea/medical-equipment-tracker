@@ -21,25 +21,26 @@ Create an internal communication and hospital resources management system to hel
 You need to create two environment variables related files into the root folder of the project, `.env.development.local`, `.env.production.local` and `.env.test.local` having the following structure:
 
 ```bash
-HASURA_POSTGRES_USER=<your_user>
-HASURA_POSTGRES_PASSWORD=<your_password>
+NODE_ENV="<your_node_env>"
+HASURA_POSTGRES_USER="<your_user>"
+HASURA_POSTGRES_PASSWORD="<your_password>"
 HASURA_POSTGRES_PORT=5432
 HASURA_POSTGRES_PORTS="5432:5432"
 HASURA_GRAPHQL_ENABLE_CONSOLE="false"
 HASURA_GRAPHQL_ENABLED_LOG_TYPES="startup, http-log, webhook-log, websocket-log, query-log"
-HASURA_GRAPHQL_ENDPOINT=<your_hasura_endpoint>
+HASURA_GRAPHQL_ENDPOINT="<your_hasura_endpoint>"
 HASURA_GRAPHQL_ADMIN_PORTS="8080:8080"
-HASURA_GRAPHQL_ADMIN_SECRET=<your_secret>
+HASURA_GRAPHQL_ADMIN_SECRET="<your_admin_secret>"
 HASURA_GRAPHQL_JWT_SECRET="{"type":"HS256","key":"<your_secret_key>"}"
 AUTHENTICATION_DB_NAME="authentication"
 AUTHENTICATION_EXPRESS_PORT=<your_port_number>
-AUTHENTICATION_EXPRESS_ENDPOINT=<your_endpoint>
+AUTHENTICATION_EXPRESS_ENDPOINT="<your_endpoint>"
 AUTHENTICATION_REFRESH_TOKEN_EXPIRES=<your_number_of_minutes>
 AUTHENTICATION_JWT_TOKEN_EXPIRES=<your_number_of_minutes>
 AUTHENTICATION_CUSTOM_CLAIMS=""
 AUTHENTICATION_FORGOT_PASSWORD_EXPIRES=<your_number_of_minutes>
 MAILTRAP_HOST="smtp.mailtrap.io"
 MAILTRAP_PORT=2525
-MAILTRAP_USER=<your_mailtrap_user>
-MAILTRAP_PASS=<your_mailtrap_password>
+MAILTRAP_USER="<your_mailtrap_user>"
+MAILTRAP_PASS="<your_mailtrap_password>"
 ```
