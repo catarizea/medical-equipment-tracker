@@ -1,12 +1,6 @@
-const path = require('path');
-
 const models = require('../../models');
 const { generateJwtToken, generateRefreshToken } = require('../../services');
 const { REFRESH_TOKEN_COOKIE } = require('../../constants/cookies');
-
-require('dotenv').config({
-  path: path.join(__dirname, '../../..', '.env.test.local'),
-});
 
 const adminUser = {
   id: 1,

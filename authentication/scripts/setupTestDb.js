@@ -1,9 +1,4 @@
 const pgtools = require('pgtools');
-const path = require('path');
-
-require('dotenv').config({
-  path: path.join(__dirname, '../..', '.env.test.local'),
-});
 
 const config = {
   user: process.env.HASURA_POSTGRES_USER,

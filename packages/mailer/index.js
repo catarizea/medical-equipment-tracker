@@ -1,9 +1,4 @@
-const path = require('path');
 const nodemailer = require('nodemailer');
-
-require('dotenv').config({
-  path: path.join(__dirname, '../..', `.env.${process.env.NODE_ENV}.local`),
-});
 
 let mailer = nodemailer.createTransport({
   sendmail: true,

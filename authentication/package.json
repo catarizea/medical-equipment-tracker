@@ -6,15 +6,16 @@
     "node": ">=8.10.0"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon -e js,yaml src/index.js",
-    "db:create": "cross-env NODE_ENV=test node scripts/setupTestDb.js",
-    "db:migrate": "cross-env NODE_ENV=test sequelize db:migrate",
-    "db:reset": "cross-env NODE_ENV=test sequelize db:migrate:undo:all",
-    "db:seed": "cross-env NODE_ENV=test sequelize db:seed:all",
-    "start": "cross-env NODE_ENV=production node src/index.js",
+    "dev": "nodemon -e js,yaml src/index.js",
+    "db:create": "node scripts/setupTestDb.js",
+    "db:migrate": "sequelize db:migrate",
+    "db:reset": "sequelize db:migrate:undo:all",
+    "db:seed": "sequelize db:seed:all",
+    "start": "node src/index.js",
     "test": "jest --verbose --coverage --detectOpenHandles --forceExit",
     "test:clear": "jest --clearCache",
-    "test:run": "cross-env NODE_ENV=test npm-run-all -s db:create db:reset db:migrate db:seed test"
+    "test:coverage": "live-server coverage/lcov-report --port=3600",
+    "test:run": "npm-run-all -s db:create db:reset db:migrate db:seed test"
   },
   "license": "MIT",
   "dependencies": {
@@ -46,6 +47,7 @@
     "eslint": "7.4.0",
     "eslint-plugin-node": "11.1.0",
     "jest": "26.1.0",
+    "live-server": "1.2.1",
     "nodemon": "2.0.4",
     "npm-run-all": "4.1.5",
     "pgtools": "0.3.0",
