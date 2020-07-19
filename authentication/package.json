@@ -7,7 +7,8 @@
   },
   "scripts": {
     "dev": "nodemon -e js,yaml src/index.js",
-    "db:create": "node scripts/setupTestDb.js",
+    "db:create": "node scripts/setupDb.js",
+    "db:first": "npm-run-all -s db:create db:migrate db:seed",
     "db:migrate": "sequelize db:migrate",
     "db:reset": "sequelize db:migrate:undo:all",
     "db:seed": "sequelize db:seed:all",
