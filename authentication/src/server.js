@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use('/api-docs', require('./utils/swagger'));
 }
 
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV === 'production') {
   const frontendPath = path.join(__dirname, '../..', 'frontend/build');
   app.use(express.static(frontendPath));
 
