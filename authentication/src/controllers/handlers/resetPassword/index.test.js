@@ -16,6 +16,7 @@ const path = `${prefix}/reset-password`;
 
 let user;
 let token;
+let expiredToken;
 
 beforeAll(async () => {
   user = { ...tempUser, email: 'reset-password@medical.equipment' };
@@ -32,10 +33,22 @@ beforeAll(async () => {
   });
 
   token = forgotPassword.token;
+
+
+  const expiredForgotPassword = await createForgotPassword({
+    expiresAt: new Date(Date.now()),
+    used: false,
+    ip: '127.0.0.1',
+    UserId: user.id,
+    token: uuidv4(),
+  });
+
+  expiredToken = expiredForgotPassword.token;
 });
 
 afterAll(async () => {
   await destroyForgotPassword(token);
+  await destroyForgotPassword(expiredToken);
   await destroyTemp(user);
 });
 
@@ -112,6 +125,24 @@ describe('/reset-password endpoint', () => {
       expect.objectContaining({
         type: 'Unauthorized',
         message: 'Invalid token'
+      })
+    );
+
+    done();
+  });
+
+  it('should fail when trying to use an expired reset password link', async (done) => {
+    const res = await testApi.put(path).send({
+      password: 'Password1234',
+      confirmPassword: 'Password1234',
+      token: expiredToken,
+    });
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toEqual(
+      expect.objectContaining({
+        type: 'Bad Request',
+        message: 'Expired reset link'
       })
     );
 
