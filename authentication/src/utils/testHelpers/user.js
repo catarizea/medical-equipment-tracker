@@ -1,6 +1,9 @@
 const models = require('../../models');
 const { generateJwtToken, generateRefreshToken } = require('../../services');
-const { REFRESH_TOKEN_COOKIE } = require('../../constants/cookies');
+const {
+  REFRESH_TOKEN_COOKIE,
+  REFRESH_TOKEN_COOKIE_OPTIONS,
+} = require('../../constants/cookies');
 
 const adminUser = {
   id: 1,
@@ -52,11 +55,7 @@ module.exports = {
       cookie = {
         key: REFRESH_TOKEN_COOKIE,
         value: refreshToken.token,
-        options: {
-          maxAge: process.env.AUTHENTICATION_REFRESH_TOKEN_EXPIRES * 60 * 1000,
-          httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
-        },
+        REFRESH_TOKEN_COOKIE_OPTIONS,
       };
     }
 
