@@ -1,13 +1,11 @@
 const validator = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
-const mailer = require('@medical-equipment-tracker/mailer');
 const { v4: uuidv4 } = require('uuid');
 const { htmlEscape } = require('escape-goat');
+const { publish } = require('@medical-equipment-tracker/message-broker');
 
 const { validate } = require('../../../middlewares');
 const models = require('../../../models');
-const renderTextMessage = require('../../../utils/emailTemplates/inviteSignup/textTemplate');
-const renderHtmlMessage = require('../../../utils/emailTemplates/inviteSignup/htmlTemplate');
 const logger = require('../../../services/logger');
 
 module.exports = {
@@ -61,19 +59,11 @@ module.exports = {
       toName: firstName,
     };
 
-    let emailSent = null;
+    const emailSent = await publish(
+      process.env.WORKER_MAILER_INVITE_QUEUE,
+      JSON.stringify({ to: email, renderVars })
+    );
 
-    try {
-      emailSent = await mailer.sendMail({
-        from: 'noreply@medical.equipment',
-        to: email,
-        subject: 'Invitation to create an account on medical.equipment',
-        text: renderTextMessage(renderVars),
-        html: renderHtmlMessage(renderVars),
-      });
-    } catch (error) {
-      logger.error('inviteSignup email error', error);
-    }
 
     if (!emailSent) {
       return next(Boom.badImplementation());

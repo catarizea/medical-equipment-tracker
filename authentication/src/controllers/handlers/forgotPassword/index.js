@@ -1,15 +1,13 @@
 const validator = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
 const { v4: uuidv4 } = require('uuid');
-const mailer = require('@medical-equipment-tracker/mailer');
 const { htmlEscape } = require('escape-goat');
 
 const { validate } = require('../../../middlewares');
 const models = require('../../../models');
 const { revokeAccess } = require('../logout');
-const renderTextMessage = require('../../../utils/emailTemplates/forgotPassword/textTemplate');
-const renderHtmlMessage = require('../../../utils/emailTemplates/forgotPassword/htmlTemplate');
 const logger = require('../../../services/logger');
+const { publish } = require('@medical-equipment-tracker/message-broker');
 
 module.exports = {
   validateForgotPassword: async (req, res, next) => {
@@ -53,8 +51,6 @@ module.exports = {
       return next(Boom.badImplementation());
     }
 
-    let emailSent = null;
-
     let host = 'https://medical.equipment';
 
     if (process.env.NODE_ENV === 'development') {
@@ -68,24 +64,17 @@ module.exports = {
       fromName: 'Admin',
     };
 
-    try {
-      emailSent = await mailer.sendMail({
-        from: 'noreply@medical.equipment',
-        to: user.email,
-        subject: 'Reset your password on medical.equipment',
-        text: renderTextMessage(renderVars),
-        html: renderHtmlMessage(renderVars),
-      });    
-    } catch (error) {
-      logger.error('forgotPassword email error', error);
-    }
+    const emailSent = await publish(
+      process.env.WORKER_MAILER_FORGOT_QUEUE,
+      JSON.stringify({ to: user.email, renderVars })
+    );
 
     if (!emailSent) {
       return next(Boom.badImplementation());
     }
 
     logger.info(JSON.stringify(emailSent, null, 2));
-    
+
     res.json({ result: 'Reset email message sent' });
   },
 };
