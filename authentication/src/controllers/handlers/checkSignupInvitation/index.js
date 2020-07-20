@@ -5,6 +5,7 @@ const pick = require('lodash.pick');
 const { validate } = require('../../../middlewares');
 const models = require('../../../models');
 const logger = require('../../../services/logger');
+const { htmlEscape } = require('escape-goat');
 
 module.exports = {
   validateSignupInvitation: async (req, res, next) => {
@@ -12,7 +13,7 @@ module.exports = {
   },
 
   findSignupInvitation: async (req, res, next) => {
-    const { token } = req.params;
+    const token = htmlEscape(req.params.token);
 
     const signupInvitation = await models.SignupInvitation.findOne({
       where: { token },

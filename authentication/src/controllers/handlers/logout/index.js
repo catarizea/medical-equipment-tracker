@@ -2,9 +2,10 @@
 const models = require('../../../models');
 const { REFRESH_TOKEN_COOKIE } = require('../../../constants/cookies');
 const logger = require('../../../services/logger');
+const { htmlEscape } = require('escape-goat');
 
 const revokeAccess = async (req, res) => {
-  const refreshToken = req.cookies[REFRESH_TOKEN_COOKIE];
+  const refreshToken = htmlEscape(req.cookies[REFRESH_TOKEN_COOKIE]);
 
   if (refreshToken) {
     const revokedToken = {

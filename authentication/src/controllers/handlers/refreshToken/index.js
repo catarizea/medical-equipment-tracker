@@ -1,4 +1,5 @@
 const Boom = require('@hapi/boom');
+const { htmlEscape } = require('escape-goat');
 
 const models = require('../../../models');
 const refreshTokens = require('../../../services/refreshTokens');
@@ -10,7 +11,7 @@ const { revokeAccess } = require('../logout');
 
 module.exports = {
   refreshToken: async (req, res, next) => {
-    const refreshToken = req.cookies[REFRESH_TOKEN_COOKIE];
+    const refreshToken = htmlEscape(req.cookies[REFRESH_TOKEN_COOKIE]);
 
     if (!refreshToken) {
       return next(Boom.unauthorized('Unauthorized'));
