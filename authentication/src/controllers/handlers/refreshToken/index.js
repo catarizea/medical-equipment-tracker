@@ -2,7 +2,10 @@ const Boom = require('@hapi/boom');
 
 const models = require('../../../models');
 const refreshTokens = require('../../../services/refreshTokens');
-const { REFRESH_TOKEN_COOKIE } = require('../../../constants/cookies');
+const {
+  REFRESH_TOKEN_COOKIE,
+  REFRESH_TOKEN_COOKIE_OPTIONS,
+} = require('../../../constants/cookies');
 const { revokeAccess } = require('../logout');
 
 module.exports = {
@@ -42,11 +45,11 @@ module.exports = {
       return next(Boom.badImplementation());
     }
 
-    res.cookie(REFRESH_TOKEN_COOKIE, newTokens.refreshToken.token, {
-      maxAge: process.env.AUTHENTICATION_REFRESH_TOKEN_EXPIRES * 60 * 1000,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-    });
+    res.cookie(
+      REFRESH_TOKEN_COOKIE,
+      newTokens.refreshToken.token,
+      REFRESH_TOKEN_COOKIE_OPTIONS
+    );
 
     res.json({ ...newTokens });
   },

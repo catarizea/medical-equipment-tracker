@@ -7,7 +7,10 @@ const generateRefreshToken = require('../../../services/generateRefreshToken');
 const generateJwtToken = require('../../../services/generateJwtToken');
 const logger = require('../../../services/logger');
 const models = require('../../../models');
-const { REFRESH_TOKEN_COOKIE } = require('../../../constants/cookies');
+const {
+  REFRESH_TOKEN_COOKIE,
+  REFRESH_TOKEN_COOKIE_OPTIONS,
+} = require('../../../constants/cookies');
 const { roles } = validator;
 
 module.exports = {
@@ -61,7 +64,7 @@ module.exports = {
 
       await t.commit();
     } catch (error) {
-      logger.error('signup transaction failed', error)
+      logger.error('signup transaction failed', error);
 
       await t.rollback();
       transactionSuccessful = false;
@@ -83,11 +86,11 @@ module.exports = {
       return next(Boom.badImplementation());
     }
 
-    res.cookie(REFRESH_TOKEN_COOKIE, refreshToken.token, {
-      maxAge: process.env.AUTHENTICATION_REFRESH_TOKEN_EXPIRES * 60 * 1000,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-    });
+    res.cookie(
+      REFRESH_TOKEN_COOKIE,
+      refreshToken.token,
+      REFRESH_TOKEN_COOKIE_OPTIONS
+    );
 
     res.json({
       jwtToken,
