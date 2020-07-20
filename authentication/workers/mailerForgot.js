@@ -6,11 +6,11 @@ const renderTextMessage = require('../src/utils/emailTemplates/forgotPassword/te
 const renderHtmlMessage = require('../src/utils/emailTemplates/forgotPassword/htmlTemplate');
 
 const consumer = async (msg, ch) => {
-  console.log('Forgot password task received...');
   const { to, renderVars } = JSON.parse(msg.content);
+  logger.info(`forgot mail to send to ${to}`);
 
   try {
-    emailSent = await mailer.sendMail({
+    await mailer.sendMail({
       from: 'noreply@medical.equipment',
       to,
       subject: 'Reset your password on medical.equipment',

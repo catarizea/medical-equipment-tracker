@@ -6,11 +6,11 @@ const renderTextMessage = require('../src/utils/emailTemplates/inviteSignup/text
 const renderHtmlMessage = require('../src/utils/emailTemplates/inviteSignup/htmlTemplate');
 
 const consumer = async (msg, ch) => {
-  console.log('Invite signup task received...');
   const { to, renderVars } = JSON.parse(msg.content);
+  logger.info(`signup invite mail to send to ${to}`);
 
   try {
-    emailSent = await mailer.sendMail({
+    await mailer.sendMail({
       from: 'noreply@medical.equipment',
       to,
       subject: 'Invitation to create an account on medical.equipment',
