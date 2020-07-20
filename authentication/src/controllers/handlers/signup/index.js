@@ -1,6 +1,7 @@
 const validator = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
 const bcrypt = require('bcryptjs');
+const { htmlEscape } = require('escape-goat');
 
 const { validate } = require('../../../middlewares');
 const generateRefreshToken = require('../../../services/generateRefreshToken');
@@ -19,8 +20,12 @@ module.exports = {
   },
 
   signup: async (req, res, next) => {
-    const { firstName, lastName, email, password, token } = req.body;
-
+    const { password } = req.body;
+    const firstName = htmlEscape(req.body.firstName);
+    const lastName = htmlEscape(req.body.lastName);
+    const email = htmlEscape(req.body.email);
+    const token = htmlEscape(req.body.token);
+  
     const signupInvitation = await models.SignupInvitation.findOne({
       where: { token },
     });
