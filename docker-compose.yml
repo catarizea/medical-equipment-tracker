@@ -9,6 +9,7 @@ services:
     - db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${HASURA_POSTGRES_PASSWORD}
+
   graphql-engine:
     image: hasura/graphql-engine:v1.2.2
     ports:
@@ -22,6 +23,19 @@ services:
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: ${HASURA_GRAPHQL_ENABLED_LOG_TYPES}
       HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
       HASURA_GRAPHQL_JWT_SECRET: ${HASURA_GRAPHQL_JWT_SECRET}
+
+  redis:
+    image: docker.io/bitnami/redis:6.0-debian-10
+    environment:
+      - ALLOW_EMPTY_PASSWORD=no
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_DISABLE_COMMANDS=${REDIS_DISABLE_COMMANDS}
+    ports:
+      - ${REDIS_PORTS}
+    volumes:
+      - redis_data:/bitnami/redis/data
+
 volumes:
   db_data:
-    
+  redis_data:
+    driver: local

@@ -22,7 +22,7 @@
     "frontend:start": "cross-env NODE_ENV=development yarn --cwd frontend start",
     "frontend:build": "cross-env NODE_ENV=production yarn --cwd frontend build",
     "clear": "rm -rf node_modules */node_modules packages/*/node_modules",
-    "containers:stop": "docker stop medical-equipment-tracker_postgres_1 medical-equipment-tracker_graphql-engine_1",
+    "containers:stop": "docker stop medical-equipment-tracker_postgres_1 medical-equipment-tracker_graphql-engine_1 medical-equipment-tracker_redis_1",
     "hasura:dev": "dotenv -e .env.development.local -- docker-compose up -d",
     "hasura:start": "dotenv -e .env.production.local -- docker-compose up -d"
   },

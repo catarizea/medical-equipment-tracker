@@ -43,4 +43,7 @@ MAILTRAP_HOST="smtp.mailtrap.io"
 MAILTRAP_PORT=2525
 MAILTRAP_USER="<your_mailtrap_user>"
 MAILTRAP_PASS="<your_mailtrap_password>"
+REDIS_PASSWORD="<your_redis_password>"
+REDIS_DISABLE_COMMANDS="<your_redis_disable_commands>"
+REDIS_PORTS="6379:6379"
 ```
