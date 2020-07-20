@@ -2,6 +2,7 @@ const validator = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
 const { v4: uuidv4 } = require('uuid');
 const mailer = require('@medical-equipment-tracker/mailer');
+const { htmlEscape } = require('escape-goat');
 
 const { validate } = require('../../../middlewares');
 const models = require('../../../models');
@@ -16,7 +17,7 @@ module.exports = {
   },
 
   forgotPassword: async (req, res, next) => {
-    const { email } = req.body;
+    const email = htmlEscape(req.body.email);
 
     const user = await models.User.findOne({ where: { email } });
 

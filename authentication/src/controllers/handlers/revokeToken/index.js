@@ -1,6 +1,7 @@
 const Boom = require('@hapi/boom');
 const intersection = require('lodash.intersection');
 const validator = require('@medical-equipment-tracker/validator');
+const { htmlEscape } = require('escape-goat');
 
 const models = require('../../../models');
 const { validate } = require('../../../middlewares');
@@ -15,7 +16,7 @@ module.exports = {
 
   revokeToken: async (req, res, next) => {
     const { user } = req;
-    const { token } = req.body;
+    const token = htmlEscape(req.body.token);
 
     const refreshToken = await models.RefreshToken.findOne({
       where: { token },
