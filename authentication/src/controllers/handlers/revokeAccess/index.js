@@ -50,7 +50,7 @@ module.exports = {
 
       await t.commit();
     } catch (error) {
-      logger.error('revokeAccess transaction failed', error);
+      logger.error('[API] revokeAccess transaction failed', error);
 
       await t.rollback();
       transactionSuccessful = false;

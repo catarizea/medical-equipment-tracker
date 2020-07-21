@@ -56,7 +56,7 @@ module.exports = {
     try {
       passwordHash = await bcrypt.hash(password, 10);
     } catch (error) {
-      logger.error('changePassword hashing error', error);
+      logger.error('[API] changePassword hashing error', error);
     }
 
     if (!passwordHash) {
@@ -71,7 +71,7 @@ module.exports = {
         { where: { id: foundUser.id } }
       );
     } catch (error) {
-      logger.error('changePassword update error', error);
+      logger.error('[API] changePassword update error', error);
     }
 
     if (!updatedUser) {

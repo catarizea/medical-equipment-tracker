@@ -1,20 +1,21 @@
-version: '3.6'
+version: "3.6"
 services:
   postgres:
     image: postgres:12
     ports:
-    - ${HASURA_POSTGRES_PORTS}
+      - ${HASURA_POSTGRES_PORTS}
     restart: always
     volumes:
-    - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${HASURA_POSTGRES_PASSWORD}
+
   graphql-engine:
     image: hasura/graphql-engine:v1.2.2
     ports:
-    - ${HASURA_GRAPHQL_ADMIN_PORTS}
+      - ${HASURA_GRAPHQL_ADMIN_PORTS}
     depends_on:
-    - "postgres"
+      - "postgres"
     restart: always
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://${HASURA_POSTGRES_USER}:${HASURA_POSTGRES_PASSWORD}@postgres:${HASURA_POSTGRES_PORT}/postgres
@@ -22,6 +23,34 @@ services:
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: ${HASURA_GRAPHQL_ENABLED_LOG_TYPES}
       HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
       HASURA_GRAPHQL_JWT_SECRET: ${HASURA_GRAPHQL_JWT_SECRET}
+
+  redis:
+    image: docker.io/bitnami/redis:6.0-debian-10
+    environment:
+      - ALLOW_EMPTY_PASSWORD=no
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_DISABLE_COMMANDS=${REDIS_DISABLE_COMMANDS}
+    ports:
+      - ${REDIS_PORTS}
+    restart: always
+    volumes:
+      - redis_data:/bitnami/redis/data
+
+  rabbitmq:
+    image: bitnami/rabbitmq:latest
+    environment:
+      - RABBITMQ_USERNAME=${RABBITMQ_USERNAME}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+    ports:
+      - ${RABBITMQ_PORTS}
+      - ${RABBITMQ_PORTS_ADMIN}
+    restart: always
+    volumes:
+      - rabbitmqstats_data:/bitnami
+
 volumes:
   db_data:
-    
+  redis_data:
+    driver: local
+  rabbitmqstats_data:
+    driver: local

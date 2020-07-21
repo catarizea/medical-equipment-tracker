@@ -40,7 +40,7 @@ module.exports = {
 
       await t.commit();
     } catch (error) {
-      logger.error('removeUser transaction failed', error)
+      logger.error('[API] removeUser transaction failed', error)
       
       await t.rollback();
       transactionSuccessful = false;

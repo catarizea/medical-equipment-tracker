@@ -11,6 +11,10 @@ const { revokeAccess } = require('../logout');
 
 module.exports = {
   refreshToken: async (req, res, next) => {
+    if (!req.cookies[REFRESH_TOKEN_COOKIE]) {
+      return next(Boom.unauthorized('Unauthorized'));
+    }
+
     const refreshToken = htmlEscape(req.cookies[REFRESH_TOKEN_COOKIE]);
 
     if (!refreshToken) {

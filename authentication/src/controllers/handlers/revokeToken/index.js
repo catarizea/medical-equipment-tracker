@@ -46,7 +46,7 @@ module.exports = {
         where: { id: refreshToken.id },
       });
     } catch (error) {
-      logger.error('revokeToken error', error);
+      logger.error('[API] revokeToken error', error);
     }
 
     if (!tokenRevoked) {

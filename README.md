@@ -43,4 +43,15 @@ MAILTRAP_HOST="smtp.mailtrap.io"
 MAILTRAP_PORT=2525
 MAILTRAP_USER="<your_mailtrap_user>"
 MAILTRAP_PASS="<your_mailtrap_password>"
+REDIS_PASSWORD="<your_redis_password>"
+REDIS_DISABLE_COMMANDS="<your_redis_disable_commands>"
+REDIS_PORTS="6379:6379"
+RABBITMQ_USERNAME="<your_rabbitmq_username>"
+RABBITMQ_PASSWORD="<your_rabbitmq_password>"
+RABBITMQ_HOST="<your_rabbitmq_host>"
+RABBITMQ_PORT=5672
+RABBITMQ_PORTS="5672:5672"
+RABBITMQ_PORTS_ADMIN="15672:15672"
+WORKER_MAILER_INVITE_QUEUE="<your_mailer_invite_queue_name>"
+WORKER_MAILER_FORGOT_QUEUE="<your_mailer_forgot_queue_name>"
 ```

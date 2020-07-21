@@ -22,7 +22,7 @@ const generateRefreshToken = async (user, ip) => {
 
     refreshToken = pick(newToken, ['token', 'expiresAt']);
   } catch (error) {
-    logger.error('generateRefreshToken error', error);
+    logger.error('[API] generateRefreshToken error', error);
   }
 
   return refreshToken;
