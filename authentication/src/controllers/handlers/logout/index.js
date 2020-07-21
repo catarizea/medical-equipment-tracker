@@ -18,7 +18,7 @@ const revokeAccess = async (req, res) => {
         where: { token: refreshToken },
       });
     } catch (error) {
-      logger.error('logout error', error);
+      logger.error('[API] logout error', error);
     }
   }
 

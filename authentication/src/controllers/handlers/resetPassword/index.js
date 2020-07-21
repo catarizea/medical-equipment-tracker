@@ -55,7 +55,7 @@ module.exports = {
     try {
       passwordHash = await bcrypt.hash(password, 10);
     } catch (error) {
-      logger.error('resetPassword hashing error', error);
+      logger.error('[API] resetPassword hashing error', error);
     }
 
     if (!passwordHash) {
@@ -83,7 +83,7 @@ module.exports = {
 
       await t.commit();
     } catch (error) {
-      logger.error('resetPassword transaction failed', error);
+      logger.error('[API] resetPassword transaction failed', error);
 
       await t.rollback();
       transactionSuccessful = false;

@@ -36,7 +36,7 @@ module.exports = {
       );
       
     } catch (error) {
-      logger.error('undoRevokeAccess update failed', error);
+      logger.error('[API] undoRevokeAccess update failed', error);
     }
 
     if (!updatedUser) {

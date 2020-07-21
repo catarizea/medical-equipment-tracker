@@ -5,9 +5,13 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 
-const { httpLogger } = require('./middlewares');
+const { httpLogger, rateLimiterRedis } = require('./middlewares');
 
 const app = express();
+
+if (process.env.NODE_ENV !== 'test') {
+  app.use(rateLimiterRedis);
+}
 
 app.use(
   cors({

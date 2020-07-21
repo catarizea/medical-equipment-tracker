@@ -23,7 +23,7 @@ module.exports = {
     try {
       users = await models.User.findAll({ where, attributes });
     } catch (error) {
-      logger.error('fetchUsers findAll error', error);
+      logger.error('[API] fetchUsers findAll error', error);
     }
 
     res.json(users);

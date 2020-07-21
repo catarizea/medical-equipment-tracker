@@ -39,7 +39,7 @@ module.exports = {
     try {
       passwordHash = await bcrypt.hash(password, 10);
     } catch (error) {
-      logger.error('signup hashing error', error);
+      logger.error('[API] signup hashing error', error);
     }
 
     if (!passwordHash) {
@@ -69,7 +69,7 @@ module.exports = {
 
       await t.commit();
     } catch (error) {
-      logger.error('signup transaction failed', error);
+      logger.error('[API] signup transaction failed', error);
 
       await t.rollback();
       transactionSuccessful = false;

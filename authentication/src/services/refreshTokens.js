@@ -28,7 +28,7 @@ const refreshTokens = async (oldRefreshToken, ip, next) => {
       where: { id: oldRefreshToken.id },
     });
   } catch (error) {
-    logger.error('refreshTokens error', error)
+    logger.error('[API] refreshTokens error', error)
   }
   
   if (!tokenRevoked) {
