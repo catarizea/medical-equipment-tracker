@@ -35,7 +35,7 @@ module.exports = {
         { where: { id: signupInvitation.id } }
       );
     } catch (error) {
-      logger.error('checkSignupInvitation error', error);
+      logger.error('[API] checkSignupInvitation error', error);
     }
 
     if (!setOpened) {

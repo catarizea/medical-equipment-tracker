@@ -6,17 +6,21 @@
     "node": ">=8.10.0"
   },
   "scripts": {
-    "dev": "nodemon -e js,yaml src/index.js",
+    "start:dev": "nodemon -e js,yaml src/index.js",
+    "dev": "npm-run-all -p start:dev worker:mailer:invite worker:mailer:forgot",
     "db:create": "node scripts/setupDb.js",
     "db:first": "npm-run-all -s db:create db:migrate db:seed",
     "db:migrate": "sequelize db:migrate",
     "db:reset": "sequelize db:migrate:undo:all",
     "db:seed": "sequelize db:seed:all",
-    "start": "node src/index.js",
+    "start:prod": "node src/index.js",
+    "start": "npm-run-all -p start:prod worker:mailer:invite worker:mailer:forgot",
     "test": "jest --verbose --coverage --detectOpenHandles --forceExit",
     "test:clear": "jest --clearCache",
     "test:coverage": "live-server coverage/lcov-report --port=3600",
-    "test:run": "npm-run-all -s db:create db:reset db:migrate db:seed test"
+    "test:run": "npm-run-all -s db:create db:reset db:migrate db:seed test",
+    "worker:mailer:invite": "node workers/mailerInvite.js",
+    "worker:mailer:forgot": "node workers/mailerForgot.js"
   },
   "license": "MIT",
   "dependencies": {

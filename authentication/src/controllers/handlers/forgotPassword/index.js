@@ -44,7 +44,7 @@ module.exports = {
     try {
       dbForgotPassword = await models.ForgotPassword.create(newForgotPassword);
     } catch (error) {
-      logger.error('forgotPassword create error', error);
+      logger.error('[API] forgotPassword create error', error);
     }
 
     if (!dbForgotPassword) {
@@ -73,7 +73,7 @@ module.exports = {
       return next(Boom.badImplementation());
     }
 
-    logger.info(JSON.stringify(emailSent, null, 2));
+    logger.info(`[API] forgot password email task published for ${user.email}`);
 
     res.json({ result: 'Reset email message sent' });
   },

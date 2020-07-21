@@ -7,7 +7,7 @@ const renderHtmlMessage = require('../src/utils/emailTemplates/forgotPassword/ht
 
 const consumer = async (msg, ch) => {
   const { to, renderVars } = JSON.parse(msg.content);
-  logger.info(`forgot mail to send to ${to}`);
+  logger.info(`[WORKER_MAILER_FORGOT] forgot mail to send to ${to}`);
 
   try {
     await mailer.sendMail({
@@ -20,7 +20,7 @@ const consumer = async (msg, ch) => {
 
     ch.ack(msg);
   } catch (error) {
-    logger.error('forgotPassword email error', error);
+    logger.error('[WORKER_MAILER_FORGOT] forgotPassword email error', error);
   }
 };
 

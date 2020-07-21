@@ -24,9 +24,7 @@
     "clear": "rm -rf node_modules */node_modules packages/*/node_modules",
     "containers:stop": "docker stop medical-equipment-tracker_postgres_1 medical-equipment-tracker_graphql-engine_1 medical-equipment-tracker_redis_1 medical-equipment-tracker_rabbitmq_1",
     "containers:dev": "dotenv -e .env.development.local -- docker-compose up -d",
-    "containers:start": "dotenv -e .env.production.local -- docker-compose up -d",
-    "worker:mailer:invite:dev": "dotenv -e .env.development.local -- node authentication/workers/mailerInvite",
-    "worker:mailer:forgot:dev": "dotenv -e .env.development.local -- node authentication/workers/mailerForgot"
+    "containers:start": "dotenv -e .env.production.local -- docker-compose up -d"
   },
   "dependencies": {
     "cross-env": "7.0.2",

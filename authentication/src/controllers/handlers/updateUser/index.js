@@ -121,7 +121,7 @@ module.exports = {
 
         await t.commit();
       } catch (error) {
-        logger.error('updateUser transaction failed', error);
+        logger.error('[API] updateUser transaction failed', error);
 
         await t.rollback();
         transactionSuccessful = false;
@@ -134,7 +134,7 @@ module.exports = {
       try {
         await updateUser();
       } catch (error) {
-        logger.error('updateUser error', error);
+        logger.error('[API] updateUser error', error);
       }
     }
 

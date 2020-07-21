@@ -9,7 +9,7 @@ module.exports = (queue, task) => {
           queue,
           Buffer.from(task),
           { persistent: true },
-          (err) => !!err
+          (err, ok) => !!ok
         );
       });
     })

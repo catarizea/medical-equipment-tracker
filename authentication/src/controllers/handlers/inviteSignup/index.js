@@ -40,7 +40,7 @@ module.exports = {
         UserId: user.id,
       });
     } catch (error) {
-      logger.error('inviteSignup error', error);
+      logger.error('[API] inviteSignup error', error);
     }
 
     if (!signupInvitation) {
@@ -69,7 +69,7 @@ module.exports = {
       return next(Boom.badImplementation());
     }
 
-    logger.info(JSON.stringify(emailSent, null, 2));
+    logger.info(`[API] signup invite mail task published for ${email}`);
 
     res.json({ result: 'Invitation to signup sent' });
   },

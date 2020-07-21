@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== 'test') {
   };
 
   httpLogger = morgan(
-    ':method :url :status :response-time ms - :res[content-length]',
+    '[API] :method :url :status :response-time ms - :res[content-length]',
     { stream: logger.stream }
   );
 }
