@@ -1,5 +1,6 @@
 const redis = require('redis');
 const { RateLimiterRedis } = require('rate-limiter-flexible');
+const Boom = require('@hapi/boom');
 
 let rateLimiterMiddleware = (req, res, next) => {
   next();
@@ -27,7 +28,7 @@ if (process.env.NODE_ENV !== 'test') {
         next();
       })
       .catch(() => {
-        res.status(429).send('Too Many Requests');
+        next(Boom.tooManyRequests('Too Many Requests'));
       });
   };
 }
