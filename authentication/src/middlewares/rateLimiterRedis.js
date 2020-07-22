@@ -8,8 +8,8 @@ let rateLimiterMiddleware = (req, res, next) => {
 
 if (process.env.NODE_ENV !== 'test') {
   const redisClient = redis.createClient({
-    host: '127.0.0.1',
-    port: 6379,
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
     enable_offline_queue: false,
     password: process.env.REDIS_PASSWORD,
   });
@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== 'test') {
   const rateLimiter = new RateLimiterRedis({
     storeClient: redisClient,
     keyPrefix: 'middleware',
-    points: 10, // 10 requests
+    points: 5, // 5 requests
     duration: 1, // per 1 second by IP
   });
 
