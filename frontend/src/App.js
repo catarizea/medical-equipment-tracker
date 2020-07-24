@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { IntlProvider } from 'react-intl';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import translationMessages from './i18n/translation.json';
+import StoreProvider from './store/reducer/StoreProvider';
+import ApolloProvider from './store/apollo/Provider';
+
+const language = navigator.language.split(/[-_]/)[0] || 'en';
+const messages = translationMessages[language];
+
+const App = () => (
+  <>
+    <CssBaseline />
+    <IntlProvider locale={language} messages={messages}>
+      <StoreProvider>
+        <ApolloProvider>
+          <div>
+            <h1>Medical Equipment Tracker</h1>
+          </div>
+        </ApolloProvider>
+      </StoreProvider>
+    </IntlProvider>
+  </>
+);
 
 export default App;
