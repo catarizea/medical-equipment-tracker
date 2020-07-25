@@ -13,10 +13,13 @@ const createClient = (state, dispatch) => {
       },
     };
   }
-  
+
   return new ApolloClient({
-    uri: process.env.HASURA_GRAPHQL_ENDPOINT,
-    request: operation => {
+    uri:
+      process.env.NODE_ENV === 'production'
+        ? process.env.REACT_APP_PROD_GRAPHQL_URL
+        : process.env.REACT_APP_DEV_GRAPHQL_URL,
+    request: (operation) => {
       operation.setContext(context);
     },
     onError: ({ graphQLErrors, networkError, operation, forward }) => {

@@ -1,9 +1,17 @@
 import { LOGGED_IN, LOGGED_OUT } from './actionTypes';
 
-export const logIn = dispatch => {
+export const logIn = (dispatch) => {
   dispatch({ type: LOGGED_IN });
 };
 
-export const logOut = dispatch => {
-  dispatch({ type: LOGGED_OUT });
+export const logOut = (dispatch) => {
+  dispatch({
+    type: LOGGED_OUT,
+    payload: {
+      request: {
+        url: '/logout',
+        method: 'get',
+      },
+    },
+  });
 };
