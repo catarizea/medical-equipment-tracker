@@ -30,22 +30,18 @@ export default (reducer, initialState, hasLogger = false) => {
 
   const dispatchWithLogging = useCallback(
     async (action) => {
-      if (typeof action === 'function') {
-        return action(dispatchWithLogging, () => preState.current);
-      }
-
       const url = get(action, 'payload.request.url', null);
       const method = get(action, 'payload.request.method', null);
       const body = get(action, 'payload.request.body', {});
 
       if (!url || !method) {
-        saveAction(action);
+        if (hasLogger) saveAction(action);
         dispatch(action);
       } else {
         const asyncActions = createAsyncTypes(action.type);
 
         try {
-          saveAction(asyncActions[0]);
+          if (hasLogger) saveAction(asyncActions[0]);
           dispatch(asyncActions[0]);
 
           const request = { method, url: `${apiUrl}${url}` };
@@ -57,20 +53,18 @@ export default (reducer, initialState, hasLogger = false) => {
 
           const successAction = { ...asyncActions[1], data: res.data };
 
-          saveAction(successAction);
+          if (hasLogger) saveAction(successAction);
           dispatch(successAction);
         } catch (error) {
           const failureAction = { ...asyncActions[2], error };
 
-          saveAction(failureAction);
+          if (hasLogger) saveAction(failureAction);
           dispatch(failureAction);
         }
       }
     },
-    [saveAction],
+    [saveAction, hasLogger],
   );
-
-  const customDispatch = hasLogger ? dispatchWithLogging : dispatch;
 
   useMemo(() => {
     if (!hasLogger || !preState.current) return;
@@ -92,7 +86,9 @@ export default (reducer, initialState, hasLogger = false) => {
     }
   }, [state, hasLogger]);
 
-  preState.current = { ...preState.current, state };
+  if (hasLogger) {
+    preState.current = { ...preState.current, state };
+  }
 
-  return [state, customDispatch];
+  return [state, dispatchWithLogging];
 };
