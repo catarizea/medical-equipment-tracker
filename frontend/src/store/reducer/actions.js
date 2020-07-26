@@ -1,4 +1,10 @@
-import { LOGGED_IN, LOGGED_OUT, SET_NEW_TOKENS } from './actionTypes';
+import {
+  LOGGED_IN,
+  LOGGED_OUT,
+  SET_NEW_TOKEN,
+  REFRESH_TOKEN,
+  FETCH_USERS,
+} from './actionTypes';
 
 export const logIn = (dispatch, credentials) => {
   dispatch({
@@ -25,11 +31,33 @@ export const logOut = (dispatch) => {
   });
 };
 
-export const setNewTokens = (dispatch, tokens) => {
+export const setNewToken = (dispatch, jwtToken) => {
   dispatch({
-    type: SET_NEW_TOKENS,
+    type: SET_NEW_TOKEN,
+    jwtToken,
+  });
+};
+
+export const refreshToken = (dispatch) => {
+  dispatch({
+    type: REFRESH_TOKEN,
     payload: {
-      tokens,
+      request: {
+        url: '/refresh-token',
+        method: 'post',
+      },
+    },
+  });
+};
+
+export const fetchUsers = (dispatch, query = null) => {
+  dispatch({
+    type: FETCH_USERS,
+    payload: {
+      request: {
+        url: '/fetch-users',
+        method: 'get'
+      }
     },
   });
 };

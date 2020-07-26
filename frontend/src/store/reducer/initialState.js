@@ -1,6 +1,7 @@
 export default {
   isAuthenticated: false,
   isLoading: false,
-  tokens: null,
+  jwtToken: null,
   error: null,
+  users: null,
 };

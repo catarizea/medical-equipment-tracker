@@ -10,6 +10,7 @@
     "@testing-library/jest-dom": "5.11.1",
     "@testing-library/react": "10.4.7",
     "@testing-library/user-event": "12.0.12",
+    "apollo-link": "1.2.14",
     "axios": "0.19.2",
     "conditional-expression": "1.1.2",
     "graphql": "15.3.0",

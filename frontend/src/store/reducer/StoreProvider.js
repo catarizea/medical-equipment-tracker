@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { authReducer } from './reducers';
@@ -14,12 +14,8 @@ const StoreProvider = ({ children }) => {
     process.env.NODE_ENV === 'development',
   );
 
-  const contextValue = useMemo(() => {
-    return { state, dispatch };
-  }, [state, dispatch]);
-
   return (
-    <StoreContext.Provider value={contextValue}>
+    <StoreContext.Provider value={{ state, dispatch }}>
       {children}
     </StoreContext.Provider>
   );

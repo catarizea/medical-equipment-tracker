@@ -19,19 +19,16 @@ export default (reducer, initialState, hasLogger = false) => {
 
   const preState = useRef();
 
-  const axios = useCallback(() => {
-    return createAxiosClient(state, dispatch); 
-  }, [state]);
+  const saveAction = useCallback((action) => {
+    const actionType = typeof action === 'object' ? action.type : dispatch;
 
-  const saveAction = useCallback(
-    (action) => {
-      const actionType = typeof action === 'object' ? action.type : dispatch;
-
-      preState.current.actions = preState.current.actions || [];
-      preState.current.actions.push({ actionType, action, state });
-    },
-    [state],
-  );
+    preState.current.actions = preState.current.actions || [];
+    preState.current.actions.push({
+      actionType,
+      action,
+      state: preState.current.state,
+    });
+  }, []);
 
   const dispatchWithLogging = useCallback(
     async (action) => {
@@ -43,6 +40,7 @@ export default (reducer, initialState, hasLogger = false) => {
         if (hasLogger) saveAction(action);
         dispatch(action);
       } else {
+        const axios = createAxiosClient(dispatchWithLogging);
         const asyncActions = createAsyncTypes(action.type);
 
         try {
@@ -53,13 +51,16 @@ export default (reducer, initialState, hasLogger = false) => {
             method,
             url: `${apiUrl}${url}`,
             withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${preState.current.state.jwtToken}`,
+            },
           };
-          
+
           if (Object.keys(body).length) {
             request.data = body;
           }
 
-          const res = await axios()(request);
+          const res = await axios(request);
 
           const successAction = { ...asyncActions[1], data: res.data };
 
@@ -73,7 +74,7 @@ export default (reducer, initialState, hasLogger = false) => {
         }
       }
     },
-    [saveAction, hasLogger, axios],
+    [hasLogger, saveAction],
   );
 
   useMemo(() => {
