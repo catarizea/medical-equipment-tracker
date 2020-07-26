@@ -4,7 +4,7 @@ import { StoreContext } from '../../store/reducer/StoreProvider';
 import { logIn, logOut, fetchUsers } from '../../store/reducer/actions';
 
 const Home = () => {
-  const { dispatch } = useContext(StoreContext);
+  const { dispatch, state } = useContext(StoreContext);
 
   const handleClick = (isLogIn = true) => {
     if (isLogIn) {
@@ -29,6 +29,7 @@ const Home = () => {
       <div>
         <button onClick={() => handleClick(false)}>Log Out</button>
       </div>
+      <p>{JSON.stringify(state.users)}</p>
     </>
   );
 };

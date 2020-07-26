@@ -3,11 +3,6 @@ import get from 'lodash.get';
 
 import createAxiosClient from '../utils/createAxiosClient';
 
-// const apiUrl =
-//   process.env.NODE_ENV === 'production'
-//     ? process.env.REACT_APP_PROD_REST_URL
-//     : process.env.REACT_APP_DEV_REST_URL;
-
 const createAsyncTypes = (type) => [
   { type: `${type}_REQUEST` },
   { type: `${type}_SUCCESS` },
@@ -37,13 +32,13 @@ export default (reducer, initialState, hasLogger = false) => {
       const body = get(action, 'payload.request.body', {});
 
       if (!url || !method) {
-        if (hasLogger) saveAction(action);
+        saveAction(action);
         dispatch(action);
       } else {
         const asyncActions = createAsyncTypes(action.type);
 
         try {
-          if (hasLogger) saveAction(asyncActions[0]);
+          saveAction(asyncActions[0]);
           dispatch(asyncActions[0]);
 
           const request = {
@@ -56,28 +51,22 @@ export default (reducer, initialState, hasLogger = false) => {
             request.data = body;
           }
 
-          if (preState.current.state.jwtToken) {
-            request.headers = {
-              Authorization: `Bearer ${preState.current.state.jwtToken}`,
-            };
-          }
-
-          const axios = await createAxiosClient(dispatchWithLogging, preState.current.state.jwtToken);
+          const axios = await createAxiosClient(dispatchWithLogging, preState.current.state);
           const res = await axios(request);
 
           const successAction = { ...asyncActions[1], data: res.data };
 
-          if (hasLogger) saveAction(successAction);
+          saveAction(successAction);
           dispatch(successAction);
         } catch (error) {
           const failureAction = { ...asyncActions[2], error };
 
-          if (hasLogger) saveAction(failureAction);
+          saveAction(failureAction);
           dispatch(failureAction);
         }
       }
     },
-    [hasLogger, saveAction],
+    [saveAction],
   );
 
   useMemo(() => {
@@ -100,9 +89,7 @@ export default (reducer, initialState, hasLogger = false) => {
     }
   }, [state, hasLogger]);
 
-  if (hasLogger) {
-    preState.current = { ...preState.current, state };
-  }
+  preState.current = { ...preState.current, state };
 
   return [state, dispatchWithLogging];
 };

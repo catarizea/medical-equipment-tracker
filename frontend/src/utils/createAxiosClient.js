@@ -8,19 +8,20 @@ const baseURL =
     ? process.env.REACT_APP_PROD_REST_URL
     : process.env.REACT_APP_DEV_REST_URL;
 
-const axiosApiInstance = axios.create({
-  baseURL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+const createAxiosClient = (dispatch, state) => {
+  const axiosApiInstance = axios.create({
+    baseURL,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
-const createAxiosClient = (dispatch, jwtToken) => {
-  axios.interceptors.request.use(
+  axiosApiInstance.interceptors.request.use(
     (config) => {
-      if (!config.headers['Authorization'] && jwtToken) {
-        config.headers['Authorization'] = `Bearer ${jwtToken}`;
+      if (state.jwtToken) {
+        config.headers['Authorization'] = `Bearer ${state.jwtToken}`;
       }
+      
       return config;
     },
     (error) => {
