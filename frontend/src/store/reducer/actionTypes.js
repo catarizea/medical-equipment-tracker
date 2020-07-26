@@ -1,5 +1,5 @@
-export const LOGGED_IN = 'loggedIn';
-export const LOGGED_OUT = 'loggedOut';
+export const LOGGED_IN = 'LOGGED_IN';
+export const LOGGED_OUT = 'LOGGED_OUT';
 
-export const FETCH_USERS = 'fetchUsers';
-export const FETCH_USER = 'fetchUser';
+export const FETCH_USERS = 'FETCH_USERS';
+export const FETCH_USER = 'FETCH_USER';

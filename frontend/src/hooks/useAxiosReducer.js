@@ -1,6 +1,7 @@
 import { useReducer, useMemo, useCallback, useRef } from 'react';
-import axios from 'axios';
 import get from 'lodash.get';
+
+import axios from '../utils/axios';
 
 const apiUrl =
   process.env.NODE_ENV === 'production'
@@ -44,7 +45,12 @@ export default (reducer, initialState, hasLogger = false) => {
           if (hasLogger) saveAction(asyncActions[0]);
           dispatch(asyncActions[0]);
 
-          const request = { method, url: `${apiUrl}${url}` };
+          const request = {
+            method,
+            url: `${apiUrl}${url}`,
+            withCredentials: true,
+          };
+          
           if (Object.keys(body).length) {
             request.data = body;
           }

@@ -19,6 +19,7 @@ const Home = () => {
       <div>
         <button onClick={() => handleClick()}>Log In</button>
       </div>
+      <br />
       <div>
         <button onClick={() => handleClick(false)}>Log Out</button>
       </div>

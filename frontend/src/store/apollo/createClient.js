@@ -1,9 +1,10 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
+import get from 'lodash.get';
 
 import { logOut } from '../reducer/actions';
 
 const createClient = (state, dispatch) => {
-  const { jwtToken } = state;
+  const jwtToken = get(state, 'tokens.jwtToken', null);
   let context = {};
 
   if (jwtToken) {
