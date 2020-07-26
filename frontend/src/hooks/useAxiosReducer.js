@@ -1,7 +1,7 @@
 import { useReducer, useMemo, useCallback, useRef } from 'react';
 import get from 'lodash.get';
 
-import axios from '../utils/axios';
+import createAxiosClient from '../utils/createAxiosClient';
 
 const apiUrl =
   process.env.NODE_ENV === 'production'
@@ -18,6 +18,10 @@ export default (reducer, initialState, hasLogger = false) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const preState = useRef();
+
+  const axios = useCallback(() => {
+    return createAxiosClient(state, dispatch); 
+  }, [state]);
 
   const saveAction = useCallback(
     (action) => {
@@ -55,7 +59,7 @@ export default (reducer, initialState, hasLogger = false) => {
             request.data = body;
           }
 
-          const res = await axios(request);
+          const res = await axios()(request);
 
           const successAction = { ...asyncActions[1], data: res.data };
 
@@ -69,7 +73,7 @@ export default (reducer, initialState, hasLogger = false) => {
         }
       }
     },
-    [saveAction, hasLogger],
+    [saveAction, hasLogger, axios],
   );
 
   useMemo(() => {

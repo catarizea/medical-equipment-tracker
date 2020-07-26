@@ -1,6 +1,6 @@
-import { LOGGED_IN, LOGGED_OUT } from './actionTypes';
+import { LOGGED_IN, LOGGED_OUT, SET_NEW_TOKENS } from './actionTypes';
 
-export const logIn = (dispatch) => {
+export const logIn = (dispatch, credentials) => {
   dispatch({
     type: LOGGED_IN,
     payload: {
@@ -21,6 +21,15 @@ export const logOut = (dispatch) => {
         url: '/logout',
         method: 'get',
       },
+    },
+  });
+};
+
+export const setNewTokens = (dispatch, tokens) => {
+  dispatch({
+    type: SET_NEW_TOKENS,
+    payload: {
+      tokens,
     },
   });
 };
