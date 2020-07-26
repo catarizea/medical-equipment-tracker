@@ -1,49 +1,72 @@
 import axios from 'axios';
+import get from 'lodash.get';
 
 import { setNewToken, logOut } from '../store/reducer/actions';
 
-const apiUrl =
+const baseURL =
   process.env.NODE_ENV === 'production'
     ? process.env.REACT_APP_PROD_REST_URL
     : process.env.REACT_APP_DEV_REST_URL;
 
-const createAxiosClient = (dispatch) => {
-  axios.interceptors.response.use(
-    (response) => response,
+const axiosApiInstance = axios.create({
+  baseURL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+const createAxiosClient = (dispatch, jwtToken) => {
+  axios.interceptors.request.use(
+    (config) => {
+      if (!config.headers['Authorization'] && jwtToken) {
+        config.headers['Authorization'] = `Bearer ${jwtToken}`;
+      }
+      return config;
+    },
     (error) => {
+      Promise.reject(error);
+    },
+  );
+
+  axiosApiInstance.interceptors.response.use(
+    (response) => response,
+    async (error) => {
       const previousRequest = error.config;
 
       if (
-        error.response.status === 401 &&
-        error.response.data.message === 'Invalid JWT token' &&
-        !previousRequest.retry
+        get(error, 'response.status', null) === 401 &&
+        get(error, 'response.data.message', null) === 'Invalid JWT token' &&
+        !previousRequest._retry
       ) {
-        previousRequest.retry = true;
-        return axios({
-          url: `${apiUrl}/refresh-token`,
-          method: 'post',
-          withCredentials: true,
-        })
-          .then((res) => {
-            if (res.status === 200) {
-              setNewToken(dispatch, res.data.jwtToken);
-              axios.defaults.headers.common[
-                'Authorization'
-              ] = `Bearer ${res.data.jwtToken}`;
-              return axios(previousRequest);
-            }
-          })
-          .catch((error) => {
-            logOut(dispatch);
-            Promise.reject(error);
+        previousRequest._retry = true;
+
+        try {
+          const res = await axios({
+            url: `${baseURL}/refresh-token`,
+            method: 'post',
+            withCredentials: true,
           });
+
+          if (res.status === 200) {
+            setNewToken(dispatch, res.data.jwtToken);
+
+            axiosApiInstance.defaults.headers.common[
+              'Authorization'
+            ] = `Bearer ${res.data.jwtToken}`;
+            
+            return axiosApiInstance(previousRequest);
+          }
+        } catch (error) {
+          logOut(dispatch);
+          return Promise.reject(error);
+        }
       }
 
       return Promise.reject(error);
     },
   );
 
-  return axios;
+  return axiosApiInstance;
 };
 
 export default createAxiosClient;

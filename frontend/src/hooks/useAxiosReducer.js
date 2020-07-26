@@ -3,10 +3,10 @@ import get from 'lodash.get';
 
 import createAxiosClient from '../utils/createAxiosClient';
 
-const apiUrl =
-  process.env.NODE_ENV === 'production'
-    ? process.env.REACT_APP_PROD_REST_URL
-    : process.env.REACT_APP_DEV_REST_URL;
+// const apiUrl =
+//   process.env.NODE_ENV === 'production'
+//     ? process.env.REACT_APP_PROD_REST_URL
+//     : process.env.REACT_APP_DEV_REST_URL;
 
 const createAsyncTypes = (type) => [
   { type: `${type}_REQUEST` },
@@ -40,7 +40,6 @@ export default (reducer, initialState, hasLogger = false) => {
         if (hasLogger) saveAction(action);
         dispatch(action);
       } else {
-        const axios = createAxiosClient(dispatchWithLogging);
         const asyncActions = createAsyncTypes(action.type);
 
         try {
@@ -49,17 +48,21 @@ export default (reducer, initialState, hasLogger = false) => {
 
           const request = {
             method,
-            url: `${apiUrl}${url}`,
+            url,
             withCredentials: true,
-            headers: {
-              Authorization: `Bearer ${preState.current.state.jwtToken}`,
-            },
           };
 
           if (Object.keys(body).length) {
             request.data = body;
           }
 
+          if (preState.current.state.jwtToken) {
+            request.headers = {
+              Authorization: `Bearer ${preState.current.state.jwtToken}`,
+            };
+          }
+
+          const axios = await createAxiosClient(dispatchWithLogging, preState.current.state.jwtToken);
           const res = await axios(request);
 
           const successAction = { ...asyncActions[1], data: res.data };
