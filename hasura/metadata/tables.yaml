@@ -15,6 +15,9 @@
     name: patient
 - table:
     schema: public
+    name: patient_admission
+- table:
+    schema: public
     name: patient_contact
 - table:
     schema: public
