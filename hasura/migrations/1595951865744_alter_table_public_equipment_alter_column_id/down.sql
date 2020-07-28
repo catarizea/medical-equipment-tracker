@@ -1,0 +1,1 @@
+ALTER TABLE ONLY "public"."equipment" ALTER COLUMN "id" DROP DEFAULT;

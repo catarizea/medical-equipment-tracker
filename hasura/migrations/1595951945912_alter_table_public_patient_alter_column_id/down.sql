@@ -1,0 +1,1 @@
+ALTER TABLE ONLY "public"."patient" ALTER COLUMN "id" DROP DEFAULT;

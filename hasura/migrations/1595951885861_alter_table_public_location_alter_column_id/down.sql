@@ -1,0 +1,1 @@
+ALTER TABLE ONLY "public"."location" ALTER COLUMN "id" DROP DEFAULT;

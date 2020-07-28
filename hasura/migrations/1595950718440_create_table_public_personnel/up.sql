@@ -1,0 +1,1 @@
+CREATE TABLE "public"."personnel"("id" uuid NOT NULL, "first_name" text NOT NULL, "last_name" text NOT NULL, "position" text NOT NULL, "title" text, "authentication_id" integer NOT NULL, PRIMARY KEY ("id","authentication_id") , UNIQUE ("id"), UNIQUE ("authentication_id"));

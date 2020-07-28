@@ -11,7 +11,7 @@ services:
       POSTGRES_PASSWORD: ${HASURA_POSTGRES_PASSWORD}
 
   graphql-engine:
-    image: hasura/graphql-engine:v1.2.2
+    image: hasura/graphql-engine:v1.3.0
     ports:
       - ${HASURA_GRAPHQL_ADMIN_PORTS}
     depends_on:

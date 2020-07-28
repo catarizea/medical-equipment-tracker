@@ -7,7 +7,7 @@ import translationMessages from './i18n/translation.json';
 import StoreProvider from './store/reducer/StoreProvider';
 import ApolloProvider from './store/apollo/Provider';
 import Home from './screens/Home';
-
+ 
 const language = get(window, 'navigator.language', 'en').slice(0, 2);
 const messages = translationMessages[language];
 

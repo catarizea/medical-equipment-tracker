@@ -29,7 +29,7 @@ export default (reducer, initialState, hasLogger = false) => {
     async (action) => {
       const url = get(action, 'payload.request.url', null);
       const method = get(action, 'payload.request.method', null);
-      const body = get(action, 'payload.request.body', {});
+      const body = get(action, 'payload.request.body', null);
 
       if (!url || !method) {
         saveAction(action);
@@ -47,11 +47,11 @@ export default (reducer, initialState, hasLogger = false) => {
             withCredentials: true,
           };
 
-          if (Object.keys(body).length) {
+          if (body) {
             request.data = body;
           }
 
-          const axios = await createAxiosClient(dispatchWithLogging, preState.current.state);
+          const axios = createAxiosClient(dispatchWithLogging, preState.current.state);
           const res = await axios(request);
 
           const successAction = { ...asyncActions[1], data: res.data };
