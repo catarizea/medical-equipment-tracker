@@ -9,6 +9,9 @@
     name: inventory
 - table:
     schema: public
+    name: inventory_movement
+- table:
+    schema: public
     name: location
 - table:
     schema: public
@@ -19,9 +22,6 @@
 - table:
     schema: public
     name: patient_contact
-- table:
-    schema: public
-    name: patient_inventory
 - table:
     schema: public
     name: personnel
