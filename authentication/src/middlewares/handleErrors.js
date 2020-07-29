@@ -6,7 +6,7 @@ const handleErrors = (err, req, res, next) => {
     case err.name === 'UnauthorizedError':
       return res
         .status(401)
-        .json({ type: 'Unauthorized', message: 'Invalid token' });
+        .json({ type: 'Unauthorized', message: 'Invalid JWT token' });
 
     case typeof err === 'string':
       if (err.indexOf(VALIDATION_ERROR) !== -1) {

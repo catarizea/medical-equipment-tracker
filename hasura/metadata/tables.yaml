@@ -1,1 +1,36 @@
-[]
+- table:
+    schema: public
+    name: division
+- table:
+    schema: public
+    name: equipment
+- table:
+    schema: public
+    name: equipment_maintenance
+- table:
+    schema: public
+    name: equipment_movement
+- table:
+    schema: public
+    name: inventory
+- table:
+    schema: public
+    name: inventory_movement
+- table:
+    schema: public
+    name: location
+- table:
+    schema: public
+    name: patient
+- table:
+    schema: public
+    name: patient_admission
+- table:
+    schema: public
+    name: patient_contact
+- table:
+    schema: public
+    name: patient_movement
+- table:
+    schema: public
+    name: personnel

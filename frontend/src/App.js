@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { IntlProvider } from 'react-intl';
+import get from 'lodash.get';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import translationMessages from './i18n/translation.json';
+import StoreProvider from './store/reducer/StoreProvider';
+import ApolloProvider from './store/apollo/Provider';
+import Home from './screens/Home';
+ 
+const language = get(window, 'navigator.language', 'en').slice(0, 2);
+const messages = translationMessages[language];
+
+const App = () => (
+  <>
+    <CssBaseline />
+    <IntlProvider locale={language} messages={messages}>
+      <StoreProvider>
+        <ApolloProvider>
+          <Home />
+        </ApolloProvider>
+      </StoreProvider>
+    </IntlProvider>
+  </>
+);
 
 export default App;

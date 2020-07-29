@@ -18,7 +18,7 @@ Create an internal communication and hospital resources management system to hel
 
 ## Environment variables
 
-You need to create two environment variables related files into the root folder of the project, `.env.development.local`, `.env.production.local` and `.env.test.local` having the following structure:
+You need to create some environment variables related files into the root folder of the project, `.env.development.local`, `.env.production.local` and `.env.test.local` having the following structure:
 
 ```bash
 NODE_ENV="<your_node_env>"

@@ -5,20 +5,22 @@ const logger = require('../../../services/logger');
 const { htmlEscape } = require('escape-goat');
 
 const revokeAccess = async (req, res) => {
-  const refreshToken = htmlEscape(req.cookies[REFRESH_TOKEN_COOKIE]);
+  if (req.cookies && req.cookies[REFRESH_TOKEN_COOKIE]) {
+    const refreshToken = htmlEscape(req.cookies[REFRESH_TOKEN_COOKIE]);
 
-  if (refreshToken) {
-    const revokedToken = {
-      revokedAt: new Date(),
-      revokedByIp: req.ip,
-    };
+    if (refreshToken) {
+      const revokedToken = {
+        revokedAt: new Date(),
+        revokedByIp: req.ip,
+      };
 
-    try {
-      await models.RefreshToken.update(revokedToken, {
-        where: { token: refreshToken },
-      });
-    } catch (error) {
-      logger.error('[API] logout error', error);
+      try {
+        await models.RefreshToken.update(revokedToken, {
+          where: { token: refreshToken },
+        });
+      } catch (error) {
+        logger.error('[API] logout error', error);
+      }
     }
   }
 
@@ -30,10 +32,10 @@ const revokeAccess = async (req, res) => {
 
 module.exports = {
   revokeAccess,
-  
+
   logout: async (req, res, next) => {
     await revokeAccess(req, res);
-    
+
     res.json({ result: 'Logged out' });
   },
 };

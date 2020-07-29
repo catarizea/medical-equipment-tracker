@@ -3,18 +3,35 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "4.2.4",
-    "@testing-library/react": "9.3.2",
-    "@testing-library/user-event": "7.1.2",
+    "@apollo/client": "3.0.2",
+    "@apollo/react-hooks": "4.0.0",
+    "@material-ui/core": "4.11.0",
+    "@material-ui/icons": "4.9.1",
+    "@testing-library/jest-dom": "5.11.1",
+    "@testing-library/react": "10.4.7",
+    "@testing-library/user-event": "12.0.12",
+    "apollo-link": "1.2.14",
+    "axios": "0.19.2",
+    "clsx": "1.1.1",
+    "conditional-expression": "1.1.2",
+    "graphql": "15.3.0",
+    "lodash.get": "4.4.2",
+    "lodash.intersection": "4.4.0",
+    "moment": "2.27.0",
+    "prop-types": "15.7.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-intl": "5.4.0",
+    "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "translate:cumulate": "node scripts/translator",
+    "translate:extract": "babel ./src >/dev/null"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,5 +47,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/cli": "7.10.5",
+    "@babel/core": "7.10.5",
+    "babel-plugin-react-intl": "7.8.3",
+    "babel-preset-react-app": "9.1.2"
   }
 }
