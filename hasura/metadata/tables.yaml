@@ -6,6 +6,9 @@
     name: equipment
 - table:
     schema: public
+    name: equipment_maintenance
+- table:
+    schema: public
     name: equipment_movement
 - table:
     schema: public
