@@ -1,1 +1,0 @@
-ALTER TABLE ONLY "public"."inventory" ALTER COLUMN "id" DROP DEFAULT;

@@ -1,1 +1,0 @@
-CREATE TABLE "public"."patient"("id" uuid NOT NULL, "first_name" text NOT NULL, "last_name" text NOT NULL, "birthday" date NOT NULL, "gender" boolean NOT NULL, "admited_at" date NOT NULL, "discharged_at" date, "identity_card_ssn" text NOT NULL, PRIMARY KEY ("id") , UNIQUE ("id"), UNIQUE ("identity_card_ssn"));

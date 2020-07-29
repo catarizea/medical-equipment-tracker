@@ -30,6 +30,9 @@
     "frontend:translate:extract": "cross-env NODE_ENV=production yarn --cwd frontend translate:extract",
     "hasura:console:dev": "dotenv -e .env.development.local -- yarn --cwd hasura console",
     "hasura:migrate:dev": "dotenv -e .env.development.local -- yarn --cwd hasura migrate",
+    "hasura:squash:dev:init": "dotenv -e .env.development.local -- yarn --cwd hasura squash:init",
+    "hasura:squash:dev:apply": "dotenv -e .env.development.local -- yarn --cwd hasura squash:apply",
+    "hasura:squash:dev:status": "dotenv -e .env.development.local -- yarn --cwd hasura squash:status",
     "hasura:migrate": "dotenv -e .env.production.local -- yarn --cwd hasura migrate",
     "start": "npm-run-all -s containers:stop containers:start authentication:start"
   },

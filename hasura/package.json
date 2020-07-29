@@ -5,7 +5,10 @@
   "license": "MIT",
   "scripts": {
     "console": "hasura console",
-    "migrate": "hasura migrate"
+    "migrate": "hasura migrate",
+    "squash:init": "hasura migrate create 'init' --from-server",
+    "squash:apply": "hasura migrate apply --version '1596032087022' --skip-execution",
+    "squash:status": "hasura migrate status"
   },
   "dependencies": {
     "dotenv-cli": "3.2.0"
