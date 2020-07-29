@@ -6,6 +6,9 @@
     name: equipment
 - table:
     schema: public
+    name: equipment_movement
+- table:
+    schema: public
     name: inventory
 - table:
     schema: public
@@ -22,6 +25,9 @@
 - table:
     schema: public
     name: patient_contact
+- table:
+    schema: public
+    name: patient_movement
 - table:
     schema: public
     name: personnel
