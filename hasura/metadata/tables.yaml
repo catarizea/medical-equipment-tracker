@@ -1225,27 +1225,27 @@
     permission:
       check: {}
       columns:
-      - id
-      - first_name
-      - last_name
-      - title
-      - authentication_id
+      - cancellation_at
+      - comment
       - created_at
-      - updated_at
-      - phone
-      - is_employed
       - division_id
       - employed_at
-      - cancellation_at
-      - superior_id
-      - comment
+      - first_name
+      - id
+      - is_employed
+      - last_name
+      - phone
       - position_id
+      - superior_id
+      - title
+      - updated_at
       backend_only: false
   select_permissions:
   - role: doctor
     permission:
       columns:
       - division_id
+      - email
       - first_name
       - id
       - last_name
@@ -1263,6 +1263,7 @@
       - comment
       - created_at
       - division_id
+      - email
       - employed_at
       - first_name
       - id
@@ -1278,6 +1279,7 @@
     permission:
       columns:
       - division_id
+      - email
       - first_name
       - id
       - last_name
@@ -1292,6 +1294,7 @@
     permission:
       columns:
       - division_id
+      - email
       - first_name
       - id
       - last_name
@@ -1306,6 +1309,7 @@
     permission:
       columns:
       - division_id
+      - email
       - first_name
       - id
       - last_name
@@ -1320,21 +1324,20 @@
   - role: hr
     permission:
       columns:
-      - is_employed
       - cancellation_at
-      - employed_at
-      - authentication_id
       - comment
+      - created_at
+      - division_id
+      - employed_at
       - first_name
+      - id
+      - is_employed
       - last_name
       - phone
-      - title
-      - created_at
-      - updated_at
-      - division_id
-      - id
       - position_id
       - superior_id
+      - title
+      - updated_at
       filter: {}
       check: null
 - table:
