@@ -18,7 +18,7 @@ const createAxiosClient = (dispatch, state) => {
 
   axiosApiInstance.interceptors.request.use(
     (config) => {
-      if (state.jwtToken) {
+      if (state.jwtToken && !config.headers['Authorization']) {
         config.headers['Authorization'] = `Bearer ${state.jwtToken}`;
       }
       
@@ -50,11 +50,7 @@ const createAxiosClient = (dispatch, state) => {
 
           if (res.status === 200) {
             setNewToken(dispatch, res.data.jwtToken);
-
-            axiosApiInstance.defaults.headers.common[
-              'Authorization'
-            ] = `Bearer ${res.data.jwtToken}`;
-            
+            previousRequest.headers['Authorization'] = `Bearer ${res.data.jwtToken}`;
             return axiosApiInstance(previousRequest);
           }
         } catch (error) {
@@ -62,7 +58,7 @@ const createAxiosClient = (dispatch, state) => {
           return Promise.reject(error);
         }
       }
-
+      
       return Promise.reject(error);
     },
   );

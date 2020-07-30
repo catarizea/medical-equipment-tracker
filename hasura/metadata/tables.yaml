@@ -1,36 +1,236 @@
 - table:
     schema: public
     name: division
+  array_relationships:
+  - name: locations
+    using:
+      foreign_key_constraint_on:
+        column: division_id
+        table:
+          schema: public
+          name: location
+  - name: personnel
+    using:
+      foreign_key_constraint_on:
+        column: division_id
+        table:
+          schema: public
+          name: personnel
 - table:
     schema: public
     name: equipment
+  array_relationships:
+  - name: equipment_maintenances
+    using:
+      foreign_key_constraint_on:
+        column: equipment_id
+        table:
+          schema: public
+          name: equipment_maintenance
+  - name: equipment_movements
+    using:
+      foreign_key_constraint_on:
+        column: equipment_id
+        table:
+          schema: public
+          name: equipment_movement
+  - name: inventory_movements
+    using:
+      foreign_key_constraint_on:
+        column: equipment_id
+        table:
+          schema: public
+          name: inventory_movement
 - table:
     schema: public
     name: equipment_maintenance
+  object_relationships:
+  - name: equipment
+    using:
+      foreign_key_constraint_on: equipment_id
+  - name: personnel
+    using:
+      foreign_key_constraint_on: handled_by
 - table:
     schema: public
     name: equipment_movement
+  object_relationships:
+  - name: equipment
+    using:
+      foreign_key_constraint_on: equipment_id
+  - name: location
+    using:
+      foreign_key_constraint_on: location_id
+  - name: personnel
+    using:
+      foreign_key_constraint_on: moved_by
 - table:
     schema: public
     name: inventory
+  array_relationships:
+  - name: inventory_movements
+    using:
+      foreign_key_constraint_on:
+        column: inventory_id
+        table:
+          schema: public
+          name: inventory_movement
 - table:
     schema: public
     name: inventory_movement
+  object_relationships:
+  - name: equipment
+    using:
+      foreign_key_constraint_on: equipment_id
+  - name: inventory
+    using:
+      foreign_key_constraint_on: inventory_id
+  - name: location
+    using:
+      foreign_key_constraint_on: location_id
+  - name: patient_admission
+    using:
+      foreign_key_constraint_on: patient_admission_id
+  - name: personnel
+    using:
+      foreign_key_constraint_on: moved_by
 - table:
     schema: public
     name: location
+  object_relationships:
+  - name: division
+    using:
+      foreign_key_constraint_on: division_id
+  array_relationships:
+  - name: equipment_movements
+    using:
+      foreign_key_constraint_on:
+        column: location_id
+        table:
+          schema: public
+          name: equipment_movement
+  - name: inventory_movements
+    using:
+      foreign_key_constraint_on:
+        column: location_id
+        table:
+          schema: public
+          name: inventory_movement
+  - name: patient_movements
+    using:
+      foreign_key_constraint_on:
+        column: location_id
+        table:
+          schema: public
+          name: patient_movement
 - table:
     schema: public
     name: patient
+  array_relationships:
+  - name: patient_admissions
+    using:
+      foreign_key_constraint_on:
+        column: patient_id
+        table:
+          schema: public
+          name: patient_admission
+  - name: patient_contacts
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: patient_contact
+        column_mapping:
+          id: patient_id
 - table:
     schema: public
     name: patient_admission
+  object_relationships:
+  - name: patient
+    using:
+      foreign_key_constraint_on: patient_id
+  array_relationships:
+  - name: inventory_movements
+    using:
+      foreign_key_constraint_on:
+        column: patient_admission_id
+        table:
+          schema: public
+          name: inventory_movement
+  - name: patient_movements
+    using:
+      foreign_key_constraint_on:
+        column: patient_admission_id
+        table:
+          schema: public
+          name: patient_movement
 - table:
     schema: public
     name: patient_contact
+  object_relationships:
+  - name: patient
+    using:
+      foreign_key_constraint_on: patient_id
 - table:
     schema: public
     name: patient_movement
+  object_relationships:
+  - name: location
+    using:
+      foreign_key_constraint_on: location_id
+  - name: patient_admission
+    using:
+      foreign_key_constraint_on: patient_admission_id
+  - name: personnel
+    using:
+      foreign_key_constraint_on: moved_by
 - table:
     schema: public
     name: personnel
+  object_relationships:
+  - name: division
+    using:
+      foreign_key_constraint_on: division_id
+  - name: position
+    using:
+      foreign_key_constraint_on: position_id
+  array_relationships:
+  - name: equipment_maintenances
+    using:
+      foreign_key_constraint_on:
+        column: handled_by
+        table:
+          schema: public
+          name: equipment_maintenance
+  - name: equipment_movements
+    using:
+      foreign_key_constraint_on:
+        column: moved_by
+        table:
+          schema: public
+          name: equipment_movement
+  - name: inventory_movements
+    using:
+      foreign_key_constraint_on:
+        column: moved_by
+        table:
+          schema: public
+          name: inventory_movement
+  - name: patient_movements
+    using:
+      foreign_key_constraint_on:
+        column: moved_by
+        table:
+          schema: public
+          name: patient_movement
+- table:
+    schema: public
+    name: position
+  array_relationships:
+  - name: personnel
+    using:
+      foreign_key_constraint_on:
+        column: position_id
+        table:
+          schema: public
+          name: personnel
