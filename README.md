@@ -6,6 +6,14 @@ Create an internal communication and hospital resources management system to hel
 
 #### Do not use this software in production! This is work in progress!
 
+## Notes to future self
+
+My task is to make the job easier for the medical personnel to be able to save more people.
+
+Any information system is as good as the people using it.
+
+Any information system that becomes a burden to its users is a failed system.
+
 ## Prerequisites
 
 * local DNS service to be able to access the webserver by its name `docs/bind/README.md`

@@ -3,6 +3,11 @@ const { object, string, ref, number, array, boolean } = require('yup');
 const roles = {
   Admin: 'Admin',
   Default: 'User',
+  Doctor: 'Doctor',
+  Nurse: 'Nurse',
+  HR: 'HR',
+  Tech: 'Tech',
+  Warehouse: 'Warehouse',
 };
 
 const uuidRegex = /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i;
@@ -12,7 +17,10 @@ const emailValidation = string()
   .email('Email has to be valid')
   .required('Email is required');
 
-const firstNameValidation = string().trim().strict().required('First name is required');
+const firstNameValidation = string()
+  .trim()
+  .strict()
+  .required('First name is required');
 
 const tokenValidation = string()
   .trim()
@@ -83,7 +91,7 @@ const udateUserSchema = object({
       string()
         .trim()
         .oneOf(
-          [roles.Default, roles.Admin],
+          Object.values(roles),
           `Role must be one of ${Object.values(roles).join(',')}`
         )
         .required('Role is required')
