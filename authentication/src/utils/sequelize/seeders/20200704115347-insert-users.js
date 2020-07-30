@@ -7,7 +7,7 @@ module.exports = {
       lastName: 'Rizea',
       email: 'catalin@medical.equipment',
       passwordHash: '$2a$10$EET8MHMUPZ4s4GkCnqWwp.dG5msvPNw9Ar/4RcsLx.r./Cv6SWGD6', // Password1
-      role: 'User,Admin',
+      role: 'user,admin',
       isBlocked: false,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -18,7 +18,7 @@ module.exports = {
       firstName: 'Simona',
       lastName: 'Galushka',
       email: 'simona@medical.equipment',
-      role: 'User',
+      role: 'user',
     };
     
     return queryInterface.bulkInsert('Users', [adminUser, defaultUser]);

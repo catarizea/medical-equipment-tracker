@@ -11,7 +11,7 @@ const adminUser = {
   lastName: 'Rizea',
   email: 'catalin@medical.equipment',
   password: 'Password1',
-  role: ['User', 'Admin'],
+  role: ['user', 'admin'],
   isBlocked: false,
   createdAt: new Date(),
   updatedAt: new Date(),
@@ -23,7 +23,7 @@ const defaultUser = {
   firstName: 'Simona',
   lastName: 'Galushka',
   email: 'simona@medical.equipment',
-  role: ['User'],
+  role: ['user'],
 };
 
 const tempUser = {
@@ -31,7 +31,7 @@ const tempUser = {
   firstName: 'Stela',
   lastName: 'Ciompo',
   email: 'stela@medical.equipment',
-  role: ['User'],
+  role: ['user'],
   isBlocked: false,
   passwordHash: '$2a$10$EET8MHMUPZ4s4GkCnqWwp.dG5msvPNw9Ar/4RcsLx.r./Cv6SWGD6',
 };

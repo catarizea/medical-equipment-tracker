@@ -1,13 +1,13 @@
 const { object, string, ref, number, array, boolean } = require('yup');
 
 const roles = {
-  Admin: 'Admin',
-  Default: 'User',
-  Doctor: 'Doctor',
-  Nurse: 'Nurse',
-  HR: 'HR',
-  Tech: 'Tech',
-  Warehouse: 'Warehouse',
+  Admin: 'admin',
+  Default: 'user',
+  Doctor: 'doctor',
+  Nurse: 'nurse',
+  HR: 'hr',
+  Tech: 'tech',
+  Warehouse: 'warehouse',
 };
 
 const uuidRegex = /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i;

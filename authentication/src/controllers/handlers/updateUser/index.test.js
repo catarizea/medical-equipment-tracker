@@ -58,7 +58,7 @@ describe('/update-user endpoint', () => {
     
     const updateWithFull = {
       ...updateWith,
-      role: ['User', 'Admin'],
+      role: ['user', 'admin'],
       isBlocked: false,
     };
 
@@ -105,7 +105,7 @@ describe('/update-user endpoint', () => {
     
     const updateWithFull = {
       ...updateWith,
-      role: ['User', 'Admin'],
+      role: ['user', 'admin'],
       isBlocked: true,
     };
 
@@ -130,7 +130,7 @@ describe('/update-user endpoint', () => {
     
     const updateWithFull = {
       ...updateWith,
-      role: ['User', 'Admin', 'Admin', 'Funny', 'Chaos'],
+      role: ['user', 'admin', 'admin', 'funny', 'chaos'],
     };
 
     const res = await testApi
@@ -150,7 +150,7 @@ describe('/update-user endpoint', () => {
     
     const updateWithRole = {
       ...updateWith,
-      role: ['User', 'Admin'],
+      role: ['user', 'admin'],
     };
 
     const res = await testApi
