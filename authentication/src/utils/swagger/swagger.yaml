@@ -393,9 +393,9 @@ components:
             lastName:
               type: string
             role[0]:
-              type: "Role must be one of Admin,User"
+              type: "Role must be one of admin,user"
             role[1]:
-              type: "Role must be one of Admin,User"
+              type: "Role must be one of admin,user"
             isBlocked:
               type: string
     InvalidChangePassword:

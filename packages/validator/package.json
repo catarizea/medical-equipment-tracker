@@ -4,6 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "lodash.get": "4.4.2",
+    "lodash.replace": "4.1.4",
     "yup": "0.29.1"
   }
 }

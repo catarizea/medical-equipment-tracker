@@ -28,7 +28,7 @@ put:
               type: array
               items:
                 type: string
-                example: "User"
+                example: "user"
             isBlocked:
               type: boolean
               example: false

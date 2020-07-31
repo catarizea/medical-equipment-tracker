@@ -1,4 +1,7 @@
 const { object, string, ref, number, array, boolean } = require('yup');
+const replace = require('lodash.replace');
+
+const messages = require('./messages');
 
 const roles = {
   Admin: 'admin',
@@ -14,32 +17,32 @@ const uuidRegex = /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A
 
 const emailValidation = string()
   .trim()
-  .email('Email has to be valid')
-  .required('Email is required');
+  .email(messages.emailValid)
+  .required(messages.emailRequired);
 
 const firstNameValidation = string()
   .trim()
   .strict()
-  .required('First name is required');
+  .required(messages.firstNameRequired);
 
 const tokenValidation = string()
   .trim()
-  .matches(uuidRegex, 'Token is not valid')
-  .required('Token is required');
+  .matches(uuidRegex, messages.tokenNotValid)
+  .required(messages.tokenRequired);
 
 const passwordAndConfirm = {
   password: string()
     .trim()
-    .required('Password is required')
-    .min(8, `Password has to contain at least 8 characters`)
+    .required(messages.passwordRequired)
+    .min(8, messages.passwordAtLeast)
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/,
-      'Password has to contain lowercase and uppercase and numeric characters'
+      messages.passwordHasToContain
     ),
   confirmPassword: string()
     .trim()
-    .required('Please confirm password')
-    .oneOf([ref('password'), null], 'Passwords must match'),
+    .required(messages.passwordConfirm)
+    .oneOf([ref('password'), null], messages.passwordMatch),
 };
 
 const newPasswordValidation = {
@@ -49,7 +52,7 @@ const newPasswordValidation = {
 
 const loginSchema = object({
   email: emailValidation,
-  password: string().trim().required('Password is required'),
+  password: string().trim().required(messages.passwordRequired),
 });
 
 const revokeTokenSchema = object({
@@ -63,7 +66,7 @@ const inviteSignupSchema = object({
 
 const userSchema = object({
   firstName: firstNameValidation,
-  lastName: string().trim().strict().required('Last name is required'),
+  lastName: string().trim().strict().required(messages.lastNameRequired),
   email: emailValidation,
   ...newPasswordValidation,
 });
@@ -78,9 +81,9 @@ const resetPasswordSchema = object({
 
 const userIdSchema = object({
   userId: number()
-    .positive('User id has to be positive number')
-    .integer('User id has to be an integer')
-    .required('User id is required'),
+    .positive(messages.userIdPositive)
+    .integer(messages.userIdInteger)
+    .required(messages.userIdRequired),
 });
 
 const udateUserSchema = object({
@@ -92,9 +95,13 @@ const udateUserSchema = object({
         .trim()
         .oneOf(
           Object.values(roles),
-          `Role must be one of ${Object.values(roles).join(',')}`
+          replace(
+            messages.roleMustBeOneOf,
+            '{roles}',
+            Object.values(roles).join(',')
+          )
         )
-        .required('Role is required')
+        .required(messages.roleRequired)
     )
     .notRequired(),
   isBlocked: boolean().notRequired(),

@@ -4,6 +4,8 @@ import get from 'lodash.get';
 
 import { logOut, setNewToken } from '../reducer/actions';
 
+const language = get(window, 'navigator.language', 'en').slice(0, 2);
+
 const apiUrl =
   process.env.NODE_ENV === 'production'
     ? process.env.REACT_APP_PROD_REST_URL
@@ -11,14 +13,14 @@ const apiUrl =
 
 const createClient = (state, dispatch) => {
   const jwtToken = get(state, 'jwtToken', null);
-  let context = {};
+  const context = {
+    headers: {
+      'Accept-Language': language,
+    },
+  };
 
   if (jwtToken) {
-    context = {
-      headers: {
-        authorization: `Bearer ${jwtToken}`,
-      },
-    };
+    context.headers.authorization = `Bearer ${jwtToken}`
   }
 
   return new ApolloClient({

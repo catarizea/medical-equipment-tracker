@@ -1,3 +1,8 @@
 { "en": {
-  "Layout.title": "Medical Equipment"
+  "Layout.title": "Medical Equipment",
+  "LoginScreen.copy": "Medical Equipment",
+  "LoginScreen.login": "Login",
+  "LoginScreen.forgot": "Forgot password?",
+  "LoginScreen.email": "Email Address",
+  "LoginScreen.password": "Password"
 } }
