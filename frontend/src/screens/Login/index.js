@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -15,9 +15,10 @@ import { injectIntl } from 'react-intl';
 import get from 'lodash.get';
 import { useHistory, useLocation } from 'react-router-dom';
 
+import PageProgress from '../../components/PageProgress';
 import messages from './messages';
 import { StoreContext } from '../../store/reducer/StoreProvider';
-import { logIn } from '../../store/reducer/actions';
+import { logIn, refreshToken } from '../../store/reducer/actions';
 import Copyright from '../../components/Copyright';
 import useStyles from './styles';
 import schemas from '../../utils/generateSchemas';
@@ -28,14 +29,26 @@ const LoginScreen = ({ intl: { formatMessage } }) => {
   const { dispatch, state } = useContext(StoreContext);
   let history = useHistory();
   let location = useLocation();
+  const [retry, setRetry] = useState(0);
+  const [isChecking, setIsChecking] = useState(true);
 
   let { from } = location.state || { from: { pathname: ROOT_PATH } };
 
   useEffect(() => {
-    if (state.jwtToken) {
-      history.replace(from);
-    }
-  }, [state, from, history]);
+    const checkTokens = async () => {
+      if (state.jwtToken) {
+        history.replace(from);
+      } else {
+        if (retry < 1) {
+          setRetry(1);
+          await refreshToken(dispatch);
+          setIsChecking(false);
+        }
+      }
+    };
+
+    checkTokens();
+  }, [state, from, history, dispatch, retry]);
 
   const handleSubmit = async (values, actions) => {
     const res = await logIn(dispatch, values);
@@ -102,6 +115,10 @@ const LoginScreen = ({ intl: { formatMessage } }) => {
       )}
     </Formik>
   );
+
+  if (isChecking) {
+    return <PageProgress />;
+  }
 
   return (
     <Container component="main" maxWidth="xs">

@@ -42,8 +42,8 @@ export const setNewToken = (dispatch, jwtToken) => {
   });
 };
 
-export const refreshToken = (dispatch) => {
-  dispatch({
+export const refreshToken = async (dispatch) => {
+  const res = await dispatch({
     type: REFRESH_TOKEN,
     payload: {
       request: {
@@ -52,6 +52,8 @@ export const refreshToken = (dispatch) => {
       },
     },
   });
+
+  return res;
 };
 
 export const fetchUsers = (dispatch, query = null) => {
