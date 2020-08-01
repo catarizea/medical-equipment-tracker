@@ -12,9 +12,12 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { injectIntl } from 'react-intl';
-import { loginSchema } from '@medical-equipment-tracker/validator';
 
 import messages from './messages';
+import { generateSchemas } from '@medical-equipment-tracker/validator';
+import language from '../../utils/getBrowserLanguage';
+
+const { loginSchema } = generateSchemas(language)
 
 const Copyright = ({ copy }) => {
   return (

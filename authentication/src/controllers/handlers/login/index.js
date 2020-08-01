@@ -1,6 +1,6 @@
 const Boom = require('@hapi/boom');
 const bcrypt = require('bcryptjs');
-const validator = require('@medical-equipment-tracker/validator');
+const { generateSchemas } = require('@medical-equipment-tracker/validator');
 
 const validate = require('../../../middlewares/validate');
 const generateJwtToken = require('../../../services/generateJwtToken');
@@ -10,9 +10,12 @@ const {
   REFRESH_TOKEN_COOKIE,
   REFRESH_TOKEN_COOKIE_OPTIONS,
 } = require('../../../constants/cookies');
+const getRequestLanguage = require('../../../services/getRequestLanguage');
 
 module.exports = {
   validateLogin: async (req, res, next) => {
+    const language = getRequestLanguage(req);
+    const validator = generateSchemas(language);
     await validate(req, next, validator.loginSchema);
   },
 

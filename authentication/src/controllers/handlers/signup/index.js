@@ -1,4 +1,4 @@
-const validator = require('@medical-equipment-tracker/validator');
+const { generateSchemas, roles } = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
 const bcrypt = require('bcryptjs');
 const { htmlEscape } = require('escape-goat');
@@ -7,15 +7,17 @@ const { validate } = require('../../../middlewares');
 const generateRefreshToken = require('../../../services/generateRefreshToken');
 const generateJwtToken = require('../../../services/generateJwtToken');
 const logger = require('../../../services/logger');
+const getRequestLanguage = require('../../../services/getRequestLanguage');
 const models = require('../../../models');
 const {
   REFRESH_TOKEN_COOKIE,
   REFRESH_TOKEN_COOKIE_OPTIONS,
 } = require('../../../constants/cookies');
-const { roles } = validator;
 
 module.exports = {
   validateSignup: async (req, res, next) => {
+    const language = getRequestLanguage(req);
+    const validator = generateSchemas(language);
     await validate(req, next, validator.userSchema);
   },
 

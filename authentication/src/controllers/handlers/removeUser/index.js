@@ -1,12 +1,15 @@
-const validator = require('@medical-equipment-tracker/validator');
+const { generateSchemas } = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
 
 const { validate } = require('../../../middlewares');
 const models = require('../../../models');
 const logger = require('../../../services/logger');
+const getRequestLanguage = require('../../../services/getRequestLanguage');
 
 module.exports = {
   validateRemoveUser: async (req, res, next) => {
+    const language = getRequestLanguage(req);
+    const validator = generateSchemas(language);
     await validate(req, next, validator.userIdSchema, true);
   },
 

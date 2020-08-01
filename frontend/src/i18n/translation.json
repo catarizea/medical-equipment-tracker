@@ -1,8 +1,18 @@
-{ "en": {
-  "Layout.title": "Medical Equipment",
-  "LoginScreen.copy": "Medical Equipment",
-  "LoginScreen.login": "Login",
-  "LoginScreen.forgot": "Forgot password?",
-  "LoginScreen.email": "Email Address",
-  "LoginScreen.password": "Password"
-} }
+{
+  "en": {
+    "Layout.title": "Medical Equipment",
+    "LoginScreen.copy": "Medical Equipment",
+    "LoginScreen.login": "Login",
+    "LoginScreen.forgot": "Forgot password?",
+    "LoginScreen.email": "Email Address",
+    "LoginScreen.password": "Password"
+  },
+  "ro": {
+    "Layout.title": "Echipament medical",
+    "LoginScreen.copy": "Echipament medical",
+    "LoginScreen.login": "Logare",
+    "LoginScreen.forgot": "Ai uitat parola?",
+    "LoginScreen.email": "Adresa de email",
+    "LoginScreen.password": "Parola"
+  }
+}
