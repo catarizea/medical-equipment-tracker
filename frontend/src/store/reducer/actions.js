@@ -21,8 +21,8 @@ export const logIn = async (dispatch, credentials) => {
   return res;
 };
 
-export const logOut = (dispatch) => {
-  dispatch({
+export const logOut = async (dispatch) => {
+  const res = await dispatch({
     type: LOGGED_OUT,
     payload: {
       request: {
@@ -31,6 +31,8 @@ export const logOut = (dispatch) => {
       },
     },
   });
+
+  return res;
 };
 
 export const setNewToken = (dispatch, jwtToken) => {
