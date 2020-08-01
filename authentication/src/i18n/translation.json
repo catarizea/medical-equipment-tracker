@@ -1,6 +1,12 @@
 {
   "en": {
     "unauthorized": "Unauthorized",
-    "accessRevoked": "Access revoked"
+    "accessRevoked": "Access revoked",
+    "invalidEmailPassword": "Invalid email or password"
+  },
+  "ro": {
+    "unauthorized": "Acces interzis",
+    "accessRevoked": "Acces anulat",
+    "invalidEmailPassword": "Email sau parola incorecta"
   }
 }

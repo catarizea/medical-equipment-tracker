@@ -11,27 +11,31 @@ const {
   REFRESH_TOKEN_COOKIE_OPTIONS,
 } = require('../../../constants/cookies');
 const getRequestLanguage = require('../../../services/getRequestLanguage');
+const translationMessages = require('../../../i18n/translation.json');
+
+let language;
 
 module.exports = {
   validateLogin: async (req, res, next) => {
-    const language = getRequestLanguage(req);
+    language = getRequestLanguage(req);
     const validator = generateSchemas(language);
     await validate(req, next, validator.loginSchema);
   },
 
   login: async (req, res, next) => {
     const { email, password } = req.body;
+    const messages = translationMessages[language]
 
     const user = await models.User.findOne({ where: { email } });
 
     if (!user) {
-      return next(Boom.unauthorized('Invalid email or password'));
+      return next(Boom.unauthorized(messages.invalidEmailPassword));
     }
 
     const match = await bcrypt.compare(password, user.passwordHash);
 
     if (!match) {
-      return next(Boom.unauthorized('Invalid email or password'));
+      return next(Boom.unauthorized(messages.invalidEmailPassword));
     }
 
     if (user.isBlocked) {
