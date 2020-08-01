@@ -30,6 +30,7 @@ export default (reducer, initialState, hasLogger = false) => {
       const url = get(action, 'payload.request.url', null);
       const method = get(action, 'payload.request.method', null);
       const body = get(action, 'payload.request.body', null);
+      let res = null; 
 
       if (!url || !method) {
         saveAction(action);
@@ -52,19 +53,22 @@ export default (reducer, initialState, hasLogger = false) => {
           }
 
           const axios = createAxiosClient(dispatchWithLogging, preState.current.state);
-          const res = await axios(request);
+          res = await axios(request);
 
           const successAction = { ...asyncActions[1], data: res.data };
 
           saveAction(successAction);
           dispatch(successAction);
         } catch (error) {
+          res = { error: get(error, 'response.data', error) };
           const failureAction = { ...asyncActions[2], error };
 
           saveAction(failureAction);
           dispatch(failureAction);
         }
       }
+
+      return res;
     },
     [saveAction],
   );

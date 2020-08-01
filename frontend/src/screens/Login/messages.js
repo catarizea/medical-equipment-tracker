@@ -19,8 +19,12 @@ const messages = defineMessages({
   },
   password: {
     id: 'LoginScreen.password',
-    defaultMessage: 'Password'
-  }
+    defaultMessage: 'Password',
+  },
+  genericError: {
+    id: 'LoginScreen.genericError',
+    defaultMessage: 'Error cannot login',
+  },
 });
 
 export default messages;

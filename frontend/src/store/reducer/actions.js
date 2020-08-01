@@ -6,17 +6,19 @@ import {
   FETCH_USERS,
 } from './actionTypes';
 
-export const logIn = (dispatch, credentials) => {
-  dispatch({
+export const logIn = async (dispatch, credentials) => {
+  const res = await dispatch({
     type: LOGGED_IN,
     payload: {
       request: {
         url: '/login',
         method: 'post',
-        body: { email: 'catalin@medical.equipment', password: 'Password1' },
+        body: { ...credentials },
       },
     },
   });
+
+  return res;
 };
 
 export const logOut = (dispatch) => {
@@ -56,8 +58,8 @@ export const fetchUsers = (dispatch, query = null) => {
     payload: {
       request: {
         url: '/fetch-users',
-        method: 'get'
-      }
+        method: 'get',
+      },
     },
   });
 };

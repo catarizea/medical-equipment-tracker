@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -12,12 +12,15 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { injectIntl } from 'react-intl';
+import get from 'lodash.get';
 
 import messages from './messages';
 import { generateSchemas } from '@medical-equipment-tracker/validator';
 import language from '../../utils/getBrowserLanguage';
+import { StoreContext } from '../../store/reducer/StoreProvider';
+import { logIn } from '../../store/reducer/actions';
 
-const { loginSchema } = generateSchemas(language)
+const { loginSchema } = generateSchemas(language);
 
 const Copyright = ({ copy }) => {
   return (
@@ -52,6 +55,17 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginScreen = ({ intl: { formatMessage } }) => {
   const classes = useStyles();
+  const { dispatch, state } = useContext(StoreContext);
+
+  const handleSubmit = async (values, actions) => {
+    const res = await logIn(dispatch, values);
+    if (res.error) {
+      actions.setFieldError(
+        'email',
+        get(res.error, 'message', formatMessage(messages.genericError)),
+      );
+    }
+  };
 
   const form = (
     <Formik
@@ -60,13 +74,8 @@ const LoginScreen = ({ intl: { formatMessage } }) => {
         password: '',
       }}
       validationSchema={loginSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          setSubmitting(false);
-          alert(JSON.stringify(values, null, 2));
-        }, 500);
-      }}>
-      {({ submitForm, isSubmitting }) => (
+      onSubmit={handleSubmit}>
+      {({ submitForm }) => (
         <Form className={classes.form} noValidate>
           <Field
             component={TextField}
@@ -92,13 +101,13 @@ const LoginScreen = ({ intl: { formatMessage } }) => {
             id="password"
             autoComplete="current-password"
           />
-          {isSubmitting && <LinearProgress />}
+          {state.isLoading && <LinearProgress />}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
-            disabled={isSubmitting}
+            disabled={state.isLoading}
             className={classes.submit}>
             {formatMessage(messages.login)}
           </Button>

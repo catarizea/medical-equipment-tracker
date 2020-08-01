@@ -11,11 +11,11 @@ export const authReducer = (state, action) =>
     .includes('_FAILURE')
       .then({ ...state, isLoading: false, error: action.error })
     .equals(`${LOGGED_IN}_SUCCESS`)
-      .then({ ...state, isLoading: false, isAuthenticated: true, jwtToken: get(action, 'data.jwtToken', null) })
+      .then({ ...state, isLoading: false, jwtToken: get(action, 'data.jwtToken', null) })
     .equals(`${LOGGED_OUT}_SUCCESS`)
       .then({ ...initialState })
     .equals(SET_NEW_TOKEN)
-      .then({ ...state, isAuthenticated: true, jwtToken: action.jwtToken })
+      .then({ ...state, jwtToken: action.jwtToken })
     .equals(`${FETCH_USERS}_SUCCESS`)
       .then({ ...state, isLoading: false, users: action.data })
     .else({ ...state });

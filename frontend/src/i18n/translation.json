@@ -5,14 +5,16 @@
     "LoginScreen.login": "Login",
     "LoginScreen.forgot": "Forgot password?",
     "LoginScreen.email": "Email Address",
-    "LoginScreen.password": "Password"
+    "LoginScreen.password": "Password",
+    "LoginScreen.genericError": "Error cannot login"
   },
   "ro": {
     "Layout.title": "Echipament medical",
     "LoginScreen.copy": "Echipament medical",
-    "LoginScreen.login": "Logare",
+    "LoginScreen.login": "Autentificare",
     "LoginScreen.forgot": "Ai uitat parola?",
     "LoginScreen.email": "Adresa de email",
-    "LoginScreen.password": "Parola"
+    "LoginScreen.password": "Parola",
+    "LoginScreen.genericError": "Eroare autentificare imposibila"
   }
 }
