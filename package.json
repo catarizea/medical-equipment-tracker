@@ -14,6 +14,9 @@
   ],
   "scripts": {
     "authentication:dev": "dotenv -e .env.development.local -- yarn --cwd authentication dev",
+    "authentication:dev:db:reset": "dotenv -e .env.development.local -- yarn --cwd authentication db:reset",
+    "authentication:dev:db:migrate": "dotenv -e .env.development.local -- yarn --cwd authentication db:migrate",
+    "authentication:dev:db:seed": "dotenv -e .env.development.local -- yarn --cwd authentication db:seed",
     "authentication:first": "dotenv -e .env.production.local -- yarn --cwd authentication db:first",
     "authentication:start": "sleep 20 && dotenv -e .env.production.local -- yarn --cwd authentication start",
     "authentication:test:clear": "dotenv -e .env.test.local -- yarn --cwd authentication test:clear",

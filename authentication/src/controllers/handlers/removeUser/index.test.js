@@ -1,14 +1,23 @@
 const { testApi } = require('../../../services');
 const prefix = require('../../../constants/apiUrlPrefix');
-const {
-  adminUser,
-  login,
-  tempUser,
-  createTemp,
-  destroyRemovedUser,
-} = require('../../../utils/testHelpers/user');
+const loadUsers = require('../../../utils/testHelpers/user');
+
+let adminUser;
+let login;
+let tempUser;
+let createTemp;
+let destroyRemovedUser;
 
 const path = `${prefix}/remove-user`;
+
+beforeAll(async () => {
+  const users = await loadUsers();
+  adminUser = users.adminUser;
+  login = users.login;
+  tempUser = users.tempUser;
+  createTemp = users.createTemp;
+  destroyRemovedUser = users.destroyRemovedUser;
+});
 
 describe('/remove-user endpoint', () => {
   it('should remove an existing user', async (done) => {
@@ -39,7 +48,7 @@ describe('/remove-user endpoint', () => {
     const { jwtToken } = await login(adminUser);
 
     const res = await testApi
-      .delete(`${path}/1`)
+      .delete(`${path}/${adminUser.id}`)
       .set('Authorization', `Bearer ${jwtToken}`);
 
     expect(res.statusCode).toEqual(401);

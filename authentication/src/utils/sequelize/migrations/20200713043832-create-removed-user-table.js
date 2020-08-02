@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       removedId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         unique: true,
       },
@@ -22,7 +22,7 @@ module.exports = {
         allowNull: false,
       },
       removedBy: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
       },
       createdAt: {

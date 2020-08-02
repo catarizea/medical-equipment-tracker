@@ -1,4 +1,4 @@
-const validator = require('@medical-equipment-tracker/validator');
+const { generateSchemas } = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
 const { v4: uuidv4 } = require('uuid');
 const { htmlEscape } = require('escape-goat');
@@ -7,9 +7,12 @@ const { publish } = require('@medical-equipment-tracker/message-broker');
 const { validate } = require('../../../middlewares');
 const models = require('../../../models');
 const logger = require('../../../services/logger');
+const getRequestLanguage = require('../../../services/getRequestLanguage');
 
 module.exports = {
   validateInviteSignup: async (req, res, next) => {
+    const language = getRequestLanguage(req);
+    const validator = generateSchemas(language);
     await validate(req, next, validator.inviteSignupSchema);
   },
 

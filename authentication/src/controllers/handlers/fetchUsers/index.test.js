@@ -1,8 +1,17 @@
 const { testApi } = require('../../../services');
 const prefix = require('../../../constants/apiUrlPrefix');
-const { adminUser, login } = require('../../../utils/testHelpers/user');
+const loadUsers = require('../../../utils/testHelpers/user');
+
+let adminUser;
+let login;
 
 const path = `${prefix}/fetch-users`;
+
+beforeAll(async () => {
+  const users = await loadUsers();
+  adminUser = users.adminUser;
+  login = users.login;
+});
 
 describe('/fetch-users endpoint', () => {
   it('should return the users array', async (done) => {
@@ -10,7 +19,7 @@ describe('/fetch-users endpoint', () => {
 
     const res = await testApi
       .get(
-        `${path}?email[Op.startsWith]=cat&email[Op.endsWith]=ment&id[Op.lt]=2`
+        `${path}?email[Op.startsWith]=cat&email[Op.endsWith]=ment`
       )
       .set('Authorization', `Bearer ${credentials.jwtToken}`);
 
@@ -18,7 +27,7 @@ describe('/fetch-users endpoint', () => {
     expect(res.body).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          id: expect.any(Number),
+          id: expect.any(String),
           fullName: `${adminUser.firstName} ${adminUser.lastName}`,
           firstName: adminUser.firstName,
           lastName: adminUser.lastName,

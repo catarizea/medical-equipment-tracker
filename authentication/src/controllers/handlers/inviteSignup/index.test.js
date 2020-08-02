@@ -1,13 +1,21 @@
 const { testApi } = require('../../../services');
 const prefix = require('../../../constants/apiUrlPrefix');
-const {
-  adminUser,
-  login,
-  tempUser,
-  defaultUser,
-} = require('../../../utils/testHelpers/user');
+const loadUsers = require('../../../utils/testHelpers/user');
+
+let adminUser;
+let login;
+let tempUser;
+let defaultUser;
 
 const path = `${prefix}/invite-signup`;
+
+beforeAll(async () => {
+  const users = await loadUsers();
+  adminUser = users.adminUser;
+  login = users.login;
+  tempUser = users.tempUser;
+  defaultUser = users.defaultUser;
+});
 
 describe('/invite-signup endpoint', () => {
   it('should send the sign up invitation email', async (done) => {

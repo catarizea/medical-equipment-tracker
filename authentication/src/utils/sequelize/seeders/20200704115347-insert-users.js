@@ -1,13 +1,16 @@
+const { v4: uuidv4 } = require('uuid');
+
 'use strict';
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
     const adminUser = {
+      id: uuidv4(),
       firstName: 'Catalin',
       lastName: 'Rizea',
       email: 'catalin@medical.equipment',
       passwordHash: '$2a$10$EET8MHMUPZ4s4GkCnqWwp.dG5msvPNw9Ar/4RcsLx.r./Cv6SWGD6', // Password1
-      role: 'User,Admin',
+      role: 'user,admin',
       isBlocked: false,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -15,10 +18,11 @@ module.exports = {
 
     const defaultUser = {
       ...adminUser,
+      id: uuidv4(),
       firstName: 'Simona',
       lastName: 'Galushka',
       email: 'simona@medical.equipment',
-      role: 'User',
+      role: 'user',
     };
     
     return queryInterface.bulkInsert('Users', [adminUser, defaultUser]);

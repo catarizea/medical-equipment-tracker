@@ -1,4 +1,4 @@
-const validator = require('@medical-equipment-tracker/validator');
+const { generateSchemas } = require('@medical-equipment-tracker/validator');
 const Boom = require('@hapi/boom');
 const { v4: uuidv4 } = require('uuid');
 const { htmlEscape } = require('escape-goat');
@@ -8,9 +8,12 @@ const models = require('../../../models');
 const { revokeAccess } = require('../logout');
 const logger = require('../../../services/logger');
 const { publish } = require('@medical-equipment-tracker/message-broker');
+const getRequestLanguage = require('../../../services/getRequestLanguage');
 
 module.exports = {
   validateForgotPassword: async (req, res, next) => {
+    const language = getRequestLanguage(req);
+    const validator = generateSchemas(language);
     await validate(req, next, validator.forgotPasswordSchema);
   },
 

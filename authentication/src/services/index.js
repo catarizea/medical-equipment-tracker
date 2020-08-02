@@ -4,6 +4,8 @@ const generateWhere = require('./generateWhere');
 const refreshTokens = require('./refreshTokens');
 const logger = require('./logger');
 const testApi = require('./testApi');
+const getRequestLanguage = require('./getRequestLanguage');
+const getTranslationMessages = require('./getTranslationMessages');
 
 module.exports = {
   generateJwtToken,
@@ -12,4 +14,6 @@ module.exports = {
   refreshTokens,
   logger,
   testApi,
+  getRequestLanguage,
+  getTranslationMessages,
 };

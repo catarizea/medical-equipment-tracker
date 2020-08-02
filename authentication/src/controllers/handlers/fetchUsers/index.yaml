@@ -6,7 +6,7 @@ get:
     - bearerAuth: []
   parameters:
     - in: query
-      description: Query object to compose the where clause using Sequelize operators (https://sequelize.org/master/manual/model-querying-basics.html#operators) Example: { "email": { "Op.startsWith": "cat", "Op.endsWith": "ment" }, "id": { "Op.lt": 2 } } 
+      description: Query object to compose the where clause using Sequelize operators (https://sequelize.org/master/manual/model-querying-basics.html#operators) Example: { "email": { "Op.startsWith": "cat", "Op.endsWith": "ment" } } 
       name: params
       schema:
         type: object
@@ -21,8 +21,8 @@ get:
               type: object
               properties:
                 id:
-                  type: integer
-                  example: "123"
+                  type: string
+                  example: "91c4f2ba-81d7-4ac6-91f5-11a6c30da3d1"
                 email:
                   type: string
                   format: email
@@ -40,7 +40,7 @@ get:
                   type: array
                   items:
                     type: string
-                    example: "User"
+                    example: "user"
                 isBlocked:
                   type: boolean
                   example: "false"

@@ -6,21 +6,23 @@ import {
   FETCH_USERS,
 } from './actionTypes';
 
-export const logIn = (dispatch, credentials) => {
-  dispatch({
+export const logIn = async (dispatch, credentials) => {
+  const res = await dispatch({
     type: LOGGED_IN,
     payload: {
       request: {
         url: '/login',
         method: 'post',
-        body: { email: 'catalin@medical.equipment', password: 'Password1' },
+        body: { ...credentials },
       },
     },
   });
+
+  return res;
 };
 
-export const logOut = (dispatch) => {
-  dispatch({
+export const logOut = async (dispatch) => {
+  const res = await dispatch({
     type: LOGGED_OUT,
     payload: {
       request: {
@@ -29,6 +31,8 @@ export const logOut = (dispatch) => {
       },
     },
   });
+
+  return res;
 };
 
 export const setNewToken = (dispatch, jwtToken) => {
@@ -38,8 +42,8 @@ export const setNewToken = (dispatch, jwtToken) => {
   });
 };
 
-export const refreshToken = (dispatch) => {
-  dispatch({
+export const refreshToken = async (dispatch) => {
+  const res = await dispatch({
     type: REFRESH_TOKEN,
     payload: {
       request: {
@@ -48,6 +52,8 @@ export const refreshToken = (dispatch) => {
       },
     },
   });
+
+  return res;
 };
 
 export const fetchUsers = (dispatch, query = null) => {
@@ -56,8 +62,8 @@ export const fetchUsers = (dispatch, query = null) => {
     payload: {
       request: {
         url: '/fetch-users',
-        method: 'get'
-      }
+        method: 'get',
+      },
     },
   });
 };

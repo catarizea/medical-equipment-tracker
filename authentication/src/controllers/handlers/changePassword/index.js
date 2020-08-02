@@ -1,5 +1,5 @@
 const Boom = require('@hapi/boom');
-const validator = require('@medical-equipment-tracker/validator');
+const { generateSchemas, roles } = require('@medical-equipment-tracker/validator');
 const bcrypt = require('bcryptjs');
 const intersection = require('lodash.intersection');
 
@@ -7,11 +7,12 @@ const { validate } = require('../../../middlewares');
 const models = require('../../../models');
 const { VALIDATION_ERROR } = require('../../../constants/validation');
 const logger = require('../../../services/logger');
-
-const { roles } = validator;
+const getRequestLanguage = require('../../../services/getRequestLanguage');
 
 module.exports = {
   validateChangePassword: async (req, res, next) => {
+    const language = getRequestLanguage(req);
+    const validator = generateSchemas(language);
     await validate(req, next, validator.changePasswordSchema);
   },
 

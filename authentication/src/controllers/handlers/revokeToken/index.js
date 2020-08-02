@@ -1,16 +1,17 @@
 const Boom = require('@hapi/boom');
 const intersection = require('lodash.intersection');
-const validator = require('@medical-equipment-tracker/validator');
+const { generateSchemas, roles } = require('@medical-equipment-tracker/validator');
 const { htmlEscape } = require('escape-goat');
 
 const models = require('../../../models');
 const { validate } = require('../../../middlewares');
 const logger = require('../../../services/logger');
-
-const { roles } = validator;
+const getRequestLanguage = require('../../../services/getRequestLanguage');
 
 module.exports = {
   validateRevokeToken: async (req, res, next) => {
+    const language = getRequestLanguage(req);
+    const validator = generateSchemas(language);
     await validate(req, next, validator.revokeTokenSchema);
   },
 
@@ -25,7 +26,7 @@ module.exports = {
 
     if (
       !refreshToken ||
-      (refreshToken.UserId !== parseInt(user.id, 10) && !isAdmin)
+      (refreshToken.UserId !== user.id && !isAdmin)
     ) {
       return next(Boom.unauthorized('Unauthorized'));
     }

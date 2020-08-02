@@ -4,9 +4,9 @@ module.exports = {
     await queryInterface.createTable('Users', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUID4,
       },
       firstName: {
         type: Sequelize.STRING,
@@ -35,7 +35,7 @@ module.exports = {
         defaultValue: false,
       },
       blockedBy: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: true,
       },
       blockedByIp: {
@@ -44,15 +44,15 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Users');
-  }
+  },
 };

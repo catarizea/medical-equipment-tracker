@@ -1,0 +1,36 @@
+{
+  "en": {
+    "emailValid": "Email has to be valid",
+    "emailRequired": "Email is required",
+    "firstNameRequired": "First name is required",
+    "tokenNotValid": "Token is not valid",
+    "tokenRequired": "Token is required",
+    "passwordRequired": "Password is required",
+    "passwordAtLeast": "Password has to contain at least 8 characters",
+    "passwordHasToContain": "Password has to contain lowercase and uppercase and numeric characters",
+    "passwordConfirm": "Please confirm password",
+    "passwordMatch": "Passwords must match",
+    "lastNameRequired": "Last name is required",
+    "userIdNotValid": "User id is not valid",
+    "userIdRequired": "User id is required",
+    "roleMustBeOneOf": "Role must be one of {roles}",
+    "roleRequired": "Role is required"
+  },
+  "ro": {
+    "emailValid": "Adresa de email nu este valida",
+    "emailRequired": "Adresa de email este obligatorie",
+    "firstNameRequired": "Prenumele este obligatoriu",
+    "tokenNotValid": "Tokenul nu este valid",
+    "tokenRequired": "Tokenul este obligatoriu",
+    "passwordRequired": "Parola este obligatorie",
+    "passwordAtLeast": "Parola trebuie sa contina cel putin 8 caractere",
+    "passwordHasToContain": "Parola trebuie sa contina cel putin o litera mica si o litera mare si un numar",
+    "passwordConfirm": "Te rugam sa confirmi parola",
+    "passwordMatch": "Cele doua parole trebuie sa fie identice",
+    "lastNameRequired": "Numele de familie este obligatoriu",
+    "userIdNotValid": "User id nu este valid",
+    "userIdRequired": "User id este obligatoriu",
+    "roleMustBeOneOf": "Rolul trebuie sa aiba una din valorile {roles}",
+    "roleRequired": "Rolul este obligatoriu"
+  }
+}

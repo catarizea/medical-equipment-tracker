@@ -5,6 +5,14 @@ const mkdirp = require('mkdirp');
 const filePattern = `${__dirname}/../src/i18n/translation/**/*.json`;
 const outputLanguageDataDir = `${__dirname}/../src/i18n/`;
 
+let previousTranslation = {};
+
+try {
+  if (fs.existsSync(`${outputLanguageDataDir}translation.json`)) {
+    previousTranslation = require(`${outputLanguageDataDir}translation.json`);
+  }
+} catch(err) {}
+
 // Aggregates the default messages that were extracted from the example app's
 // React components via the React Intl Babel plugin. An error will be thrown if
 // there are messages in different components that use the same `id`. The result
@@ -28,7 +36,9 @@ console.log(defaultMessages);
 
 mkdirp.sync(outputLanguageDataDir);
 
+const currentTranslation = { ...previousTranslation, en: defaultMessages };
+
 fs.writeFileSync(
   `${outputLanguageDataDir}translation.json`,
-  `{ "en": ${JSON.stringify(defaultMessages, null, 2)} }`,
+  JSON.stringify(currentTranslation, null, 2),
 );

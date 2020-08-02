@@ -17,10 +17,10 @@ if (process.env.NODE_ENV !== 'test') {
     ),
     transports: [
       new DailyRotateFile({
-        filename: path.join(__dirname, '..', 'logs/all-logs-%DATE%.log'),
+        filename: path.join(__dirname, '../..', 'logs/all-logs-%DATE%.log'),
         json: false,
         maxsize: 5242880,
-        maxFiles: 5,
+        maxFiles: process.env.AUTHENTICATION_LOGS_DAYS,
       }),
       new transports.Console(),
     ],

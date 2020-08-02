@@ -1,13 +1,20 @@
 const { testApi } = require('../../../services');
 const prefix = require('../../../constants/apiUrlPrefix');
-const {
-  defaultUser,
-  adminUser,
-  login,
-} = require('../../../utils/testHelpers/user');
+const loadUsers = require('../../../utils/testHelpers/user');
+
+let defaultUser;
+let adminUser;
+let login;
 
 const path = `${prefix}/change-password`;
 const newPassword = 'Password12';
+
+beforeAll(async () => {
+  const users = await loadUsers();
+  defaultUser = users.defaultUser;
+  adminUser = users.adminUser;
+  login = users.login;
+});
 
 describe('/change-password endpoint', () => {
   it('should change password as owner of the record', async (done) => {
@@ -17,7 +24,7 @@ describe('/change-password endpoint', () => {
       .put(`${path}/${defaultUser.id}`)
       .set('Authorization', `Bearer ${credentials.jwtToken}`)
       .send({
-        currentPassword: defaultUser.password,
+        currentPassword: 'Password1',
         password: newPassword,
         confirmPassword: newPassword,
       });

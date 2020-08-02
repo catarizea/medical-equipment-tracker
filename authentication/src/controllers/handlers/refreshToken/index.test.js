@@ -1,16 +1,26 @@
 const { testApi } = require('../../../services');
 const prefix = require('../../../constants/apiUrlPrefix');
-const {
-  adminUser,
-  login,
-  tempUser,
-  createTemp,
-  destroyTemp,
-  updateBlocked,
-} = require('../../../utils/testHelpers/user');
+const loadUsers = require('../../../utils/testHelpers/user');
 const { REFRESH_TOKEN_COOKIE } = require('../../../constants/cookies');
 
+let adminUser;
+let login;
+let tempUser;
+let createTemp;
+let destroyTemp;
+let updateBlocked;
+
 const path = `${prefix}/refresh-token`;
+
+beforeAll(async () => {
+  const users = await loadUsers();
+  adminUser = users.adminUser;
+  login = users.login;
+  tempUser = users.tempUser;
+  createTemp = users.createTemp;
+  destroyTemp = users.destroyTemp;
+  updateBlocked = users.updateBlocked;
+});
 
 describe('/refresh-token endpoint', () => {
   it('should return a new set of JWT, JWT expiration date and refreshToken', async (done) => {

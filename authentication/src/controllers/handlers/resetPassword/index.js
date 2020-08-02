@@ -1,11 +1,12 @@
 const Boom = require('@hapi/boom');
-const validator = require('@medical-equipment-tracker/validator');
+const { generateSchemas } = require('@medical-equipment-tracker/validator');
 const bcrypt = require('bcryptjs');
 const { htmlEscape } = require('escape-goat');
 
 const { validate } = require('../../../middlewares');
 const generateRefreshToken = require('../../../services/generateRefreshToken');
 const generateJwtToken = require('../../../services/generateJwtToken');
+const getRequestLanguage = require('../../../services/getRequestLanguage');
 const logger = require('../../../services/logger');
 const models = require('../../../models');
 const {
@@ -16,6 +17,8 @@ const { revokeAccess } = require('../logout');
 
 module.exports = {
   validateResetPassword: async (req, res, next) => {
+    const language = getRequestLanguage(req);
+    const validator = generateSchemas(language);
     await validate(req, next, validator.resetPasswordSchema);
   },
 
