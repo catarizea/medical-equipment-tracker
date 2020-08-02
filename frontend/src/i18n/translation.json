@@ -1,6 +1,13 @@
 {
   "en": {
     "Layout.title": "Medical Equipment",
+    "SidebarMenu.patients": "Patients",
+    "SidebarMenu.equipment": "Equipment",
+    "SidebarMenu.inventory": "Inventory",
+    "SidebarMenu.locations": "Locations",
+    "SidebarMenu.personnel": "Personnel",
+    "SidebarMenu.divisions": "Divisions",
+    "SidebarMenu.positions": "Positions",
     "LoginScreen.copy": "Medical Equipment",
     "LoginScreen.login": "Login",
     "LoginScreen.forgot": "Forgot password?",
@@ -10,6 +17,13 @@
   },
   "ro": {
     "Layout.title": "Echipament medical",
+    "SidebarMenu.patients": "Pacienti",
+    "SidebarMenu.equipment": "Echipamente",
+    "SidebarMenu.inventory": "Materiale sanitare",
+    "SidebarMenu.locations": "Locatii",
+    "SidebarMenu.personnel": "Personal",
+    "SidebarMenu.divisions": "Sectii",
+    "SidebarMenu.positions": "Functii",
     "LoginScreen.copy": "Echipament medical",
     "LoginScreen.login": "Autentificare",
     "LoginScreen.forgot": "Ai uitat parola?",

@@ -6,7 +6,7 @@ import translationMessages from './i18n/translation.json';
 import language from './utils/getBrowserLanguage';
 import StoreProvider from './store/reducer/StoreProvider';
 import ApolloProvider from './store/apollo/Provider';
-import RootRouter from './navigation/RootRouter'; 
+import RootRouter from './navigation/RootRouter';
  
 const messages = translationMessages[language];
 
