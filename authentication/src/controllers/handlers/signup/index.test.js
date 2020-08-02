@@ -6,6 +6,7 @@ const {
   createSignupInvitation,
   destroySignupInvitation,
 } = require('../../../utils/testHelpers/signupinvitation');
+const loadUsers = require('../../../utils/testHelpers/user');
 
 let invited;
 const path = `${prefix}/signup`;
@@ -13,7 +14,6 @@ const path = `${prefix}/signup`;
 const invitee = {
   email: 'max-boshuruku@medical.equipment',
   name: 'Boshuruku',
-  UserId: 1,
   token: uuidv4(),
 };
 
@@ -26,6 +26,8 @@ const user = {
 };
 
 beforeAll(async () => {
+  const users  = await loadUsers();
+  invitee.UserId = users.adminUser.id;
   invited = await createSignupInvitation(invitee);
 });
 

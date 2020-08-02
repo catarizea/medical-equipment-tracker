@@ -1,8 +1,15 @@
 const { testApi } = require('../../../services');
 const prefix = require('../../../constants/apiUrlPrefix');
-const { defaultUser } = require('../../../utils/testHelpers/user');
+const loadUsers = require('../../../utils/testHelpers/user');
+
+let defaultUser;
 
 const path = `${prefix}/forgot-password`;
+
+beforeAll(async () => {
+  const users = await loadUsers();
+  defaultUser = users.defaultUser;
+});
 
 describe('/forgot-password endpoint', () => {
   it('should send the reset password email', async (done) => {

@@ -42,11 +42,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       revokedBy: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: true,
       },
       UserId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         references: {
           model: 'Users',

@@ -26,7 +26,7 @@ module.exports = {
 
     if (
       !refreshToken ||
-      (refreshToken.UserId !== parseInt(user.id, 10) && !isAdmin)
+      (refreshToken.UserId !== user.id && !isAdmin)
     ) {
       return next(Boom.unauthorized('Unauthorized'));
     }

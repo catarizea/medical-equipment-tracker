@@ -14,7 +14,9 @@ const roles = {
 };
 
 const generateSchemas = (language = 'en') => {
-  const messages = translationMessages[language] ? translationMessages[language] : translationMessages.en;
+  const messages = translationMessages[language]
+    ? translationMessages[language]
+    : translationMessages.en;
 
   const uuidRegex = /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i;
 
@@ -83,9 +85,9 @@ const generateSchemas = (language = 'en') => {
   });
 
   const userIdSchema = object({
-    userId: number()
-      .positive(messages.userIdPositive)
-      .integer(messages.userIdInteger)
+    userId: string()
+      .trim()
+      .matches(uuidRegex, messages.userIdNotValid)
       .required(messages.userIdRequired),
   });
 

@@ -2,6 +2,7 @@ const { generateSchemas, roles } = require('@medical-equipment-tracker/validator
 const Boom = require('@hapi/boom');
 const bcrypt = require('bcryptjs');
 const { htmlEscape } = require('escape-goat');
+const { v4: uuidv4 } = require('uuid');
 
 const { validate } = require('../../../middlewares');
 const generateRefreshToken = require('../../../services/generateRefreshToken');
@@ -49,6 +50,7 @@ module.exports = {
     }
 
     const newUser = {
+      id: uuidv4(),
       firstName,
       lastName,
       email,

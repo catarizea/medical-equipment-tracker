@@ -32,14 +32,14 @@ module.exports = {
         type: Sequelize.STRING,
       },
       revokedBy: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: true,
       },
       replacedByToken: {
         type: Sequelize.STRING,
       },
       UserId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         onDelete: 'CASCADE',
         allowNull: false,
         references: {

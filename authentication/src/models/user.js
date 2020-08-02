@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: false,
       },
       blockedBy: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: true,
       },
       blockedByIp: {

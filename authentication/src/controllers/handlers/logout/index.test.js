@@ -1,8 +1,17 @@
 const { testApi } = require('../../../services');
 const prefix = require('../../../constants/apiUrlPrefix');
-const { defaultUser, login } = require('../../../utils/testHelpers/user');
+const loadUsers = require('../../../utils/testHelpers/user');
+
+let defaultUser;
+let login;
 
 const path = `${prefix}/logout`;
+
+beforeAll(async () => {
+  const users = await loadUsers();
+  defaultUser = users.defaultUser;
+  login = users.login;
+});
 
 describe('/logout endpoint', () => {
   it('should delete the refreshToken cookie if exists', async (done) => {

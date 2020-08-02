@@ -1,8 +1,11 @@
+const { v4: uuidv4 } = require('uuid');
+
 'use strict';
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
     const adminUser = {
+      id: uuidv4(),
       firstName: 'Catalin',
       lastName: 'Rizea',
       email: 'catalin@medical.equipment',
@@ -15,6 +18,7 @@ module.exports = {
 
     const defaultUser = {
       ...adminUser,
+      id: uuidv4(),
       firstName: 'Simona',
       lastName: 'Galushka',
       email: 'simona@medical.equipment',

@@ -1,14 +1,23 @@
 const { testApi } = require('../../../services');
 const prefix = require('../../../constants/apiUrlPrefix');
-const {
-  adminUser,
-  tempUser,
-  createTemp,
-  destroyTemp,
-  login,
-} = require('../../../utils/testHelpers/user');
+const loadUsers = require('../../../utils/testHelpers/user');
+
+let adminUser;
+let tempUser;
+let createTemp;
+let destroyTemp;
+let login;
 
 const path = `${prefix}/fetch-user`;
+
+beforeAll(async () => {
+  const users = await loadUsers();
+  adminUser = users.adminUser;
+  tempUser = users.tempUser;
+  createTemp = users.createTemp;
+  destroyTemp = users.destroyTemp;
+  login = users.login;
+});
 
 describe('/fetch-user endpoint', () => {
   it('should return the user object', async (done) => {
@@ -30,7 +39,7 @@ describe('/fetch-user endpoint', () => {
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(
       expect.objectContaining({
-        id: expect.any(Number),
+        id: expect.any(String),
         fullName: `${user.firstName} ${user.lastName}`,
         firstName: user.firstName,
         lastName: user.lastName,

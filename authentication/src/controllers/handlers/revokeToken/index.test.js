@@ -1,14 +1,23 @@
 const { testApi } = require('../../../services');
 const prefix = require('../../../constants/apiUrlPrefix');
-const {
-  adminUser,
-  login,
-  tempUser,
-  createTemp,
-  destroyTemp,
-} = require('../../../utils/testHelpers/user');
+const loadUsers = require('../../../utils/testHelpers/user');
+
+let adminUser;
+let login;
+let tempUser;
+let createTemp;
+let destroyTemp;
 
 const path = `${prefix}/revoke-token`;
+
+beforeAll(async () => {
+  const users = await loadUsers();
+  adminUser = users.adminUser; 
+  login = users.login; 
+  tempUser = users.tempUser; 
+  createTemp = users.createTemp; 
+  destroyTemp = users.destroyTemp; 
+});
 
 describe('/revoke-token endpoint', () => {
   it('should revoke a valid refresh token', async (done) => {

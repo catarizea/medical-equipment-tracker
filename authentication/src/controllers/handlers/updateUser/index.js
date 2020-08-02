@@ -64,7 +64,7 @@ module.exports = {
 
     if (
       !isAdmin &&
-      (foundUser.id !== parseInt(user.id, 10) || foundUser.isBlocked)
+      (foundUser.id !== user.id || foundUser.isBlocked)
     ) {
       return next(Boom.unauthorized('Unauthorized'));
     }

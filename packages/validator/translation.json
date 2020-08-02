@@ -11,8 +11,7 @@
     "passwordConfirm": "Please confirm password",
     "passwordMatch": "Passwords must match",
     "lastNameRequired": "Last name is required",
-    "userIdPositive": "User id has to be positive number",
-    "userIdInteger": "User id has to be an integer",
+    "userIdNotValid": "User id is not valid",
     "userIdRequired": "User id is required",
     "roleMustBeOneOf": "Role must be one of {roles}",
     "roleRequired": "Role is required"
@@ -29,8 +28,7 @@
     "passwordConfirm": "Te rugam sa confirmi parola",
     "passwordMatch": "Cele doua parole trebuie sa fie identice",
     "lastNameRequired": "Numele de familie este obligatoriu",
-    "userIdPositive": "User id trebuie sa fie un numar pozitiv",
-    "userIdInteger": "User id trebuie sa fie un numar intreg",
+    "userIdNotValid": "User id nu este valid",
     "userIdRequired": "User id este obligatoriu",
     "roleMustBeOneOf": "Rolul trebuie sa aiba una din valorile {roles}",
     "roleRequired": "Rolul este obligatoriu"

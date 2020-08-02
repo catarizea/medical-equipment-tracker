@@ -1,17 +1,19 @@
+const { v4: uuidv4 } = require('uuid');
+
 const { testApi } = require('../../../services');
 const prefix = require('../../../constants/apiUrlPrefix');
-const {
-  tempUser,
-  adminUser,
-  createTemp,
-  destroyTemp,
-  login,
-} = require('../../../utils/testHelpers/user');
+const loadUsers = require('../../../utils/testHelpers/user');
+  
+let tempUser;
+let adminUser;
+let createTemp;
+let destroyTemp;
+let login;
 
 const path = `${prefix}/update-user`;
 
-const user = { ...tempUser, email: 'update-user@medical.equipment' };
-const userBlocked = { ...tempUser, email: 'update-user-blocked@medical.equipment' };
+let user;
+let userBlocked;
 
 let createdUser;
 let createdUserBlocked;
@@ -22,6 +24,16 @@ const updateWith = {
 };
 
 beforeAll(async () => {
+  const users = await loadUsers();
+  tempUser = users.tempUser;
+  adminUser = users.adminUser;
+  createTemp = users.createTemp;
+  destroyTemp = users.destroyTemp;
+  login = users.login;
+
+  user = { ...tempUser, email: 'update-user@medical.equipment' };
+  userBlocked = { ...tempUser, email: 'update-user-blocked@medical.equipment' };
+
   createdUser = await createTemp(user);
   user.id = createdUser.id;
 
@@ -110,7 +122,7 @@ describe('/update-user endpoint', () => {
     };
 
     const res = await testApi
-      .put(`${path}/1`)
+      .put(`${path}/${adminUser.id}`)
       .set('Authorization', `Bearer ${jwtToken}`)
       .send(updateWithFull);
 
@@ -197,7 +209,7 @@ describe('/update-user endpoint', () => {
     const { jwtToken } = await login(user);
 
     const res = await testApi
-      .put(`${path}/1001`)
+      .put(`${path}/${uuidv4()}`)
       .set('Authorization', `Bearer ${jwtToken}`)
       .send(updateWith);
 

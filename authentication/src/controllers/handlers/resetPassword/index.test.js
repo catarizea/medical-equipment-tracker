@@ -3,14 +3,14 @@ const { v4: uuidv4 } = require('uuid');
 const { testApi } = require('../../../services');
 const prefix = require('../../../constants/apiUrlPrefix');
 const {
-  tempUser,
-  createTemp,
-  destroyTemp,
-} = require('../../../utils/testHelpers/user');
-const {
   createForgotPassword,
   destroyForgotPassword,
 } = require('../../../utils/testHelpers/forgotpassword');
+const loadUsers = require('../../../utils/testHelpers/user');
+
+let tempUser;
+let createTemp;
+let destroyTemp;
 
 const path = `${prefix}/reset-password`;
 
@@ -19,6 +19,11 @@ let token;
 let expiredToken;
 
 beforeAll(async () => {
+  const users = await loadUsers();
+  tempUser = users.tempUser;
+  createTemp = users.createTemp;
+  destroyTemp = users.destroyTemp;
+
   user = { ...tempUser, email: 'reset-password@medical.equipment' };
 
   const createdTemp = await createTemp(user);

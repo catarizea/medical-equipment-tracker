@@ -1,18 +1,25 @@
 const { testApi } = require('../../../services');
 const prefix = require('../../../constants/apiUrlPrefix');
-const {
-  adminUser,
-  login,
-  tempUser,
-  createTemp,
-  destroyTemp,
-} = require('../../../utils/testHelpers/user');
+const loadUsers = require('../../../utils/testHelpers/user');
+
+let adminUser;
+let login;
+let tempUser;
+let createTemp;
+let destroyTemp;
 
 const path = `${prefix}/undo-revoke-access`;
 
 let user;
 
 beforeAll(async () => {
+  const users = await loadUsers();
+  adminUser = users.adminUser;
+  login = users.login;
+  tempUser = users.tempUser;
+  createTemp = users.createTemp;
+  destroyTemp = users.destroyTemp;
+
   user = {
     ...tempUser,
     isBlocked: true,
@@ -66,7 +73,7 @@ describe('/undo-revoke-access endpoint', () => {
     const { jwtToken } = await login(adminUser);
 
     const res = await testApi
-      .get(`${path}/1`)
+      .get(`${path}/${adminUser.id}`)
       .set('Authorization', `Bearer ${jwtToken}`);
 
     expect(res.statusCode).toEqual(401);

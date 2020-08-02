@@ -23,7 +23,7 @@ module.exports = {
       return next(Boom.badRequest('No account for this id'));
     }
 
-    if (user.id === parseInt(admin.id, 10)) {
+    if (user.id === admin.id) {
       return next(Boom.unauthorized('You cannot remove your own account'));
     }
 
