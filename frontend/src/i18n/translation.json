@@ -1,6 +1,7 @@
 {
   "en": {
     "Layout.title": "Medical Equipment",
+    "SidebarMenu.home": "Home",
     "SidebarMenu.patients": "Patients",
     "SidebarMenu.equipment": "Equipment",
     "SidebarMenu.inventory": "Inventory",
@@ -8,15 +9,24 @@
     "SidebarMenu.personnel": "Personnel",
     "SidebarMenu.divisions": "Divisions",
     "SidebarMenu.positions": "Positions",
+    "Divisions.title": "Divisions",
+    "Equipment.title": "Equipment",
+    "Home.title": "Home",
+    "Inventory.title": "Inventory",
+    "Locations.title": "Locations",
     "LoginScreen.copy": "Medical Equipment",
     "LoginScreen.login": "Login",
     "LoginScreen.forgot": "Forgot password?",
     "LoginScreen.email": "Email Address",
     "LoginScreen.password": "Password",
-    "LoginScreen.genericError": "Error cannot login"
+    "LoginScreen.genericError": "Error cannot login",
+    "Patients.title": "Patients",
+    "Personnel.title": "Personnel",
+    "Positions.title": "Positions"
   },
   "ro": {
     "Layout.title": "Echipament medical",
+    "SidebarMenu.home": "Acasa",
     "SidebarMenu.patients": "Pacienti",
     "SidebarMenu.equipment": "Echipamente",
     "SidebarMenu.inventory": "Materiale sanitare",
@@ -24,11 +34,19 @@
     "SidebarMenu.personnel": "Personal",
     "SidebarMenu.divisions": "Sectii",
     "SidebarMenu.positions": "Functii",
+    "Divisions.title": "Sectii",
+    "Equipment.title": "Echipamente",
+    "Home.title": "Acasa",
+    "Inventory.title": "Materiale sanitare",
+    "Locations.title": "Locatii",
     "LoginScreen.copy": "Echipament medical",
     "LoginScreen.login": "Autentificare",
     "LoginScreen.forgot": "Ai uitat parola?",
     "LoginScreen.email": "Adresa de email",
     "LoginScreen.password": "Parola",
-    "LoginScreen.genericError": "Eroare autentificare imposibila"
+    "LoginScreen.genericError": "Eroare autentificare imposibila",
+    "Patients.title": "Pacienti",
+    "Personnel.title": "Personal",
+    "Positions.title": "Functii"
   }
 }
