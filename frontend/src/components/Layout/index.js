@@ -20,7 +20,7 @@ import useStyles from './styles';
 const Layout = (props) => {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const { children, intl: { formatMessage } } = props;
 
   const handleDrawerOpen = () => {

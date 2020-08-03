@@ -4,7 +4,7 @@ const config = {
   user: process.env.HASURA_POSTGRES_USER,
   password: process.env.HASURA_POSTGRES_PASSWORD,
   port: process.env.HASURA_POSTGRES_PORT,
-  host: process.env.AUTHENTICATION_EXPRESS_IP,
+  host: '127.0.0.1',
 };
 
 pgtools.createdb(config, process.env.AUTHENTICATION_DB_NAME, function (

@@ -4,15 +4,15 @@ import Typography from '@material-ui/core/Typography';
 import { StoreContext } from '../../store/reducer/StoreProvider';
 import useStylesCommon from '../stylesCommon';
 
-const Home = () => {
+const Locations = () => {
   const { dispatch, state } = useContext(StoreContext);
   const classesCommon = useStylesCommon();
 
   return (
     <div className={classesCommon.root}>
-      <Typography variant="h1">Home</Typography>
+      <Typography variant="h1">Locations</Typography>
     </div>
   );
 };
 
-export default Home;
+export default Locations;

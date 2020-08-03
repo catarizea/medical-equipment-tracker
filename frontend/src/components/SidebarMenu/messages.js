@@ -1,6 +1,10 @@
 import { defineMessages } from 'react-intl';
 
 const messages = defineMessages({
+  home: {
+    id: 'SidebarMenu.home',
+    defaultMessage: 'Home',
+  },
   patients: {
     id: 'SidebarMenu.patients',
     defaultMessage: 'Patients',
