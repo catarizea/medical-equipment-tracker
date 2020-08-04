@@ -50,6 +50,10 @@
 - table:
     schema: public
     name: equipment
+  object_relationships:
+  - name: personnel
+    using:
+      foreign_key_constraint_on: owner_id
   array_relationships:
   - name: equipment_maintenances
     using:
