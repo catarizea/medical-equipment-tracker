@@ -22,9 +22,11 @@ export const GET_DIVISIONS = gql`
 `;
 
 const Divisions = ({ intl: { formatMessage } }) => {
-  const { error: divisionsError, data: divisionsData, loading } = useQuery(
-    GET_DIVISIONS,
-  );
+  const {
+    error: divisionsError,
+    data: divisionsData,
+    loading,
+  } = useQuery(GET_DIVISIONS, { fetchPolicy: 'network-only' });
 
   if (loading) return 'Loading...';
   if (divisionsError) return `Error! ${divisionsError.message}`;
