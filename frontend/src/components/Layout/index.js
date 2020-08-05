@@ -13,7 +13,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { injectIntl } from 'react-intl';
 
-import SidebarMenu from '../../components/SidebarMenu';
+import SidebarMenu from '../../navigation/SidebarMenu';
 import messages from './messages';
 import useStyles from './styles';
 

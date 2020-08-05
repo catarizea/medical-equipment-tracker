@@ -26,7 +26,7 @@ import {
   PERSONNEL_PATH,
   DIVISIONS_PATH,
   POSITIONS_PATH,
-} from '../../navigation/routes';
+} from '../routes';
 import useStyles from './styles';
 
 const SidebarMenu = ({ intl: { formatMessage } }) => {

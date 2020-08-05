@@ -10,6 +10,7 @@ module.exports = {
       passwordHash:
         '$2a$10$EET8MHMUPZ4s4GkCnqWwp.dG5msvPNw9Ar/4RcsLx.r./Cv6SWGD6', // Password1
       role: 'user,admin',
+      defaultRole: 'admin',
       isBlocked: false,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -22,6 +23,7 @@ module.exports = {
       lastName: 'Galushka',
       email: 'simona@medical.equipment',
       role: 'user,doctor',
+      defaultRole: 'doctor',
     };
 
     const nurseUser = {
@@ -31,6 +33,7 @@ module.exports = {
       lastName: 'Martin',
       email: 'marietta@medical.equipment',
       role: 'user,nurse',
+      defaultRole: 'nurse',
     };
 
     const warehouseUser = {
@@ -40,6 +43,7 @@ module.exports = {
       lastName: 'Sivornian',
       email: 'pavel@medical.equipment',
       role: 'user,warehouse',
+      defaultRole: 'warehouse',
     };
 
     const hrUser = {
@@ -49,6 +53,7 @@ module.exports = {
       lastName: 'Mosneag',
       email: 'sonia@medical.equipment',
       role: 'user,hr',
+      defaultRole: 'hr',
     };
 
     const techUser = {
@@ -58,6 +63,7 @@ module.exports = {
       lastName: 'Apolodor',
       email: 'gaius@medical.equipment',
       role: 'user,tech',
+      defaultRole: 'tech',
     };
 
     return queryInterface.bulkInsert('Users', [

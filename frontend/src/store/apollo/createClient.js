@@ -1,18 +1,24 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
-import axios from 'axios';
+import {
+  ApolloClient,
+  InMemoryCache,
+  HttpLink,
+  concat,
+  ApolloLink,
+} from '@apollo/client';
 import get from 'lodash.get';
+import { onError } from '@apollo/client/link/error';
+import language from '../../utils/getBrowserLanguage';
 
-import { logOut, setNewToken } from '../reducer/actions';
-
-const language = get(window, 'navigator.language', 'en').slice(0, 2);
-
-const apiUrl =
-  process.env.NODE_ENV === 'production'
-    ? process.env.REACT_APP_PROD_REST_URL
-    : process.env.REACT_APP_DEV_REST_URL;
+const httpLink = new HttpLink({
+  uri:
+    process.env.NODE_ENV === 'production'
+      ? process.env.REACT_APP_PROD_GRAPHQL_URL
+      : process.env.REACT_APP_DEV_GRAPHQL_URL,
+});
 
 const createClient = (state, dispatch) => {
   const jwtToken = get(state, 'jwtToken', null);
+
   const context = {
     headers: {
       'Accept-Language': language,
@@ -20,64 +26,26 @@ const createClient = (state, dispatch) => {
   };
 
   if (jwtToken) {
-    context.headers.authorization = `Bearer ${jwtToken}`
+    context.headers['Authorization'] = `Bearer ${jwtToken}`;
   }
 
-  return new ApolloClient({
-    uri:
-      process.env.NODE_ENV === 'production'
-        ? process.env.REACT_APP_PROD_GRAPHQL_URL
-        : process.env.REACT_APP_DEV_GRAPHQL_URL,
-    request: (operation) => {
-      operation.setContext(context);
-    },
-    onError: ({ graphQLErrors, networkError, operation, forward }) => {
-      if (graphQLErrors) {
-        console.log('graphQLErrors', graphQLErrors);
-        let isJwtRejected = false;
+  const authMiddleware = new ApolloLink((operation, forward) => {
+    operation.setContext(context);
+    return forward(operation);
+  });
 
-        for (let err of graphQLErrors) {
-          if (err.extensions.code === 'UNAUTHENTICATED') {
-            isJwtRejected = true;
-          }
-        }
+  const errorMiddleware = onError(({ networkError }) => {
+    if (networkError && networkError.statusCode === 401) {
+      console.log(networkError);
+    }
+  });
 
-        const previousHeaders = operation.getContext().headers;
-
-        if (isJwtRejected && !previousHeaders.retry) {
-          axios({
-            url: `${apiUrl}/refresh-token`,
-            method: 'post',
-            withCredentials: true,
-          })
-            .then((res) => {
-              if (res.status === 200) {
-                setNewToken(dispatch, res.data.jwtToken);
-
-                operation.setContext({
-                  headers: {
-                    ...previousHeaders,
-                    authorization: `Bearer ${res.data.jwtToken}`,
-                    retry: true,
-                  },
-                });
-
-                return forward(operation);
-              }
-            })
-            .catch((error) => {
-              logOut(dispatch);
-            });
-        }
-      }
-
-      if (networkError) {
-        console.log('networkError', networkError);
-        logOut(dispatch);
-      }
-    },
+  const client = new ApolloClient({
+    link: errorMiddleware.concat(concat(authMiddleware, httpLink)),
     cache: new InMemoryCache(),
   });
+
+  return client;
 };
 
 export default createClient;
