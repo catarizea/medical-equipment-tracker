@@ -36,6 +36,7 @@
     "hasura:squash:dev:init": "dotenv -e .env.development.local -- yarn --cwd hasura squash:init",
     "hasura:squash:dev:apply": "dotenv -e .env.development.local -- yarn --cwd hasura squash:apply",
     "hasura:squash:dev:status": "dotenv -e .env.development.local -- yarn --cwd hasura squash:status",
+    "hasura:metadata": "dotenv -e .env.production.local -- yarn --cwd hasura metadata",
     "hasura:migrate": "dotenv -e .env.production.local -- yarn --cwd hasura migrate",
     "start": "npm-run-all -s containers:stop containers:start authentication:start"
   },

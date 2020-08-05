@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "console": "hasura console",
+    "metadata": "hasura metadata",
     "migrate": "hasura migrate",
     "squash:init": "hasura migrate create 'init' --from-server",
     "squash:apply": "hasura migrate apply --version '1596032087022' --skip-execution",

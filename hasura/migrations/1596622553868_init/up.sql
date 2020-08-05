@@ -76,7 +76,7 @@ CREATE TABLE public.inventory_movement (
     moved_at timestamp with time zone NOT NULL,
     moved_by uuid NOT NULL,
     comment text,
-    patient_id uuid,
+    patient_admission_id uuid,
     equipment_id uuid
 );
 CREATE TABLE public.location (
@@ -117,7 +117,6 @@ CREATE TABLE public.patient_contact (
     first_name text NOT NULL,
     last_name text NOT NULL,
     phone text NOT NULL,
-    email text,
     patient_id uuid NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
@@ -143,9 +142,7 @@ CREATE TABLE public.personnel (
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     first_name text NOT NULL,
     last_name text NOT NULL,
-    "position" text NOT NULL,
     title text,
-    authentication_id integer NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     phone text,
@@ -154,7 +151,14 @@ CREATE TABLE public.personnel (
     employed_at date NOT NULL,
     cancellation_at date,
     superior_id uuid,
-    comment text
+    comment text,
+    position_id uuid NOT NULL,
+    email text,
+    authentication_id uuid
+);
+CREATE TABLE public."position" (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    name text NOT NULL
 );
 ALTER TABLE ONLY public.division
     ADD CONSTRAINT division_pkey PRIMARY KEY (id);
@@ -187,11 +191,11 @@ ALTER TABLE ONLY public.patient_movement
 ALTER TABLE ONLY public.patient
     ADD CONSTRAINT patient_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.personnel
-    ADD CONSTRAINT personnel_authentication_id_key UNIQUE (authentication_id);
-ALTER TABLE ONLY public.personnel
     ADD CONSTRAINT personnel_id_key UNIQUE (id);
 ALTER TABLE ONLY public.personnel
-    ADD CONSTRAINT personnel_pkey PRIMARY KEY (id, authentication_id);
+    ADD CONSTRAINT personnel_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public."position"
+    ADD CONSTRAINT position_pkey PRIMARY KEY (id);
 CREATE TRIGGER set_public_division_updated_at BEFORE UPDATE ON public.division FOR EACH ROW EXECUTE FUNCTION public.set_current_timestamp_updated_at();
 COMMENT ON TRIGGER set_public_division_updated_at ON public.division IS 'trigger to set value of column "updated_at" to current timestamp on row update';
 CREATE TRIGGER set_public_equipment_maintenance_updated_at BEFORE UPDATE ON public.equipment_maintenance FOR EACH ROW EXECUTE FUNCTION public.set_current_timestamp_updated_at();
@@ -224,6 +228,8 @@ ALTER TABLE ONLY public.equipment_movement
     ADD CONSTRAINT equipment_movement_location_id_fkey FOREIGN KEY (location_id) REFERENCES public.location(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.equipment_movement
     ADD CONSTRAINT equipment_movement_moved_by_fkey FOREIGN KEY (moved_by) REFERENCES public.personnel(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY public.equipment
+    ADD CONSTRAINT equipment_owner_id_fkey FOREIGN KEY (owner_id) REFERENCES public.personnel(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.inventory_movement
     ADD CONSTRAINT inventory_movement_equipment_id_fkey FOREIGN KEY (equipment_id) REFERENCES public.equipment(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.inventory_movement
@@ -233,7 +239,7 @@ ALTER TABLE ONLY public.inventory_movement
 ALTER TABLE ONLY public.inventory_movement
     ADD CONSTRAINT inventory_movement_moved_by_fkey FOREIGN KEY (moved_by) REFERENCES public.personnel(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.inventory_movement
-    ADD CONSTRAINT inventory_movement_patient_id_fkey FOREIGN KEY (patient_id) REFERENCES public.patient(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+    ADD CONSTRAINT inventory_movement_patient_admission_id_fkey FOREIGN KEY (patient_admission_id) REFERENCES public.patient_admission(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.location
     ADD CONSTRAINT location_division_id_fkey FOREIGN KEY (division_id) REFERENCES public.division(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.patient_admission
@@ -248,3 +254,5 @@ ALTER TABLE ONLY public.patient_movement
     ADD CONSTRAINT patient_movement_patient_admission_id_fkey FOREIGN KEY (patient_admission_id) REFERENCES public.patient_admission(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.personnel
     ADD CONSTRAINT personnel_division_id_fkey FOREIGN KEY (division_id) REFERENCES public.division(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY public.personnel
+    ADD CONSTRAINT personnel_position_id_fkey FOREIGN KEY (position_id) REFERENCES public."position"(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
