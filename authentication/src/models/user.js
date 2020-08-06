@@ -40,6 +40,11 @@ module.exports = (sequelize, DataTypes) => {
           this.setDataValue('role', value.join(','));
         },
       },
+      defaultRole: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'user',
+      },
       isBlocked: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

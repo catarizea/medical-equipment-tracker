@@ -1,29 +1,25 @@
 import React, { useContext } from 'react';
+import { injectIntl } from 'react-intl';
+import PropTypes from 'prop-types';
+import Typography from '@material-ui/core/Typography';
 
-import Layout from '../../components/Layout';
 import { StoreContext } from '../../store/reducer/StoreProvider';
-import { logOut, fetchUsers } from '../../store/reducer/actions';
+import useStylesCommon from '../stylesCommon';
+import messages from './messages';
 
-const Home = () => {
+const Home = ({ intl: { formatMessage } }) => {
   const { dispatch, state } = useContext(StoreContext);
-
-  const handleClick = (isLogIn = true) => {
-    logOut(dispatch);
-  };
+  const classesCommon = useStylesCommon();
 
   return (
-    <Layout>
-      <div>
-        <button onClick={() => fetchUsers(dispatch)}>Fetch Users</button>
-      </div>
-      <br />
-      <br />
-      <div>
-        <button onClick={() => handleClick(false)}>Log Out</button>
-      </div>
-      <p>{JSON.stringify(state.users)}</p>
-    </Layout>
+    <div className={classesCommon.root}>
+      <Typography variant="h1">{formatMessage(messages.title)}</Typography>
+    </div>
   );
 };
 
-export default Home;
+Home.propTypes = {
+  intl: PropTypes.object.isRequired,
+};
+
+export default injectIntl(Home);

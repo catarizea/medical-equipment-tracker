@@ -10,6 +10,7 @@ REACT_APP_DEV_REST_URL="<your-development-rest-base_url>"
 REACT_APP_PROD_REST_URL="<your-production-rest-base_url>"
 REACT_APP_DEV_GRAPHQL_URL="<your-development-graphql-base_url>"
 REACT_APP_PROD_GRAPHQL_URL="<your-production-graphql-base_url>"
+REACT_APP_CLAIMS_KEY="<the-same-claims-key-as-from-authentication-constants-claims>"
 ```
 
 ## Available Scripts

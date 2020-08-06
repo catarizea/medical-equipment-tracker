@@ -50,6 +50,10 @@
 - table:
     schema: public
     name: equipment
+  object_relationships:
+  - name: personnel
+    using:
+      foreign_key_constraint_on: owner_id
   array_relationships:
   - name: equipment_maintenances
     using:
@@ -1011,84 +1015,78 @@
     permission:
       check: {}
       columns:
-      - id
-      - first_name
-      - last_name
-      - phone
-      - email
-      - patient_id
       - created_at
-      - updated_at
+      - first_name
+      - id
+      - last_name
+      - patient_id
+      - phone
       - related_how
+      - updated_at
       backend_only: false
   - role: nurse
     permission:
       check: {}
       columns:
-      - email
+      - created_at
       - first_name
+      - id
       - last_name
+      - patient_id
       - phone
       - related_how
-      - created_at
       - updated_at
-      - id
-      - patient_id
       backend_only: false
   select_permissions:
   - role: doctor
     permission:
       columns:
-      - email
+      - created_at
       - first_name
+      - id
       - last_name
+      - patient_id
       - phone
       - related_how
-      - created_at
       - updated_at
-      - id
-      - patient_id
       filter: {}
   - role: nurse
     permission:
       columns:
-      - email
+      - created_at
       - first_name
+      - id
       - last_name
+      - patient_id
       - phone
       - related_how
-      - created_at
       - updated_at
-      - id
-      - patient_id
       filter: {}
   update_permissions:
   - role: doctor
     permission:
       columns:
-      - email
+      - created_at
       - first_name
+      - id
       - last_name
+      - patient_id
       - phone
       - related_how
-      - created_at
       - updated_at
-      - id
-      - patient_id
       filter: {}
       check: null
   - role: nurse
     permission:
       columns:
-      - email
+      - created_at
       - first_name
+      - id
       - last_name
+      - patient_id
       - phone
       - related_how
-      - created_at
       - updated_at
-      - id
-      - patient_id
       filter: {}
       check: null
 - table:

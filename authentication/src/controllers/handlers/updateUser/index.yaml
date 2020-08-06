@@ -29,6 +29,9 @@ put:
               items:
                 type: string
                 example: "user"
+            defaultRole:
+              type: string
+              example: "user"
             isBlocked:
               type: boolean
               example: false
@@ -51,6 +54,7 @@ put:
             oneOf:
               - $ref: "#/components/schemas/NoAccountForId"
               - $ref: "#/components/schemas/InvalidUpdateUser"
+              - $ref: "#/components/schemas/DefaultRoleNotInUserRoles"
     "401":
       description: Unauthorized
       content:

@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import ApolloProvider from '../../store/apollo/Provider';
+import HomeRouter from '../HomeRouter';
 import PrivateRoute from '../../navigation/PrivateRoute';
-import Home from '../../screens/Home';
 import Login from '../../screens/Login';
 import { ROOT_PATH, LOGIN_PATH } from '../routes';
 
@@ -14,7 +15,9 @@ const RootRouter = () => {
           <Login />
         </Route>
         <PrivateRoute path={ROOT_PATH}>
-          <Home />
+          <ApolloProvider>
+            <HomeRouter />
+          </ApolloProvider>
         </PrivateRoute>
       </Switch>
     </Router>

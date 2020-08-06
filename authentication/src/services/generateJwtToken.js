@@ -25,7 +25,7 @@ const generateJwtToken = (user) => {
     {
       [KEY]: {
         'x-hasura-allowed-roles': user.role,
-        'x-hasura-default-role': roles.Default,
+        'x-hasura-default-role': user.defaultRole,
         'x-hasura-user-id': user.id,
         ...custom_claims,
       },

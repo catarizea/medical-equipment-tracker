@@ -1,18 +1,33 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
-import axios from 'axios';
+import {
+  ApolloClient,
+  InMemoryCache,
+  HttpLink,
+  from,
+  ApolloLink,
+  fromPromise,
+} from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
 import get from 'lodash.get';
+import axios from 'axios';
 
 import { logOut, setNewToken } from '../reducer/actions';
-
-const language = get(window, 'navigator.language', 'en').slice(0, 2);
+import language from '../../utils/getBrowserLanguage';
 
 const apiUrl =
   process.env.NODE_ENV === 'production'
     ? process.env.REACT_APP_PROD_REST_URL
     : process.env.REACT_APP_DEV_REST_URL;
 
+const httpLink = new HttpLink({
+  uri:
+    process.env.NODE_ENV === 'production'
+      ? process.env.REACT_APP_PROD_GRAPHQL_URL
+      : process.env.REACT_APP_DEV_GRAPHQL_URL,
+});
+
 const createClient = (state, dispatch) => {
   const jwtToken = get(state, 'jwtToken', null);
+
   const context = {
     headers: {
       'Accept-Language': language,
@@ -20,38 +35,45 @@ const createClient = (state, dispatch) => {
   };
 
   if (jwtToken) {
-    context.headers.authorization = `Bearer ${jwtToken}`
+    context.headers['Authorization'] = `Bearer ${jwtToken}`;
   }
 
-  return new ApolloClient({
-    uri:
-      process.env.NODE_ENV === 'production'
-        ? process.env.REACT_APP_PROD_GRAPHQL_URL
-        : process.env.REACT_APP_DEV_GRAPHQL_URL,
-    request: (operation) => {
-      operation.setContext(context);
-    },
-    onError: ({ graphQLErrors, networkError, operation, forward }) => {
-      if (graphQLErrors) {
-        console.log('graphQLErrors', graphQLErrors);
-        let isJwtRejected = false;
+  const authMiddleware = new ApolloLink((operation, forward) => {
+    operation.setContext(context);
+    return forward(operation);
+  });
 
-        for (let err of graphQLErrors) {
-          if (err.extensions.code === 'UNAUTHENTICATED') {
-            isJwtRejected = true;
+  const errorMiddleware = onError(
+    ({ graphQLErrors, networkError, operation, forward }) => {
+      if (graphQLErrors) {
+        let message = null;
+        let type = null;
+
+        for (const err of graphQLErrors) {
+          if (!message && !type) {
+            message = get(err, 'message', null);
+            type = get(err, 'extensions.code', null);
           }
         }
 
-        const previousHeaders = operation.getContext().headers;
-
-        if (isJwtRejected && !previousHeaders.retry) {
-          axios({
-            url: `${apiUrl}/refresh-token`,
-            method: 'post',
-            withCredentials: true,
-          })
-            .then((res) => {
-              if (res.status === 200) {
+        if (
+          message === 'Could not verify JWT: JWTExpired' &&
+          type === 'invalid-jwt'
+        ) {
+          const previousHeaders = operation.getContext().headers;
+          
+          if (!previousHeaders.retry) {
+            return fromPromise(
+              axios({
+                url: `${apiUrl}/refresh-token`,
+                method: 'post',
+                withCredentials: true,
+              }).catch(() => {
+                logOut(dispatch);
+              }),
+            )
+              .filter((value) => Boolean(value))
+              .flatMap((res) => {
                 setNewToken(dispatch, res.data.jwtToken);
 
                 operation.setContext({
@@ -63,21 +85,26 @@ const createClient = (state, dispatch) => {
                 });
 
                 return forward(operation);
-              }
-            })
-            .catch((error) => {
-              logOut(dispatch);
-            });
+              });
+          } else {
+            logOut(dispatch);
+          }
         }
       }
 
       if (networkError) {
-        console.log('networkError', networkError);
+        console.log(networkError);
         logOut(dispatch);
       }
     },
+  );
+
+  const client = new ApolloClient({
+    link: from([errorMiddleware, authMiddleware, httpLink]),
     cache: new InMemoryCache(),
   });
+
+  return client;
 };
 
 export default createClient;
