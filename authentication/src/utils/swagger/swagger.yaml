@@ -413,4 +413,13 @@ components:
             confirmPassword:
               type: string
               example: "Confirm password is required"
+    DefaultRoleNotInUserRoles:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: "Bad Request"
+        message:
+          type: string
+          example: "Default role not in user roles"
           
