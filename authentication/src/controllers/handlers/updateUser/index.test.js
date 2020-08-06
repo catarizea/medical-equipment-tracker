@@ -157,7 +157,7 @@ describe('/update-user endpoint', () => {
     done();
   });
 
-  it('should fail when to update user role as a user with default role', async (done) => {
+  it('should fail when trying to update user role as a user with default role', async (done) => {
     const { jwtToken } = await login(user);
     
     const updateWithRole = {
@@ -181,7 +181,7 @@ describe('/update-user endpoint', () => {
     done();
   });
 
-  it('should fail when to update user access as a user with default role', async (done) => {
+  it('should fail when trying to update user access as a user with default role', async (done) => {
     const { jwtToken } = await login(user);
     
     const updateWithAccess = {
@@ -205,7 +205,7 @@ describe('/update-user endpoint', () => {
     done();
   });
 
-  it('should fail when to update a non existent account', async (done) => {
+  it('should fail when trying to update a non existent account', async (done) => {
     const { jwtToken } = await login(user);
 
     const res = await testApi
@@ -218,6 +218,54 @@ describe('/update-user endpoint', () => {
       expect.objectContaining({
         type: 'Bad Request',
         message: 'No account for this id',
+      })
+    );
+
+    done();
+  });
+
+  it('should fail when trying to update own defaultRole', async (done) => {
+    const { jwtToken } = await login(user);
+
+    const updateWithWrongDefaultRole = {
+      ...updateWith,
+      defaultRole: 'admin',
+    };
+
+    const res = await testApi
+      .put(`${path}/${user.id}`)
+      .set('Authorization', `Bearer ${jwtToken}`)
+      .send(updateWithWrongDefaultRole);
+
+    expect(res.statusCode).toEqual(401);
+    expect(res.body).toEqual(
+      expect.objectContaining({
+        type: 'Unauthorized',
+        message: 'You cannot update your own role',
+      })
+    );
+
+    done();
+  });
+
+  it('should fail when trying to update user as an admin with a defaultRole not in user roles', async (done) => {
+    const { jwtToken } = await login(adminUser);
+
+    const updateWithWrongDefaultRole = {
+      ...updateWith,
+      defaultRole: 'hr',
+    };
+
+    const res = await testApi
+      .put(`${path}/${user.id}`)
+      .set('Authorization', `Bearer ${jwtToken}`)
+      .send(updateWithWrongDefaultRole);
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toEqual(
+      expect.objectContaining({
+        type: 'Bad Request',
+        message: 'Default role not in user roles',
       })
     );
 

@@ -110,6 +110,17 @@ const generateSchemas = (language = 'en') => {
       )
       .notRequired(),
     isBlocked: boolean().notRequired(),
+    defaultRole: string()
+      .trim()
+      .oneOf(
+        Object.values(roles),
+        replace(
+          messages.roleMustBeOneOf,
+          '{roles}',
+          Object.values(roles).join(',')
+        )
+      )
+      .notRequired(),
   });
 
   const changePasswordSchema = object({

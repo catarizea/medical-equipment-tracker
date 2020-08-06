@@ -32,6 +32,7 @@ module.exports = {
       defaultRole: {
         type: Sequelize.STRING,
         allowNull: false,
+        defaultValue: 'user',
       },
       isBlocked: {
         type: Sequelize.BOOLEAN,

@@ -16,6 +16,7 @@ const loadUsers = async () => {
     lastName: 'Ciompo',
     email: 'stela@medical.equipment',
     role: ['user'],
+    defaultRole: 'user',
     isBlocked: false,
     passwordHash: '$2a$10$EET8MHMUPZ4s4GkCnqWwp.dG5msvPNw9Ar/4RcsLx.r./Cv6SWGD6', 
   };
