@@ -23,15 +23,22 @@ const getUserInfo = async (jwtToken, dispatch) => {
     null,
   );
 
+  const defaultRole = get(
+    decoded,
+    `[${process.env.REACT_APP_CLAIMS_KEY}]['x-hasura-default-role']`,
+    null,
+  );
+
   const userId = get(decoded, `['x-hasura-user-id']`, null);
 
-  if (!roles || !userId) {
+  if (!roles || !userId || !defaultRole) {
     await logOut(dispatch);
     return;
   }
 
   return {
     roles,
+    defaultRole,
     userId,
   };
 };
