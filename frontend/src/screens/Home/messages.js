@@ -13,6 +13,10 @@ const messages = defineMessages({
     id: 'Home.updatedAt',
     defaultMessage: 'Updated At',
   },
+  systemId: {
+    id: 'Home.systemId',
+    defaultMessage: 'System Id',
+  },
 });
 
 export default messages;

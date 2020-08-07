@@ -24,8 +24,6 @@ export const GET_EQUIPMENT = gql`
       name
       created_at
       inventory_system_id
-      retired_at
-      retired_by
       status
       updated_at
       personnel {
@@ -62,7 +60,7 @@ const Equipment = ({ intl: { formatMessage } }) => {
     },
   ];
 
-  let divisionTable;
+  let table;
 
   if (get(data, 'equipment[0]', null)) {
     const minWidth = 650;
@@ -76,7 +74,7 @@ const Equipment = ({ intl: { formatMessage } }) => {
       },
       {
         key: 'inventory_system_id',
-        name: formatMessage(messages.systemId),
+        name: formatMessage(homeMessages.systemId),
         alignHeader: 'center',
         align: 'center',
       },
@@ -110,7 +108,7 @@ const Equipment = ({ intl: { formatMessage } }) => {
       },
     ];
 
-    divisionTable = (
+    table = (
       <Table data={data.equipment} header={header} minWidth={minWidth} />
     );
   }
@@ -120,7 +118,7 @@ const Equipment = ({ intl: { formatMessage } }) => {
       title={formatMessage(messages.title)}
       breadcrumbItems={breadcrumbItems}>
       <Grid item xs={12}>
-        {divisionTable}
+        {table}
       </Grid>
     </InnerLayout>
   );

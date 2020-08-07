@@ -17,10 +17,6 @@ const messages = defineMessages({
     id: 'Equipment.owner',
     defaultMessage: 'Owner',
   },
-  systemId: {
-    id: 'Equipment.systemId',
-    defaultMessage: 'System Id',
-  },
 });
 
 export default messages;
