@@ -13,10 +13,6 @@ const messages = defineMessages({
     id: 'Divisions.manager',
     defaultMessage: 'Manager',
   },
-  createdAt: {
-    id: 'Divisions.createdAt',
-    defaultMessage: 'Created At',
-  },
 });
 
 export default messages;

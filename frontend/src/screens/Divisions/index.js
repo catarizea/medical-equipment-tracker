@@ -76,7 +76,7 @@ const Divisions = ({ intl: { formatMessage } }) => {
       },
       {
         key: 'created_at',
-        name: formatMessage(messages.createdAt),
+        name: formatMessage(homeMessages.createdAt),
         alignHeader: 'center',
         align: 'center',
         showFn: (str) => formatDate(fromUtc(str), getDateTimeFormat()),
