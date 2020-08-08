@@ -25,6 +25,7 @@ const Home = ({ intl: { formatMessage } }) => {
         <BarcodeScannerComponent
           width={300}
           height={300}
+          interval={200}
           onUpdate={(err, result) => {
             if (result) {
               setData(result.text);
