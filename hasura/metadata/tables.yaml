@@ -1,6 +1,10 @@
 - table:
     schema: public
     name: division
+  object_relationships:
+  - name: personnelByManagerId
+    using:
+      foreign_key_constraint_on: manager_id
   array_relationships:
   - name: locations
     using:

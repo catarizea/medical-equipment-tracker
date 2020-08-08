@@ -16,6 +16,7 @@
     "clsx": "1.1.1",
     "conditional-expression": "1.1.2",
     "date-fns": "2.15.0",
+    "date-fns-tz": "1.0.10",
     "formik": "2.1.5",
     "formik-material-ui": "3.0.0-alpha.0",
     "formik-material-ui-lab": "0.0.5",
@@ -29,7 +30,8 @@
     "react-dom": "16.13.1",
     "react-intl": "5.4.0",
     "react-router-dom": "5.2.0",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "react-webcam-barcode-scanner": "0.0.2-rc2"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,20 +1,38 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
+import BarcodeScannerComponent from 'react-webcam-barcode-scanner';
+import Grid from '@material-ui/core/Grid';
 
-import { StoreContext } from '../../store/reducer/StoreProvider';
-import useStylesCommon from '../stylesCommon';
 import messages from './messages';
+import InnerLayout from '../../components/InnerLayout';
+import { ROOT_PATH } from '../../navigation/routes';
 
 const Home = ({ intl: { formatMessage } }) => {
-  const { dispatch, state } = useContext(StoreContext);
-  const classesCommon = useStylesCommon();
-
+  const [data, setData] = useState('Not Found');
+  const breadcrumbItems = [
+    {
+      key: 'home',
+      name: formatMessage(messages.title),
+      path: ROOT_PATH,
+    },
+  ];
   return (
-    <div className={classesCommon.root}>
-      <Typography variant="h1">{formatMessage(messages.title)}</Typography>
-    </div>
+    <InnerLayout
+      title={formatMessage(messages.title)}
+      breadcrumbItems={breadcrumbItems}>
+      <Grid item xs={12}>
+        <BarcodeScannerComponent
+          width={200}
+          height={200}
+          onUpdate={(err, result) => {
+            if (result) setData(result.text);
+            else setData('Not Found');
+          }}
+        />
+        <p>{data}</p>
+      </Grid>
+    </InnerLayout>
   );
 };
 

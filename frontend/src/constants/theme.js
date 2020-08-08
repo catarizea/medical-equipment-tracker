@@ -24,8 +24,25 @@ let theme = createMuiTheme({
       fontSize: '1.25rem',
       fontWeight: 300,
     }
-  }
+  },
 });
+
+theme = {
+  ...theme,
+  overrides: {
+    MuiLinearProgress: {
+      indeterminate: {
+        backgroundColor: theme.palette.grey[200],
+      },
+      bar1Indeterminate: {
+        backgroundColor: theme.palette.info.dark,
+      },
+      bar2Indeterminate: {
+        backgroundColor: theme.palette.info.main,
+      }
+    }
+  }
+};
 
 theme = responsiveFontSizes(theme);
 

@@ -1,13 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(() => ({
   root: {
-    width: '100vw',
-    position: 'absolute',
-    top: 0,
-    left: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 }));
 
@@ -16,7 +15,7 @@ const PageProgress = () => {
 
   return (
     <div className={classes.root}>
-      <LinearProgress />
+      <CircularProgress />
     </div>
   );
 };

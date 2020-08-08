@@ -2,7 +2,7 @@ import axios from 'axios';
 import get from 'lodash.get';
 
 import { setNewToken, logOut } from '../store/reducer/actions';
-const language = get(window, 'navigator.language', 'en').slice(0, 2);
+import language from './getBrowserLanguage';
 
 const baseURL =
   process.env.NODE_ENV === 'production'
