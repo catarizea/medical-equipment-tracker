@@ -5,17 +5,27 @@ import Grid from '@material-ui/core/Grid';
 import ScreenTitle from '../../components/ScreenTitle';
 import Breadcrumb from '../../navigation/Breadcrumb';
 
-const InnerLayout = ({ title, breadcrumbItems, children }) => (
-  <Grid container spacing={2}>
-    <Grid item xs={12}>
-      <Breadcrumb items={breadcrumbItems} />
+const InnerLayout = ({ title, breadcrumbItems, children }) => {
+  let breadcrumbNode;
+
+  if (breadcrumbItems) {
+    breadcrumbNode = (
+      <Grid item xs={12}>
+        <Breadcrumb items={breadcrumbItems} />
+      </Grid>
+    );
+  }
+
+  return (
+    <Grid container spacing={2}>
+      {breadcrumbNode}
+      <Grid item xs={12}>
+        <ScreenTitle>{title}</ScreenTitle>
+      </Grid>
+      {children}
     </Grid>
-    <Grid item xs={12}>
-      <ScreenTitle>{title}</ScreenTitle>
-    </Grid>
-    {children}
-  </Grid>
-);
+  );
+};
 
 InnerLayout.propTypes = {
   children: PropTypes.oneOfType([
@@ -23,7 +33,7 @@ InnerLayout.propTypes = {
     PropTypes.node,
   ]).isRequired,
   title: PropTypes.string.isRequired,
-  breadcrumbItems: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  breadcrumbItems: PropTypes.arrayOf(PropTypes.object.isRequired),
 };
 
 export default InnerLayout;

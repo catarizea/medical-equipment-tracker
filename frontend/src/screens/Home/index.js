@@ -1,18 +1,23 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
-import useStylesCommon from '../stylesCommon';
 import messages from './messages';
+import InnerLayout from '../../components/InnerLayout';
+import CodeReader from '../../components/CodeReader';
 
 const Home = ({ intl: { formatMessage } }) => {
-  const classesCommon = useStylesCommon();
+  const handleRead = (data) => {
+    console.log(data);
+  };
 
   return (
-    <div className={classesCommon.root}>
-      <Typography variant="h1">{formatMessage(messages.title)}</Typography>
-    </div>
+    <InnerLayout title={formatMessage(messages.title)}>
+      <Grid item xs={12}>
+        <CodeReader handleRead={handleRead} />
+      </Grid>
+    </InnerLayout>
   );
 };
 
