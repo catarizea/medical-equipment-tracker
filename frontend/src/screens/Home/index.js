@@ -23,11 +23,16 @@ const Home = ({ intl: { formatMessage } }) => {
       breadcrumbItems={breadcrumbItems}>
       <Grid item xs={12}>
         <BarcodeScannerComponent
-          width={200}
-          height={200}
+          width={300}
+          height={300}
           onUpdate={(err, result) => {
-            if (result) setData(result.text);
-            else setData('Not Found');
+            if (result) {
+              setData(result.text);
+            }
+
+            if (err) {
+              console.log(err);
+            }
           }}
         />
         <p>{data}</p>
