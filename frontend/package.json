@@ -30,7 +30,8 @@
     "react-dom": "16.13.1",
     "react-intl": "5.4.0",
     "react-router-dom": "5.2.0",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "react-webcam-barcode-scanner": "0.0.2-rc2"
   },
   "scripts": {
     "start": "react-scripts start",
