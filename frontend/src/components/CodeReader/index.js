@@ -10,11 +10,11 @@ const style = {
 const CodeReader = ({ handleRead }) => {
   useEffect(() => {
     const handler = (e) => {
-      if (e.origin !== process.env.REACT_APP_HOST_URL) {
+      if (e.origin !== process.env.REACT_APP_HOST_URL || typeof e.data !== 'string') {
         return;
       }
 
-      handleRead(e.data);
+      handleRead(JSON.parse(e.data));
     };
 
     window.addEventListener('message', handler);
@@ -83,7 +83,6 @@ const CodeReader = ({ handleRead }) => {
             window.addEventListener('load', function () {
               let selectedDeviceId;
               const codeReader = new ZXing.BrowserMultiFormatReader()
-              console.log('ZXing code reader initialized')
               codeReader.listVideoInputDevices()
                 .then((videoInputDevices) => {
                   const sourceSelect = document.getElementById('sourceSelect')
@@ -107,21 +106,24 @@ const CodeReader = ({ handleRead }) => {
                   document.getElementById('startButton').addEventListener('click', () => {
                     codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
                       if (result) {
-                        console.log(result)
                         document.getElementById('result').textContent = result.text
+                        window.top.postMessage(
+                          JSON.stringify({
+                            error: false,
+                            message: result.text
+                          }),
+                          '*'
+                        );
                       }
                       if (err && !(err instanceof ZXing.NotFoundException)) {
-                        console.error(err)
                         document.getElementById('result').textContent = err
                       }
                     })
-                    console.log('Started continous decode from camera with id' + selectedDeviceId);
                   })
 
                   document.getElementById('resetButton').addEventListener('click', () => {
                     codeReader.reset()
                     document.getElementById('result').textContent = '';
-                    console.log('Reset.')
                   })
 
                 })

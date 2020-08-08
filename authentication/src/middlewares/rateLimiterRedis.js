@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== 'test') {
   const rateLimiter = new RateLimiterRedis({
     storeClient: redisClient,
     keyPrefix: 'middleware',
-    points: 15, // 15 requests
+    points: 17, // 17 requests
     duration: 1, // per 1 second by IP
   });
 
