@@ -30,8 +30,7 @@
     "react-dom": "16.13.1",
     "react-intl": "5.4.0",
     "react-router-dom": "5.2.0",
-    "react-scripts": "3.4.1",
-    "react-webcam-barcode-scanner": "git+https://github.com/catarizea/react-webcam-barcode-scanner.git#testing"
+    "react-scripts": "3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
