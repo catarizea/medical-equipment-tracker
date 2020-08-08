@@ -66,3 +66,9 @@ RABBITMQ_PORTS_ADMIN="15672:15672"
 WORKER_MAILER_INVITE_QUEUE="<your_mailer_invite_queue_name>"
 WORKER_MAILER_FORGOT_QUEUE="<your_mailer_forgot_queue_name>"
 ```
+
+### Starting the api service on production environment 
+
+```shell
+pm2 start yarn --interpreter bash --name api -- authentication:start
+```
