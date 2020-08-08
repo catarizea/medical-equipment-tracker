@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 const style = {
@@ -8,19 +8,27 @@ const style = {
 };
 
 const CodeReader = ({ handleRead }) => {
+  const [lastCode, setLastCode] = useState(null);
+  
   useEffect(() => {
     const handler = (e) => {
       if (e.origin !== process.env.REACT_APP_HOST_URL || typeof e.data !== 'string') {
         return;
       }
 
+      if (e.data === lastCode) {
+        return; 
+      }
+
       handleRead(JSON.parse(e.data));
+
+      setLastCode(e.data);
     };
 
     window.addEventListener('message', handler);
 
     return () => window.removeEventListener('message', handler);
-  }, [handleRead]);
+  }, [handleRead, setLastCode, lastCode]);
 
   if (
     !navigator.mediaDevices ||
