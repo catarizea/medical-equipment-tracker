@@ -14,11 +14,11 @@ const TableComponent = ({ data, header, minWidth }) => {
       {header.map((cell) => {
         let value = '-';
 
-        if (row[cell.key] && !cell.showFn) {
+        if (cell.key in row && row[cell.key] !== null && !cell.showFn) {
           value = row[cell.key];
         }
 
-        if (row[cell.key] && cell.showFn) {
+        if (cell.key in row && row[cell.key] !== null && cell.showFn) {
           value = cell.showFn(row[cell.key]);
         }
 

@@ -17,6 +17,14 @@ const messages = defineMessages({
     id: 'Home.systemId',
     defaultMessage: 'System Id',
   },
+  yes: {
+    id: 'Home.yes',
+    defaultMessage: 'Yes',
+  },
+  no: {
+    id: 'Home.no',
+    defaultMessage: 'No',
+  },
 });
 
 export default messages;
