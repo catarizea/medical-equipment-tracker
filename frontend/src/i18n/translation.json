@@ -1,5 +1,6 @@
 {
   "en": {
+    "CodeReader.cannotUse": "Cannot use webcam to read codes...",
     "Layout.title": "Medical Equipment",
     "SidebarMenu.home": "Home",
     "SidebarMenu.patients": "Patients",
@@ -26,6 +27,9 @@
     "Inventory.name": "Inventory Item Name",
     "Inventory.unit": "Unit",
     "Locations.title": "Locations",
+    "Locations.name": "Name",
+    "Locations.manager": "Manager",
+    "Locations.division": "Division",
     "LoginScreen.copy": "Medical Equipment",
     "LoginScreen.login": "Login",
     "LoginScreen.forgot": "Forgot password?",
@@ -47,9 +51,17 @@
     "Patients.isAnonymous": "Is Anonymous",
     "Patients.guardianName": "Guardian Name",
     "Personnel.title": "Personnel",
-    "Positions.title": "Positions"
+    "Personnel.name": "Name",
+    "Personnel.position": "Position",
+    "Personnel.division": "Division",
+    "Personnel.phone": "Phone",
+    "Personnel.email": "Email",
+    "Personnel.employedSince": "Employed since",
+    "Positions.title": "Positions",
+    "Positions.name": "Name"
   },
   "ro": {
+    "CodeReader.cannotUse": "Camera web nu poate fi utilizata pentru citirea codurilor...",
     "Layout.title": "Echipament medical",
     "SidebarMenu.home": "Acasa",
     "SidebarMenu.patients": "Pacienti",
@@ -76,6 +88,9 @@
     "Inventory.name": "Nume Material Sanitar",
     "Inventory.unit": "Unitate de masura",
     "Locations.title": "Locatii",
+    "Locations.name": "Nume",
+    "Locations.manager": "Sef Sectie",
+    "Locations.division": "Sectie",
     "LoginScreen.copy": "Echipament medical",
     "LoginScreen.login": "Autentificare",
     "LoginScreen.forgot": "Ai uitat parola?",
@@ -97,6 +112,13 @@
     "Patients.isAnonymous": "Este Anonim",
     "Patients.guardianName": "Nume Tutore",
     "Personnel.title": "Personal",
-    "Positions.title": "Functii"
+    "Personnel.name": "Nume",
+    "Personnel.position": "Post",
+    "Personnel.division": "Sectie",
+    "Personnel.phone": "Telefon",
+    "Personnel.email": "Email",
+    "Personnel.employedSince": "Durata angajarii",
+    "Positions.title": "Functii",
+    "Positions.name": "Nume"
   }
 }

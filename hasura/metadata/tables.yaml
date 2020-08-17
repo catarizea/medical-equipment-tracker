@@ -749,6 +749,9 @@
   - name: division
     using:
       foreign_key_constraint_on: division_id
+  - name: personnel
+    using:
+      foreign_key_constraint_on: manager_id
   array_relationships:
   - name: equipment_movements
     using:

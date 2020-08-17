@@ -30,4 +30,11 @@ export const age = (birthday) =>
   differenceInCalendarYears(new Date(), new Date(birthday));
 
 export const timeAgo = (someDate) =>
-  formatDistanceToNow(new Date(fromUtc(someDate)), { locale: language === 'en' ? enUsLocale : roLocale  });
+  formatDistanceToNow(new Date(fromUtc(someDate)), {
+    locale: language === 'en' ? enUsLocale : roLocale,
+  });
+
+export const timeAgoDate = (someDate) =>
+  formatDistanceToNow(new Date(someDate), {
+    locale: language === 'en' ? enUsLocale : roLocale,
+  });

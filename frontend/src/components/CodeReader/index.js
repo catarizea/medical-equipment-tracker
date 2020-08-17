@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl } from 'react-intl';
+
+import messages from './messages';
 
 const style = {
   width: '100%',
@@ -7,7 +10,7 @@ const style = {
   border: 'none',
 };
 
-const CodeReader = ({ handleRead }) => {
+const CodeReader = ({ handleRead, intl: { formatMessage } }) => {
   const [lastCode, setLastCode] = useState(null);
   
   useEffect(() => {
@@ -34,7 +37,7 @@ const CodeReader = ({ handleRead }) => {
     !navigator.mediaDevices ||
     typeof navigator.mediaDevices.enumerateDevices !== 'function'
   ) {
-    return <p>Cannot use webcam to read codes...</p>;
+    return <p>{formatMessage(messages.cannotUse)}</p>;
   }
 
   return (
@@ -152,6 +155,7 @@ const CodeReader = ({ handleRead }) => {
 
 CodeReader.propTypes = {
   handleRead: PropTypes.func.isRequired,
+  intl: PropTypes.object.isRequired,
 };
 
-export default CodeReader;
+export default injectIntl(CodeReader);
