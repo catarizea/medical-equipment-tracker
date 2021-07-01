@@ -14,6 +14,7 @@
   ],
   "scripts": {
     "authentication:dev": "dotenv -e .env.development.local -- yarn --cwd authentication dev",
+    "authentication:dev:db:create": "dotenv -e .env.development.local -- yarn --cwd authentication db:create",
     "authentication:dev:db:reset": "dotenv -e .env.development.local -- yarn --cwd authentication db:reset",
     "authentication:dev:db:migrate": "dotenv -e .env.development.local -- yarn --cwd authentication db:migrate",
     "authentication:dev:db:seed": "dotenv -e .env.development.local -- yarn --cwd authentication db:seed",
@@ -32,6 +33,7 @@
     "frontend:translate:cumulate": "cross-env NODE_ENV=production yarn --cwd frontend translate:cumulate",
     "frontend:translate:extract": "cross-env NODE_ENV=production yarn --cwd frontend translate:extract",
     "hasura:console:dev": "dotenv -e .env.development.local -- yarn --cwd hasura console",
+    "hasura:metadata:dev": "dotenv -e .env.development.local -- yarn --cwd hasura metadata",
     "hasura:migrate:dev": "dotenv -e .env.development.local -- yarn --cwd hasura migrate",
     "hasura:squash:dev:init": "dotenv -e .env.development.local -- yarn --cwd hasura squash:init",
     "hasura:squash:dev:apply": "dotenv -e .env.development.local -- yarn --cwd hasura squash:apply",

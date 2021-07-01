@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { gql, useQuery } from '@apollo/client';

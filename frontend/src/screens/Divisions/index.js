@@ -23,7 +23,7 @@ export const GET_DIVISIONS = gql`
       id
       created_at
       name
-      personnelByManagerId {
+      personnel {
         id
         last_name
         first_name
@@ -68,7 +68,7 @@ const Divisions = ({ intl: { formatMessage } }) => {
         align: 'center',
       },
       {
-        key: 'personnelByManagerId',
+        key: 'personnel',
         name: formatMessage(messages.manager),
         alignHeader: 'center',
         align: 'center',

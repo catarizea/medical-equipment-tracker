@@ -8,13 +8,13 @@
     "metadata": "hasura metadata",
     "migrate": "hasura migrate",
     "squash:init": "hasura migrate create 'init' --from-server",
-    "squash:apply": "hasura migrate apply --version '1596032087022' --skip-execution",
+    "squash:apply": "hasura migrate apply --version '1596622553868' --skip-execution",
     "squash:status": "hasura migrate status"
   },
   "dependencies": {
     "dotenv-cli": "3.2.0"
   },
   "devDependencies": {
-    "hasura-cli": "1.3.0"
+    "hasura-cli": "1.3.3"
   }
 }

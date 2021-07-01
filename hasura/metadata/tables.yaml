@@ -2,7 +2,7 @@
     schema: public
     name: division
   object_relationships:
-  - name: personnelByManagerId
+  - name: personnel
     using:
       foreign_key_constraint_on: manager_id
   array_relationships:
@@ -13,44 +13,13 @@
         table:
           schema: public
           name: location
-  - name: personnel
+  - name: personnels
     using:
       foreign_key_constraint_on:
         column: division_id
         table:
           schema: public
           name: personnel
-  select_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - id
-      - name
-      filter: {}
-  - role: hr
-    permission:
-      columns:
-      - id
-      - name
-      filter: {}
-  - role: nurse
-    permission:
-      columns:
-      - id
-      - name
-      filter: {}
-  - role: tech
-    permission:
-      columns:
-      - id
-      - name
-      filter: {}
-  - role: warehouse
-    permission:
-      columns:
-      - id
-      - name
-      filter: {}
 - table:
     schema: public
     name: equipment
@@ -80,119 +49,6 @@
         table:
           schema: public
           name: inventory_movement
-  insert_permissions:
-  - role: warehouse
-    permission:
-      check: {}
-      columns:
-      - id
-      - name
-      - inventory_system_id
-      - created_at
-      - updated_at
-      - owner_id
-      - status
-      - retired_at
-      - retired_by
-      - comment
-      - has_everything
-      backend_only: false
-  select_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - comment
-      - created_at
-      - has_everything
-      - id
-      - inventory_system_id
-      - name
-      - owner_id
-      - status
-      - updated_at
-      filter: {}
-  - role: nurse
-    permission:
-      columns:
-      - comment
-      - created_at
-      - has_everything
-      - id
-      - inventory_system_id
-      - name
-      - owner_id
-      - status
-      - updated_at
-      filter: {}
-  - role: tech
-    permission:
-      columns:
-      - comment
-      - created_at
-      - has_everything
-      - id
-      - inventory_system_id
-      - name
-      - owner_id
-      - status
-      - updated_at
-      filter: {}
-  - role: warehouse
-    permission:
-      columns:
-      - has_everything
-      - status
-      - comment
-      - inventory_system_id
-      - name
-      - created_at
-      - retired_at
-      - updated_at
-      - id
-      - owner_id
-      - retired_by
-      filter: {}
-  update_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - comment
-      - has_everything
-      - status
-      filter: {}
-      check: null
-  - role: nurse
-    permission:
-      columns:
-      - comment
-      - has_everything
-      - status
-      filter: {}
-      check: null
-  - role: tech
-    permission:
-      columns:
-      - comment
-      - has_everything
-      - status
-      filter: {}
-      check: null
-  - role: warehouse
-    permission:
-      columns:
-      - has_everything
-      - status
-      - comment
-      - inventory_system_id
-      - name
-      - created_at
-      - retired_at
-      - updated_at
-      - id
-      - owner_id
-      - retired_by
-      filter: {}
-      check: null
 - table:
     schema: public
     name: equipment_maintenance
@@ -203,91 +59,6 @@
   - name: personnel
     using:
       foreign_key_constraint_on: handled_by
-  insert_permissions:
-  - role: tech
-    permission:
-      check: {}
-      columns:
-      - id
-      - equipment_id
-      - type
-      - started_at
-      - finished_at
-      - done_internally
-      - issue
-      - solution
-      - comment
-      - created_at
-      - updated_at
-      - handled_by
-      backend_only: false
-  select_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - done_internally
-      - type
-      - comment
-      - issue
-      - solution
-      - created_at
-      - finished_at
-      - started_at
-      - updated_at
-      - equipment_id
-      - handled_by
-      - id
-      filter: {}
-  - role: nurse
-    permission:
-      columns:
-      - done_internally
-      - type
-      - comment
-      - issue
-      - solution
-      - created_at
-      - finished_at
-      - started_at
-      - updated_at
-      - equipment_id
-      - handled_by
-      - id
-      filter: {}
-  - role: tech
-    permission:
-      columns:
-      - done_internally
-      - type
-      - comment
-      - issue
-      - solution
-      - created_at
-      - finished_at
-      - started_at
-      - updated_at
-      - equipment_id
-      - handled_by
-      - id
-      filter: {}
-  update_permissions:
-  - role: tech
-    permission:
-      columns:
-      - done_internally
-      - type
-      - comment
-      - issue
-      - solution
-      - created_at
-      - finished_at
-      - started_at
-      - updated_at
-      - equipment_id
-      - handled_by
-      - id
-      filter: {}
-      check: null
 - table:
     schema: public
     name: equipment_movement
@@ -301,193 +72,6 @@
   - name: personnel
     using:
       foreign_key_constraint_on: moved_by
-  insert_permissions:
-  - role: doctor
-    permission:
-      check: {}
-      columns:
-      - id
-      - equipment_id
-      - location_id
-      - moved_by
-      - movement_type
-      - moved_at
-      - is_locked
-      - created_at
-      - updated_at
-      - comment
-      backend_only: false
-  - role: nurse
-    permission:
-      check: {}
-      columns:
-      - is_locked
-      - movement_type
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - location_id
-      - moved_by
-      backend_only: false
-  - role: tech
-    permission:
-      check: {}
-      columns:
-      - is_locked
-      - movement_type
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - location_id
-      - moved_by
-      backend_only: false
-  - role: warehouse
-    permission:
-      check: {}
-      columns:
-      - is_locked
-      - movement_type
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - location_id
-      - moved_by
-      backend_only: false
-  select_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - is_locked
-      - movement_type
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - location_id
-      - moved_by
-      filter: {}
-  - role: nurse
-    permission:
-      columns:
-      - is_locked
-      - movement_type
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - location_id
-      - moved_by
-      filter: {}
-  - role: tech
-    permission:
-      columns:
-      - is_locked
-      - movement_type
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - location_id
-      - moved_by
-      filter: {}
-  - role: warehouse
-    permission:
-      columns:
-      - is_locked
-      - movement_type
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - location_id
-      - moved_by
-      filter: {}
-  update_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - is_locked
-      - movement_type
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - location_id
-      - moved_by
-      filter:
-        is_locked:
-          _eq: false
-      check: null
-  - role: nurse
-    permission:
-      columns:
-      - is_locked
-      - movement_type
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - location_id
-      - moved_by
-      filter:
-        is_locked:
-          _eq: false
-      check: null
-  - role: tech
-    permission:
-      columns:
-      - is_locked
-      - movement_type
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - location_id
-      - moved_by
-      filter:
-        is_locked:
-          _eq: false
-      check: null
-  - role: warehouse
-    permission:
-      columns:
-      - is_locked
-      - movement_type
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - location_id
-      - moved_by
-      filter:
-        is_locked:
-          _eq: false
-      check: null
 - table:
     schema: public
     name: inventory
@@ -499,62 +83,6 @@
         table:
           schema: public
           name: inventory_movement
-  insert_permissions:
-  - role: warehouse
-    permission:
-      check: {}
-      columns:
-      - id
-      - name
-      - inventory_system_id
-      - created_at
-      - updated_at
-      - unit
-      - comment
-      backend_only: false
-  select_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - comment
-      - id
-      - inventory_system_id
-      - name
-      - unit
-      filter: {}
-  - role: nurse
-    permission:
-      columns:
-      - comment
-      - id
-      - inventory_system_id
-      - name
-      - unit
-      filter: {}
-  - role: warehouse
-    permission:
-      columns:
-      - comment
-      - inventory_system_id
-      - name
-      - unit
-      - created_at
-      - updated_at
-      - id
-      filter: {}
-  update_permissions:
-  - role: warehouse
-    permission:
-      columns:
-      - comment
-      - inventory_system_id
-      - name
-      - unit
-      - created_at
-      - updated_at
-      - id
-      filter: {}
-      check: null
 - table:
     schema: public
     name: inventory_movement
@@ -574,174 +102,6 @@
   - name: personnel
     using:
       foreign_key_constraint_on: moved_by
-  insert_permissions:
-  - role: doctor
-    permission:
-      check: {}
-      columns:
-      - is_locked
-      - movement_type
-      - quantity
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - inventory_id
-      - location_id
-      - moved_by
-      - patient_admission_id
-      backend_only: false
-  - role: nurse
-    permission:
-      check: {}
-      columns:
-      - is_locked
-      - movement_type
-      - quantity
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - inventory_id
-      - location_id
-      - moved_by
-      - patient_admission_id
-      backend_only: false
-  - role: warehouse
-    permission:
-      check: {}
-      columns:
-      - id
-      - movement_type
-      - location_id
-      - inventory_id
-      - quantity
-      - created_at
-      - updated_at
-      - is_locked
-      - moved_at
-      - moved_by
-      - comment
-      - patient_admission_id
-      - equipment_id
-      backend_only: false
-  select_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - is_locked
-      - movement_type
-      - quantity
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - inventory_id
-      - location_id
-      - moved_by
-      - patient_admission_id
-      filter: {}
-  - role: nurse
-    permission:
-      columns:
-      - is_locked
-      - movement_type
-      - quantity
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - inventory_id
-      - location_id
-      - moved_by
-      - patient_admission_id
-      filter: {}
-  - role: warehouse
-    permission:
-      columns:
-      - is_locked
-      - movement_type
-      - quantity
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - inventory_id
-      - location_id
-      - moved_by
-      - patient_admission_id
-      filter: {}
-  update_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - is_locked
-      - movement_type
-      - quantity
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - inventory_id
-      - location_id
-      - moved_by
-      - patient_admission_id
-      filter:
-        is_locked:
-          _eq: false
-      check: null
-  - role: nurse
-    permission:
-      columns:
-      - is_locked
-      - movement_type
-      - quantity
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - inventory_id
-      - location_id
-      - moved_by
-      - patient_admission_id
-      filter:
-        is_locked:
-          _eq: false
-      check: null
-  - role: warehouse
-    permission:
-      columns:
-      - is_locked
-      - movement_type
-      - quantity
-      - comment
-      - created_at
-      - moved_at
-      - updated_at
-      - equipment_id
-      - id
-      - inventory_id
-      - location_id
-      - moved_by
-      - patient_admission_id
-      filter:
-        is_locked:
-          _eq: false
-      check: null
 - table:
     schema: public
     name: location
@@ -774,46 +134,18 @@
         table:
           schema: public
           name: patient_movement
-  select_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - comment
-      - division_id
-      - id
-      - manager_id
-      - name
-      filter: {}
-  - role: nurse
-    permission:
-      columns:
-      - comment
-      - division_id
-      - id
-      - manager_id
-      - name
-      filter: {}
-  - role: tech
-    permission:
-      columns:
-      - comment
-      - division_id
-      - id
-      - manager_id
-      - name
-      filter: {}
-  - role: warehouse
-    permission:
-      columns:
-      - comment
-      - division_id
-      - id
-      - manager_id
-      - name
-      filter: {}
 - table:
     schema: public
     name: patient
+  object_relationships:
+  - name: patient_contact
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: patient_contact
+        column_mapping:
+          id: patient_id
   array_relationships:
   - name: patient_admissions
     using:
@@ -822,123 +154,6 @@
         table:
           schema: public
           name: patient_admission
-  - name: patient_contacts
-    using:
-      manual_configuration:
-        remote_table:
-          schema: public
-          name: patient_contact
-        column_mapping:
-          id: patient_id
-  insert_permissions:
-  - role: doctor
-    permission:
-      check: {}
-      columns:
-      - id
-      - first_name
-      - last_name
-      - birthday
-      - gender
-      - identity_card_ssn
-      - created_at
-      - updated_at
-      - address
-      - occupation
-      - guardian_name
-      - is_anonymous
-      - comment
-      backend_only: false
-  - role: nurse
-    permission:
-      check: {}
-      columns:
-      - gender
-      - is_anonymous
-      - birthday
-      - address
-      - comment
-      - first_name
-      - guardian_name
-      - identity_card_ssn
-      - last_name
-      - occupation
-      - created_at
-      - updated_at
-      - id
-      backend_only: false
-  select_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - gender
-      - is_anonymous
-      - birthday
-      - address
-      - comment
-      - first_name
-      - guardian_name
-      - identity_card_ssn
-      - last_name
-      - occupation
-      - created_at
-      - updated_at
-      - id
-      filter: {}
-  - role: nurse
-    permission:
-      columns:
-      - gender
-      - is_anonymous
-      - birthday
-      - address
-      - comment
-      - first_name
-      - guardian_name
-      - identity_card_ssn
-      - last_name
-      - occupation
-      - created_at
-      - updated_at
-      - id
-      filter: {}
-  update_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - gender
-      - is_anonymous
-      - birthday
-      - address
-      - comment
-      - first_name
-      - guardian_name
-      - identity_card_ssn
-      - last_name
-      - occupation
-      - created_at
-      - updated_at
-      - id
-      filter: {}
-      check: null
-  - role: nurse
-    permission:
-      columns:
-      - gender
-      - is_anonymous
-      - birthday
-      - address
-      - comment
-      - first_name
-      - guardian_name
-      - identity_card_ssn
-      - last_name
-      - occupation
-      - created_at
-      - updated_at
-      - id
-      filter: {}
-      check: null
 - table:
     schema: public
     name: patient_admission
@@ -961,55 +176,6 @@
         table:
           schema: public
           name: patient_movement
-  insert_permissions:
-  - role: doctor
-    permission:
-      check: {}
-      columns:
-      - id
-      - patient_id
-      - admited_at
-      - admited_by
-      - discharged_at
-      - discharged_by
-      - comment
-      backend_only: false
-  select_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - comment
-      - admited_at
-      - discharged_at
-      - admited_by
-      - discharged_by
-      - id
-      - patient_id
-      filter: {}
-  - role: nurse
-    permission:
-      columns:
-      - comment
-      - admited_at
-      - discharged_at
-      - admited_by
-      - discharged_by
-      - id
-      - patient_id
-      filter: {}
-  update_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - comment
-      - admited_at
-      - discharged_at
-      - admited_by
-      - discharged_by
-      - id
-      - patient_id
-      filter: {}
-      check: null
 - table:
     schema: public
     name: patient_contact
@@ -1017,85 +183,6 @@
   - name: patient
     using:
       foreign_key_constraint_on: patient_id
-  insert_permissions:
-  - role: doctor
-    permission:
-      check: {}
-      columns:
-      - created_at
-      - first_name
-      - id
-      - last_name
-      - patient_id
-      - phone
-      - related_how
-      - updated_at
-      backend_only: false
-  - role: nurse
-    permission:
-      check: {}
-      columns:
-      - created_at
-      - first_name
-      - id
-      - last_name
-      - patient_id
-      - phone
-      - related_how
-      - updated_at
-      backend_only: false
-  select_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - created_at
-      - first_name
-      - id
-      - last_name
-      - patient_id
-      - phone
-      - related_how
-      - updated_at
-      filter: {}
-  - role: nurse
-    permission:
-      columns:
-      - created_at
-      - first_name
-      - id
-      - last_name
-      - patient_id
-      - phone
-      - related_how
-      - updated_at
-      filter: {}
-  update_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - created_at
-      - first_name
-      - id
-      - last_name
-      - patient_id
-      - phone
-      - related_how
-      - updated_at
-      filter: {}
-      check: null
-  - role: nurse
-    permission:
-      columns:
-      - created_at
-      - first_name
-      - id
-      - last_name
-      - patient_id
-      - phone
-      - related_how
-      - updated_at
-      filter: {}
-      check: null
 - table:
     schema: public
     name: patient_movement
@@ -1109,83 +196,6 @@
   - name: personnel
     using:
       foreign_key_constraint_on: moved_by
-  insert_permissions:
-  - role: doctor
-    permission:
-      check: {}
-      columns:
-      - id
-      - patient_admission_id
-      - movement_type
-      - moved_at
-      - moved_by
-      - location_id
-      - comment
-      - created_at
-      - updated_at
-      - is_locked
-      - reference_doctor
-      - patient_id
-      - deceased_at_location
-      - deceased_at
-      backend_only: false
-  select_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - deceased_at_location
-      - is_locked
-      - movement_type
-      - comment
-      - created_at
-      - deceased_at
-      - moved_at
-      - updated_at
-      - id
-      - location_id
-      - moved_by
-      - patient_admission_id
-      - patient_id
-      - reference_doctor
-      filter: {}
-  - role: nurse
-    permission:
-      columns:
-      - deceased_at_location
-      - is_locked
-      - movement_type
-      - comment
-      - created_at
-      - deceased_at
-      - moved_at
-      - updated_at
-      - id
-      - location_id
-      - moved_by
-      - patient_admission_id
-      - patient_id
-      - reference_doctor
-      filter: {}
-  update_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - deceased_at_location
-      - is_locked
-      - movement_type
-      - comment
-      - created_at
-      - deceased_at
-      - moved_at
-      - updated_at
-      - id
-      - location_id
-      - moved_by
-      - patient_admission_id
-      - patient_id
-      - reference_doctor
-      filter: {}
-      check: null
 - table:
     schema: public
     name: personnel
@@ -1197,6 +207,20 @@
     using:
       foreign_key_constraint_on: position_id
   array_relationships:
+  - name: divisions
+    using:
+      foreign_key_constraint_on:
+        column: manager_id
+        table:
+          schema: public
+          name: division
+  - name: equipment
+    using:
+      foreign_key_constraint_on:
+        column: owner_id
+        table:
+          schema: public
+          name: equipment
   - name: equipment_maintenances
     using:
       foreign_key_constraint_on:
@@ -1218,6 +242,13 @@
         table:
           schema: public
           name: inventory_movement
+  - name: locations
+    using:
+      foreign_key_constraint_on:
+        column: manager_id
+        table:
+          schema: public
+          name: location
   - name: patient_movements
     using:
       foreign_key_constraint_on:
@@ -1225,181 +256,14 @@
         table:
           schema: public
           name: patient_movement
-  insert_permissions:
-  - role: hr
-    permission:
-      check: {}
-      columns:
-      - cancellation_at
-      - comment
-      - created_at
-      - division_id
-      - employed_at
-      - first_name
-      - id
-      - is_employed
-      - last_name
-      - phone
-      - position_id
-      - superior_id
-      - title
-      - updated_at
-      backend_only: false
-  select_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - division_id
-      - email
-      - first_name
-      - id
-      - last_name
-      - phone
-      - position_id
-      - superior_id
-      - title
-      filter:
-        is_employed:
-          _eq: true
-  - role: hr
-    permission:
-      columns:
-      - cancellation_at
-      - comment
-      - created_at
-      - division_id
-      - email
-      - employed_at
-      - first_name
-      - id
-      - is_employed
-      - last_name
-      - phone
-      - position_id
-      - superior_id
-      - title
-      - updated_at
-      filter: {}
-  - role: nurse
-    permission:
-      columns:
-      - division_id
-      - email
-      - first_name
-      - id
-      - last_name
-      - phone
-      - position_id
-      - superior_id
-      - title
-      filter:
-        is_employed:
-          _eq: true
-  - role: tech
-    permission:
-      columns:
-      - division_id
-      - email
-      - first_name
-      - id
-      - last_name
-      - phone
-      - position_id
-      - superior_id
-      - title
-      filter:
-        is_employed:
-          _eq: true
-  - role: warehouse
-    permission:
-      columns:
-      - division_id
-      - email
-      - first_name
-      - id
-      - last_name
-      - phone
-      - position_id
-      - superior_id
-      - title
-      filter:
-        is_employed:
-          _eq: true
-  update_permissions:
-  - role: hr
-    permission:
-      columns:
-      - cancellation_at
-      - comment
-      - created_at
-      - division_id
-      - employed_at
-      - first_name
-      - id
-      - is_employed
-      - last_name
-      - phone
-      - position_id
-      - superior_id
-      - title
-      - updated_at
-      filter: {}
-      check: null
 - table:
     schema: public
     name: position
   array_relationships:
-  - name: personnel
+  - name: personnels
     using:
       foreign_key_constraint_on:
         column: position_id
         table:
           schema: public
           name: personnel
-  insert_permissions:
-  - role: hr
-    permission:
-      check: {}
-      columns:
-      - id
-      - name
-      backend_only: false
-  select_permissions:
-  - role: doctor
-    permission:
-      columns:
-      - name
-      - id
-      filter: {}
-  - role: hr
-    permission:
-      columns:
-      - name
-      - id
-      filter: {}
-  - role: nurse
-    permission:
-      columns:
-      - name
-      - id
-      filter: {}
-  - role: tech
-    permission:
-      columns:
-      - name
-      - id
-      filter: {}
-  - role: warehouse
-    permission:
-      columns:
-      - name
-      - id
-      filter: {}
-  update_permissions:
-  - role: hr
-    permission:
-      columns:
-      - name
-      - id
-      filter: {}
-      check: null
