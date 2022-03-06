@@ -20,10 +20,15 @@ module.exports = {
   forgotPassword: async (req, res, next) => {
     const email = htmlEscape(req.body.email);
 
+    const message =
+      'If this account exists you will get a password reset email';
+
     const user = await models.User.findOne({ where: { email } });
 
     if (!user) {
-      return next(Boom.badRequest('No account for this email'));
+      return res.json({
+        result: message,
+      });
     }
 
     if (user.isBlocked) {
@@ -78,6 +83,6 @@ module.exports = {
 
     logger.info(`[API] forgot password email task published for ${user.email}`);
 
-    res.json({ result: 'Reset email message sent' });
+    res.json({ result: message });
   },
 };

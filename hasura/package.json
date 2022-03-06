@@ -12,9 +12,9 @@
     "squash:status": "hasura migrate status"
   },
   "dependencies": {
-    "dotenv-cli": "3.2.0"
+    "dotenv-cli": "4.0.0"
   },
   "devDependencies": {
-    "hasura-cli": "2.0.1"
+    "hasura-cli": "2.0.9"
   }
 }

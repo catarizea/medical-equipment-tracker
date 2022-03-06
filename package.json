@@ -26,7 +26,7 @@
     "clear": "rm -rf node_modules */node_modules packages/*/node_modules",
     "containers:dev": "dotenv -e .env.development.local -- docker-compose up -d",
     "containers:start": "dotenv -e .env.production.local -- docker-compose up -d",
-    "containers:stop": "docker stop medical-equipment-tracker_postgres_1 medical-equipment-tracker_graphql-engine_1 medical-equipment-tracker_redis_1 medical-equipment-tracker_rabbitmq_1",
+    "containers:stop": "docker stop medical-equipment-tracker-postgres-1 medical-equipment-tracker-graphql-engine-1 medical-equipment-tracker-redis-1 medical-equipment-tracker-rabbitmq-1",
     "frontend:start": "cross-env NODE_ENV=development yarn --cwd frontend start",
     "frontend:build": "cross-env NODE_ENV=production yarn --cwd frontend build",
     "frontend:translate": "npm-run-all -s frontend:translate:extract frontend:translate:cumulate",
@@ -43,8 +43,8 @@
     "start": "npm-run-all -s containers:stop containers:start authentication:start"
   },
   "dependencies": {
-    "cross-env": "7.0.2",
-    "dotenv-cli": "3.1.0",
+    "cross-env": "7.0.3",
+    "dotenv-cli": "4.0.0",
     "npm-run-all": "4.1.5"
   }
 }
